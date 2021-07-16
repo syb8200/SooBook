@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/my_lib"
+        app:showAsAction="always"
+        android:icon="@drawable/home"
+        android:title="내서재"
+        />
+
+
+    <item
+        android:id="@+id/fri_lib"
+        app:showAsAction="always"
+        android:icon="@drawable/heart"
+        android:title="친구서재"
+         />
+    <!--
+    android:title="▬▬▬"
+    -->
+
+    <item
+        android:id="@+id/find_lib"
+        app:showAsAction="always"
+        android:icon="@drawable/location"
+        android:title="주위도서관" />
+
+    <item
+        android:id="@+id/my_page"
+        app:showAsAction="always"
+        android:icon="@drawable/setting"
+        android:title="마이페이지" />
+</menu>

@@ -4,80 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sooBook_bg"
+    android:orientation="vertical"
     tools:context=".Login">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:background="@drawable/back_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 변경"
+            android:textColor="@color/sb_title"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:ignore="NotSibling">
+        android:layout_marginTop="74dp"
+        android:layout_marginHorizontal="36dp">
 
         <TextView
-            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:text="가입 시 등록한 이메일 주소와 변경할 비밀번호를 입력해주세요."
+            android:textColor="@color/sb_title"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_radius_2"
+            android:hint="이메일 주소"
+            android:textColor="@color/sb_title"
+            android:textSize="17sp"
+            android:textColorHint="@color/sb_gray2"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_radius_2"
+            android:hint="신규 비밀번호"
+            android:textColor="@color/sb_title"
+            android:textSize="17sp"
+            android:textColorHint="@color/sb_gray2"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_radius_2"
+            android:hint="신규 비밀번호 확인"
+            android:textColor="@color/sb_title"
+            android:textSize="17sp"
+            android:textColorHint="@color/sb_gray2"/>
+
+        <Button
+            android:id="@+id/send_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="비밀번호 재설정"
-            android:textColor="@color/soobook_green"
-            android:textSize="26sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="50dp"
-            android:layout_marginHorizontal="25dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:text="이메일"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:textColor="@color/black"
-                android:textColorHint="#888888"
-                android:textSize="20sp"
-                android:backgroundTint="@color/black"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp"
-            android:layout_marginHorizontal="25dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp"
-            android:layout_marginHorizontal="25dp"/>
-
-
-
-            <Button
-                android:id="@+id/send_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="변경"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/more_light_grey"
-                android:textSize="18sp"/>
+            android:background="@drawable/button_radius_1"
+            android:padding="17dp"
+            android:text="비밀번호 변경"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
 
     </LinearLayout>
+
+
 </LinearLayout>

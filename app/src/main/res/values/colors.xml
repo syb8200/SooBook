@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <color name="sb_main">#FF5F68</color>
+    <color name="sb_point">#5FA7FF</color>
+    <color name="sb_gray1">#F7F8F9</color>
+    <color name="sb_gray2">#E8E9EA</color>
+    <color name="sb_gray3">#B9BABE</color>
+    <color name="sb_gray4">#828282</color>
+    <color name="sb_title">#282732</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

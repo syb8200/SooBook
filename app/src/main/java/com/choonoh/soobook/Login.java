@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.widget.Button;
 
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class Login extends AppCompatActivity{
     private TextView find_email_pwd, sign_up;
     private Button login_btn;
     private FirebaseAuth firebaseAuth;
+    private ImageButton back_btn;
 
     private String user_email, user_pwd;
 
@@ -33,6 +35,12 @@ public class Login extends AppCompatActivity{
         setContentView(R.layout.activity_login);
 
         setLogin();
+
+        back_btn.setOnClickListener(v -> {
+            Intent intent=new Intent(Login.this, Before_Signup.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
 
         find_email_pwd.setOnClickListener(v -> {
             Intent intent=new Intent(Login.this, FindPw.class);
@@ -62,10 +70,11 @@ public class Login extends AppCompatActivity{
     }
 
     public void setLogin() {
+        back_btn = findViewById(R.id.back_btn);
         et_email = findViewById(R.id.et_email);
         et_pwd = findViewById(R.id.et_pwd);
         login_btn = findViewById(R.id.login_btn);
-        sign_up = findViewById(R.id.sign_up);
+        sign_up = findViewById(R.id.sign_up_tv);
         find_email_pwd = findViewById(R.id.find_email_pwd);
         firebaseAuth = FirebaseAuth.getInstance();
     }

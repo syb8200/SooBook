@@ -13,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class Home extends AppCompatActivity {
 
     FriLibFragment friLibFragment;
-    MyLibFragment myLibFragment;
+    HomeFragment homeFragment;
   //  BeforeFindLibFragment beforeFindLibFragment;
     FindLibFragment findLibFragment;
     MyPageFragment myPageFragment;
@@ -37,20 +37,22 @@ public class Home extends AppCompatActivity {
         Log.e(this.getClass().getName(), user_email + ", " + user_UID + ", " + bottom_frag);
 
         friLibFragment = new FriLibFragment();
-        myLibFragment = new MyLibFragment();
+        homeFragment = new HomeFragment();
        findLibFragment = new FindLibFragment();
     //    beforeFindLibFragment = new BeforeFindLibFragment();
-        myPageFragment = new MyPageFragment();
+    //    myPageFragment = new MyPageFragment();
+
         final BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
+        //오류날때 로그캣 여기 파란불...(?)
         switch (bottom_frag) {
             default:
             case "my_lib":
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, myLibFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                 Bundle toMyLibFrag = new Bundle();
                 toMyLibFrag.putString("user_email", user_email);
                 toMyLibFrag.putString("user_UID", user_UID);
-                myLibFragment.setArguments(toMyLibFrag);
+                homeFragment.setArguments(toMyLibFrag);
                 bottomNavigationView.setSelectedItemId(R.id.my_lib);
                 break;
             case "fri_lib":
@@ -69,14 +71,14 @@ public class Home extends AppCompatActivity {
                 findLibFragment.setArguments(findLibFrag);
                 bottomNavigationView.setSelectedItemId(R.id.find_lib);
                 break;
-            case "myPage":
+            /*case "myPage":
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, myPageFragment).commit();
                 Bundle myPage = new Bundle();
                 myPage.putString("user_email", user_email);
                 myPage.putString("user_UID", user_UID);
                 myPageFragment.setArguments(myPage);
                 bottomNavigationView.setSelectedItemId(R.id.my_page);
-                break;
+                break;*/
         }
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 menuItem -> {
@@ -89,11 +91,11 @@ public class Home extends AppCompatActivity {
                             friLibFragment.setArguments(toFirLibFrag);
                             return true;
                         case R.id.my_lib:
-                            getSupportFragmentManager().beginTransaction().replace(R.id.container, myLibFragment).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                             Bundle toMyLibFrag = new Bundle();
                             toMyLibFrag.putString("user_email", user_email);
                             toMyLibFrag.putString("user_UID", user_UID);
-                            myLibFragment.setArguments(toMyLibFrag);
+                            homeFragment.setArguments(toMyLibFrag);
                             return true;
                         case R.id.find_lib:
                             getSupportFragmentManager().beginTransaction().replace(R.id.container, findLibFragment).commit();
@@ -102,13 +104,13 @@ public class Home extends AppCompatActivity {
                             toFindLibFrag.putString("user_UID", user_UID);
                              findLibFragment.setArguments(toFindLibFrag);
                             return true;
-                        case R.id.my_page:
+                        /*case R.id.my_page:
                             getSupportFragmentManager().beginTransaction().replace(R.id.container, myPageFragment).commit();
                             Bundle toMyPageFrag = new Bundle();
                             toMyPageFrag.putString("user_email", user_email);
                             toMyPageFrag.putString("user_UID", user_UID);
                             myPageFragment.setArguments(toMyPageFrag);
-                            return true;
+                            return true;*/
                     }
                     return false;
                 }

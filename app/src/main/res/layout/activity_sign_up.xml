@@ -13,8 +13,9 @@
         android:layout_height="50dp">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/back_btn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginLeft="11dp"
             android:background="@drawable/back_btn"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -24,6 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumgothicbold"
             android:text="이메일로 가입하기"
             android:textColor="@color/sb_title"
             android:textSize="17sp"
@@ -50,47 +52,56 @@
                 android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="14dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_radius_2"
+                android:fontFamily="@font/nanumgothic"
                 android:hint="이메일 주소"
+                android:inputType="textEmailAddress"
+                android:padding="18dp"
                 android:textColor="@color/sb_title"
-                android:textSize="17sp"
-                android:textColorHint="@color/sb_gray2"/>
+                android:textColorHint="@color/sb_gray2"
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/et_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="14dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_radius_2"
+                android:fontFamily="@font/nanumgothic"
                 android:hint="비밀번호"
+                android:inputType="textPassword"
+                android:padding="18dp"
                 android:textColor="@color/sb_title"
-                android:textSize="17sp"
-                android:textColorHint="@color/sb_gray2"/>
+                android:textColorHint="@color/sb_gray2"
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/et_pwd_check"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="14dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_radius_2"
+                android:fontFamily="@font/nanumgothic"
                 android:hint="비밀번호 확인"
+                android:inputType="textPassword"
+                android:padding="18dp"
                 android:textColor="@color/sb_title"
-                android:textSize="17sp"
-                android:textColorHint="@color/sb_gray2"/>
+                android:textColorHint="@color/sb_gray2"
+                android:textSize="17sp" />
 
             <EditText
+                android:id="@+id/et_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="14dp"
                 android:background="@drawable/button_radius_2"
+                android:fontFamily="@font/nanumgothic"
                 android:hint="별명(2~13자 이내)"
+                android:inputType="text"
+                android:padding="18dp"
                 android:textColor="@color/sb_title"
-                android:textSize="17sp"
-                android:textColorHint="@color/sb_gray2"/>
+                android:textColorHint="@color/sb_gray2"
+                android:textSize="17sp" />
 
 
             <LinearLayout
@@ -100,14 +111,17 @@
               android:orientation="horizontal">
 
                 <ImageButton
+                    android:id="@+id/checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="12dp"
-                    android:background="@drawable/selection_btn"/>
+                    android:background="@drawable/selection_btn_off" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/nanumgothic"
                     android:text="개인정보 수집 및 이용 동의"
                     android:textColor="@color/sb_title"
                     android:textSize="15sp"/>
@@ -118,6 +132,7 @@
             android:id="@+id/sign_up_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumgothicbold"
             android:layout_marginTop="35dp"
             android:background="@drawable/button_radius_1"
             android:padding="17dp"

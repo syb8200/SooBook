@@ -29,26 +29,31 @@
         android:theme="@style/Theme.SOOBOOK.NoActionBar"
         android:usesCleartextTraffic="true">
 
-        <activity android:name="com.choonoh.soobook.UpdateMyBook" />
-        <activity android:name="com.choonoh.soobook.Home" />
-        <activity android:name="com.choonoh.soobook.DetailView" />
-        <activity android:name="com.choonoh.soobook.Sign_up" />
-        <activity android:name="com.choonoh.soobook.Login">
+        <activity android:name=".Splash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.choonoh.soobook.My_lib_add" />
-        <activity android:name="com.choonoh.soobook.FindPw" />
-        <activity android:name="com.choonoh.soobook.Add_frnd" />
-        <activity android:name="com.choonoh.soobook.AdminFrnd" />
-        <activity android:name="com.choonoh.soobook.BookDetailView" />
-        <activity android:name="com.choonoh.soobook.MyBookDetailView" />
+
+        <activity android:name=".Before_Signup"/>
+        <activity android:name=".Sign_up" />
+        <activity android:name=".Login"/>
+        <activity android:name=".Home"/>
+        <activity android:name=".UpdateMyBook" />
+        <activity android:name=".DetailView" />
+        <activity android:name=".My_lib_add" />
+        <activity android:name=".FindPw" />
+        <activity android:name=".Add_frnd" />
+        <activity android:name=".AdminFrnd" />
+        <activity android:name=".BookDetailView" />
+        <activity android:name=".MyBookDetailView" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
-        <activity android:name="com.choonoh.soobook.QrReaderActivity" />
+        <activity android:name=".QrReaderActivity" />
     </application>
 </manifest>

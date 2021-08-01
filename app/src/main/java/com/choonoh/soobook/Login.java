@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        setLogin();
+
 
         back_btn.setOnClickListener(v -> {
             Intent intent=new Intent(Login.this, Before_Signup.class);
@@ -64,56 +64,12 @@ public class Login extends AppCompatActivity{
                 toast = Toast.makeText(Login.this, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT); toast.show();
                 handler.postDelayed(toast::cancel, 1000);
             } else {
-                startLogin();
+
             }
         });
     }
 
-    public void setLogin() {
-        back_btn = findViewById(R.id.back_btn);
-        et_email = findViewById(R.id.et_email);
-        et_pwd = findViewById(R.id.et_pwd);
-        login_btn = findViewById(R.id.login_btn);
-        sign_up = findViewById(R.id.sign_up_tv);
-        find_email_pwd = findViewById(R.id.find_email_pwd);
-        firebaseAuth = FirebaseAuth.getInstance();
-    }
 
-    public void startLogin(){
-        firebaseAuth.signInWithEmailAndPassword(et_email.getText().toString(), et_pwd.getText().toString())
-                .addOnCompleteListener(this, task -> {
-                    if(task.isSuccessful()){
-                        Intent intent = new Intent(Login.this, Home.class);
-                        intent.putExtra("fragment","my_lib");
-                        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-                        intent.putExtra("user_email",et_email.getText().toString());
-                        intent.putExtra("user_UID",currentUser.getUid());
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(intent);
-                        finish();
-                    } else{
-                        Toast toast = Toast.makeText(Login.this, "이메일이나 비밀번호가 틀립니다. 다시 시도해주세요.", Toast.LENGTH_SHORT); toast.show();
-                        Handler handler = new Handler();
-                        handler.postDelayed(toast::cancel, 1000);
-                    }
-                });
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(Login.this, Home.class);
-            intent.putExtra("fragment","my_lib");
-            intent.putExtra("user_email",currentUser.getEmail());
-            intent.putExtra("user_UID",currentUser.getUid());
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast toast = Toast.makeText(Login.this, "자동로그인 되었습니다.", Toast.LENGTH_SHORT); toast.show();
-            Handler handler = new Handler();
-            handler.postDelayed(toast::cancel, 1000);
-            startActivity(intent);
-            finish();
-        }
-    }
+
 }

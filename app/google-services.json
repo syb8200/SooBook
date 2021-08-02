@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "22111351168",
-    "project_id": "soobook-971fa",
-    "storage_bucket": "soobook-971fa.appspot.com"
+    "project_number": "492168446715",
+    "project_id": "soobook-donghwa",
+    "storage_bucket": "soobook-donghwa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:22111351168:android:0e8aca182f2af24389d165",
+        "mobilesdk_app_id": "1:492168446715:android:91ec20152ab298eaf8e65e",
         "android_client_info": {
           "package_name": "com.choonoh.soobook"
         }
       },
       "oauth_client": [
         {
-          "client_id": "22111351168-ndv6j3os5f84hrinhgq5qm3ek5qp8253.apps.googleusercontent.com",
+          "client_id": "492168446715-6rvc989qvcjgphb05sdtbh77b4sr1a7o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAopVX5W0voQAM9y7IP1bDrhZUkvrI28K4"
+          "current_key": "AIzaSyDdqvjelcprWlcC3tTYGVojNu02rJMy_1Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "22111351168-ndv6j3os5f84hrinhgq5qm3ek5qp8253.apps.googleusercontent.com",
+              "client_id": "492168446715-6rvc989qvcjgphb05sdtbh77b4sr1a7o.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

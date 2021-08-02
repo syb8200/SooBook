@@ -51,7 +51,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.naver.maps:map-sdk:3.7.0'
 //파이어베이스
-    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    implementation platform('com.google.firebase:firebase-bom:28.3.0')
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'androidx.recyclerview:recyclerview:1.0.0'

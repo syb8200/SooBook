@@ -38,6 +38,8 @@
         <activity android:name=".Sign_up" />
         <activity android:name=".Login"/>
         <activity android:name=".FindPw" />
+        <activity android:name=".BottomNavActivity"/>
+
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"

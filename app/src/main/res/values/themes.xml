@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.SOOBOOK" parent="Theme.AppCompat.Light.NoActionBar"
 >
-        <item name="colorPrimary">@color/soobook_green</item>
+        <item name="colorPrimary">@color/sb_main</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/black</item>
 
@@ -23,5 +23,11 @@
     <style name="Theme.SOOBOOK.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.SOOBOOK.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Widget.BottomNavigationView"
+        parent = "Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/nanumgothic</item>
+        <item name="android:textSize">11sp</item>
+    </style>
 
 </resources>

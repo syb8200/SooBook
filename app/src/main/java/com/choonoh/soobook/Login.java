@@ -34,6 +34,12 @@ public class Login extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        back_btn = findViewById(R.id.back_btn);
+        find_email_pwd = findViewById(R.id.find_email_pwd);
+        sign_up = findViewById(R.id.sign_up_tv);
+        login_btn = findViewById(R.id.login_btn);
+        et_email = findViewById(R.id.et_email);
+        et_pwd = findViewById(R.id.et_pwd);
 
 
         back_btn.setOnClickListener(v -> {
@@ -53,6 +59,7 @@ public class Login extends AppCompatActivity{
             startActivity(intent);
         });
         login_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(Login.this, BottomNavActivity.class);
             user_email = et_email.getText().toString();
             user_pwd = et_pwd.getText().toString();
             final Toast toast;
@@ -66,6 +73,10 @@ public class Login extends AppCompatActivity{
             } else {
 
             }
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+
         });
     }
 

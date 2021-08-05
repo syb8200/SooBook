@@ -24,6 +24,7 @@ public class Sign_up extends AppCompatActivity {
 
     private EditText et_email, et_pwd, et_pwd_check;
     private Button only_one_btn, sign_up_btn;
+    private ImageButton back_btn;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference mPostReference;
@@ -34,6 +35,14 @@ public class Sign_up extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         setID();
         setEvents();
+
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(v -> {
+            Intent intent=new Intent(Sign_up.this, Before_Signup.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+
     }
     public void setID() {
         et_email = findViewById(R.id.et_email);

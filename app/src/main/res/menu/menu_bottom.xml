@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/my_lib"
+        android:id="@+id/home"
         app:showAsAction="always"
         android:icon="@drawable/home"
         android:title="홈"
@@ -10,7 +10,7 @@
 
 
     <item
-        android:id="@+id/fri_lib"
+        android:id="@+id/record"
         app:showAsAction="always"
         android:icon="@drawable/timer"
         android:title="기록"
@@ -20,7 +20,7 @@
     -->
 
     <item
-        android:id="@+id/find_lib"
+        android:id="@+id/profile"
         app:showAsAction="always"
         android:icon="@drawable/user"
         android:title="프로필" />

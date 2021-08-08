@@ -27,7 +27,7 @@
     <style name="Widget.BottomNavigationView"
         parent = "Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/nanumgothic</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
 </resources>

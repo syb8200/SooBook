@@ -42,12 +42,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checkedButton="@+id/bestseller_tab"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -56,24 +56,26 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-            <Button
+            <TextView
                 android:id="@+id/bestseller_tab"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@color/white"
+                android:button="@null"
+                android:gravity="center"
+                android:clickable="true"
                 android:text="베스트셀러"
                 android:textColor="@color/sb_main"
                 android:textSize="13sp"
                 android:fontFamily="@font/nanumgothicbold"/>
 
-            <View
-                android:id="@+id/under_bar1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/sb_main"/>
+                <View
+                    android:id="@+id/under_bar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/sb_main"/>
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,33 +83,37 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-            <Button
+            <TextView
                 android:id="@+id/wishlist_tab"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@color/white"
+                android:button="@null"
+                android:gravity="center"
+                android:clickable="true"
                 android:text="위시리스트"
                 android:textSize="13sp"
                 android:textColor="@color/sb_gray3"
                 android:fontFamily="@font/nanumgothicbold"/>
 
-            <View
-                android:id="@+id/under_bar2"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/sb_gray3"/>
+                <View
+                    android:id="@+id/under_bar2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:visibility="gone"
+                    android:background="@color/sb_main"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
-
-
         <FrameLayout
             android:id="@+id/child_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="?attr/actionBarSize">
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:layout_marginHorizontal="20dp">
         </FrameLayout>
 
 

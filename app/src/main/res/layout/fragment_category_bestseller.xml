@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="8월 종합 연간 베스트"
+            android:text="종합 베스트셀러"
             android:textColor="@color/sb_title"
             android:textSize="14sp"
             android:fontFamily="@font/nanumgothicextrabold"/>
@@ -32,8 +32,12 @@
             android:textSize="8sp"
             android:fontFamily="@font/nanumgothicextrabold"/>
 
-
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
 
 
 

@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class Best_Week_Fragment extends Fragment {
+public class RecommendFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup child_child_container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_best_week, child_child_container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_category_recommend, child_child_container, false);
 
         return rootView;
     }

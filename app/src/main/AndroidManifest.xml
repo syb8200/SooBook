@@ -25,7 +25,7 @@
         android:theme="@style/Theme.SOOBOOK.NoActionBar"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".BottomNavActivity">
+        <activity android:name=".test">
             <intent-filter>
 
                 <action android:name="android.intent.action.MAIN"/>
@@ -38,6 +38,7 @@
         <activity android:name=".Sign_up" />
         <activity android:name=".Login"/>
         <activity android:name=".FindPw" />
+        <activity android:name=".BottomNavActivity"/>
 
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

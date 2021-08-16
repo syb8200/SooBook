@@ -11,34 +11,34 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/best_year"
+            android:id="@+id/category_best"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@color/sb_main"
-            android:text="연간"
+            android:text="베스트셀러"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:fontFamily="@font/nanumgothicbold"/>
 
         <Button
-            android:id="@+id/best_month"
+            android:id="@+id/category_recommend"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@color/sb_gray5"
-            android:text="월간"
+            android:text="추천 도서"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:fontFamily="@font/nanumgothicbold"/>
 
         <Button
-            android:id="@+id/best_week"
+            android:id="@+id/category_new"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@color/sb_gray5"
-            android:text="주간"
+            android:text="신간 도서"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:fontFamily="@font/nanumgothicbold"/>

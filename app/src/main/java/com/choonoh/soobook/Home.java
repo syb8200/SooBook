@@ -24,7 +24,7 @@ public class Home extends AppCompatActivity {
 
     HomeFragment homeFragment;
     HomeCategoryFragment homeCategoryFragment;
-
+    String user_email, user_UID;
  /*   @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -54,6 +54,8 @@ public class Home extends AppCompatActivity {
         recordFragment = new RecordFragment();
         profileFragment = new ProfileFragment();
 
+        user_email = getIntent().getStringExtra("user_email");
+        user_UID = getIntent().getStringExtra("user_UID");
         final BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         switch(bottom_frag){

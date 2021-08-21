@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/et_search"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +36,7 @@
             android:gravity="center_vertical"
             android:textSize="13sp"
             android:fontFamily="@font/nanumgothicbold"
-            android:hint="책 제목을 입력해주세요."
+            android:hint="isbn을 입력해주세요."
             android:textColorHint="@color/sb_title"/>
 
 
@@ -49,8 +50,44 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+    <ImageView
+        android:id="@+id/book_img_view"
+        android:layout_width="200dp"
+        android:layout_height="250dp"/>
+
+
+    <TextView
+        android:id="@+id/book_title_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="제ddddd목"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/book_pub_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="출판사"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        />
+
+
+
+
+</LinearLayout>
     <Button
         android:id="@+id/search_isbn"
         android:layout_width="220dp"
@@ -59,13 +96,20 @@
         android:background="@drawable/button_radius_4"
         android:fontFamily="@font/nanumgothicbold"
         android:gravity="center"
-        android:text="ISBN으로 검색하기"
+        android:text="바코드로 검색하기"
         android:textColor="@color/white"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="300dp"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

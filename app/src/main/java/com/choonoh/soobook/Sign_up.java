@@ -104,7 +104,7 @@ public class Sign_up extends AppCompatActivity {
                 handler.postDelayed(toast::cancel, 1000);
                 finish();
             } else {
-                toast = Toast.makeText(Sign_up.this, "중복 이메일이 존재합니다. 다른 이메일을 사용해주세요.", Toast.LENGTH_SHORT); toast.show();
+                toast = Toast.makeText(Sign_up.this, "오류(이메일 형식/ 비번 영+숫)으로 다시해보샘~", Toast.LENGTH_SHORT); toast.show();
                 handler.postDelayed(toast::cancel, 1000);
             }
         });

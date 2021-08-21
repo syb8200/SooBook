@@ -48,7 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checkedButton="@+id/bestseller_tab"
+            android:checkedButton="@+id/total_books"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -58,14 +58,14 @@
                 android:orientation="vertical">
 
             <TextView
-                android:id="@+id/bestseller_tab"
+                android:id="@+id/total_books"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@color/white"
                 android:button="@null"
                 android:gravity="center"
                 android:clickable="true"
-                android:text="베스트셀러"
+                android:text="전체 도서"
                 android:textColor="@color/sb_main"
                 android:textSize="13sp"
                 android:fontFamily="@font/nanumgothicbold"/>

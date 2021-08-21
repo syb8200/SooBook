@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:background="@color/white"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="5dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="35dp">
+        android:orientation="vertical">
         
         <ImageView
-            android:id="@+id/book_cover"
+            android:id="@+id/coverSmallUrl"
             android:layout_width="72dp"
             android:layout_height="100dp"
             android:background="@color/sb_gray2"
@@ -36,11 +36,11 @@
             android:layout_marginBottom="5dp">
 
             <TextView
-                android:id="@+id/book_rank"
+                android:id="@+id/rank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:textColor="@color/sb_main"
                 android:fontFamily="@font/nanumgothicbold"/>
 
@@ -49,20 +49,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="1dp"
                 android:text="위"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:textColor="@color/sb_main"
                 android:fontFamily="@font/nanumgothicbold"/>
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/book_title"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:text=""
             android:textColor="@color/sb_title"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:fontFamily="@font/nanumgothicextrabold"/>
 
         <LinearLayout
@@ -76,16 +76,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="7sp"
-                android:textColor="@color/sb_gray4"/>
+                android:textSize="10sp"
+                android:textColor="@color/sb_gray4"
+                android:fontFamily="@font/nanumgothic"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="3dp"
                 android:text="|"
-                android:textSize="7sp"
-                android:textColor="@color/sb_gray4"/>
+                android:textSize="10sp"
+                android:textColor="@color/sb_gray4"
+                android:fontFamily="@font/nanumgothic"/>
 
             <TextView
                 android:id="@+id/publisher"
@@ -93,8 +95,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text=""
-                android:textSize="7sp"
-                android:textColor="@color/sb_gray4"/>
+                android:textSize="10sp"
+                android:textColor="@color/sb_gray4"
+                android:fontFamily="@font/nanumgothic"/>
 
         </LinearLayout>
 
@@ -111,12 +114,12 @@
                 android:background="@drawable/star_rate"/>
 
             <TextView
-                android:id="@+id/star"
+                android:id="@+id/customerReviewRank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/sb_point"
-                android:textSize="8sp"
+                android:textSize="10sp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:layout_gravity="center"/>
 

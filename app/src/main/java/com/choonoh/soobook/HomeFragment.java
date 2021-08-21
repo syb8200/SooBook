@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        bestseller_tab = rootView.findViewById(R.id.bestseller_tab);
+        bestseller_tab = rootView.findViewById(R.id.total_books);
         wishlist_tab = rootView.findViewById(R.id.wishlist_tab);
 
         under_bar1 = rootView.findViewById(R.id.under_bar1);
@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         switch (v.getId()){
 
-            case R.id.bestseller_tab:
+            case R.id.total_books:
                 bestseller_tab.setTextColor(Color.parseColor("#FF5F68"));
                 wishlist_tab.setTextColor(Color.parseColor("#B9BABE"));
                 under_bar1.setVisibility(View.VISIBLE);

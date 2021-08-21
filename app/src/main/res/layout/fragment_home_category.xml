@@ -18,7 +18,7 @@
             android:background="@color/sb_main"
             android:text="베스트셀러"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:fontFamily="@font/nanumgothicbold"/>
 
         <Button
@@ -29,7 +29,7 @@
             android:background="@color/sb_gray5"
             android:text="추천 도서"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:fontFamily="@font/nanumgothicbold"/>
 
         <Button
@@ -40,7 +40,7 @@
             android:background="@color/sb_gray5"
             android:text="신간 도서"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:fontFamily="@font/nanumgothicbold"/>
 
     </LinearLayout>

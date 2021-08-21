@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 under_bar1.setVisibility(View.VISIBLE);
                 under_bar2.setVisibility(View.GONE);
 
-                getFragmentManager().beginTransaction().replace(R.id.child_container, bestsellerFragment).commit();
+              getFragmentManager().beginTransaction().replace(R.id.child_container, bestsellerFragment).commit();
                 break;
 
             case R.id.wishlist_tab:

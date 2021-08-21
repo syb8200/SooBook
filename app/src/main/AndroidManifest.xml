@@ -39,7 +39,8 @@
         <activity android:name=".FindPw" />
         <activity android:name=".Home"/>
         <activity android:name=".BottomNavActivity"/>
-
+        <activity android:name=".SearchBook"/>
+        <activity android:name=".QrReaderActivity"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"

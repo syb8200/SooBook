@@ -1,10 +1,12 @@
 package com.choonoh.soobook;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +15,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     TextView bestseller_tab, wishlist_tab;
     View under_bar1, under_bar2;
+    ImageButton search_book;
 
     HomeCategoryFragment bestsellerFragment;
     WishlistFragment wishlistFragment;
@@ -21,6 +24,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
+
+        search_book = rootView.findViewById(R.id.search_book);
+        search_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), SearchBook.class);
+                startActivity(intent);
+            }
+        });
 
         bestseller_tab = rootView.findViewById(R.id.bestseller_tab);
         wishlist_tab = rootView.findViewById(R.id.wishlist_tab);

@@ -12,6 +12,7 @@
         android:layout_marginLeft="35dp">
         
         <ImageView
+            android:id="@+id/book_cover"
             android:layout_width="72dp"
             android:layout_height="100dp"
             android:background="@color/sb_gray2"
@@ -35,9 +36,10 @@
             android:layout_marginBottom="5dp">
 
             <TextView
+                android:id="@+id/book_rank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="---"
+                android:text=""
                 android:textSize="10sp"
                 android:textColor="@color/sb_main"
                 android:fontFamily="@font/nanumgothicbold"/>
@@ -54,10 +56,11 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/book_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="책 제목 어쩌구 저쩌구"
+            android:text=""
             android:textColor="@color/sb_title"
             android:textSize="12sp"
             android:fontFamily="@font/nanumgothicextrabold"/>
@@ -69,9 +72,10 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="저자"
+                android:text=""
                 android:textSize="7sp"
                 android:textColor="@color/sb_gray4"/>
 
@@ -84,10 +88,11 @@
                 android:textColor="@color/sb_gray4"/>
 
             <TextView
+                android:id="@+id/publisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="출판사"
+                android:text=""
                 android:textSize="7sp"
                 android:textColor="@color/sb_gray4"/>
 
@@ -106,9 +111,10 @@
                 android:background="@drawable/star_rate"/>
 
             <TextView
+                android:id="@+id/star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="9.8"
+                android:text=""
                 android:textColor="@color/sb_point"
                 android:textSize="8sp"
                 android:fontFamily="@font/nanumgothicbold"

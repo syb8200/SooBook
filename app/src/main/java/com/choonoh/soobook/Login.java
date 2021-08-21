@@ -105,15 +105,14 @@ public class Login extends AppCompatActivity{
                                 handler.postDelayed(toast::cancel, 1000);
                             }
                         });
-            }}
-/*
+            }
+
             @Override
             public void onStart() {
                 super.onStart();
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                 if(currentUser != null){
-                    Intent intent = new Intent(Login.this, HomeFragment.class);
-                    intent.putExtra("fragment","my_lib");
+                    Intent intent = new Intent(Login.this, Home.class);
                     intent.putExtra("user_email",currentUser.getEmail());
                     intent.putExtra("user_UID",currentUser.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -123,4 +122,4 @@ public class Login extends AppCompatActivity{
                     startActivity(intent);
                     finish();
                 }
-            }}*/
+            }}

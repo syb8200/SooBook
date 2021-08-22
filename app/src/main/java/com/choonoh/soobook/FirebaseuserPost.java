@@ -13,14 +13,16 @@ import java.util.Map;
 public class FirebaseuserPost {
     public String email;
     public String uid;
+    public String nick;
 
     public FirebaseuserPost(){
         // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
 
-    public FirebaseuserPost(String email, String uid) {
+    public FirebaseuserPost(String email, String uid, String nick) {
         this.email=email;
         this.uid=uid;
+        this.nick=nick;
     }
 
     @Exclude
@@ -28,6 +30,7 @@ public class FirebaseuserPost {
         HashMap<String, Object> result = new HashMap<>();
         result.put("email",email);
         result.put("uid",uid);
+        result.put("nick",nick);
 
         return result;
     }

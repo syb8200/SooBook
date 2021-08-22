@@ -82,7 +82,7 @@ public class SearchBook  extends AppCompatActivity {
             Log.e(this.getClass().getName(), "클릭");
 
 
-            URL url = null; //검색 URL부분
+            URL url = null; 
             try {
                 url = new URL("http://book.interpark.com/api/search.api?key=D10E38E11FF9AF9A94BBFCEA6E7C69EB862A51DD8A9A6F6F0141AA42540FEF41&query="+et_search.getText().toString()+"&queryType=isbn");
                         //"" + et_search.getText().toString());

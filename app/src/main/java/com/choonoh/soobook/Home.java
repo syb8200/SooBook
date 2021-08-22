@@ -3,6 +3,7 @@ package com.choonoh.soobook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +57,8 @@ public class Home extends AppCompatActivity {
 
         user_email = getIntent().getStringExtra("user_email");
         user_UID = getIntent().getStringExtra("user_UID");
+
+
         final BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         switch(bottom_frag){
@@ -71,17 +74,26 @@ public class Home extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    Bundle bundle = new Bundle();
                     @Override
                     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
                         switch (menuItem.getItemId()){
                             case R.id.home:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                                 return true;
+
                             case R.id.record:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, recordFragment).commit();
+                                bundle.putString("user_email", user_email);
+                                bundle.putString("user_UID", user_UID);
+                                recordFragment.setArguments(bundle);
                                 return true;
-                            case R.id.profile:
+
+                                case R.id.profile:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                                bundle.putString("user_email", user_email);
+                                bundle.putString("user_UID", user_UID);
+                                profileFragment.setArguments(bundle);
                                 return true;
                         }
                         return false;

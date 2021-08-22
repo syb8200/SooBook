@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class Sign_up extends AppCompatActivity {
 
-    private EditText et_email, et_pwd, et_pwd_check;
+    private EditText et_email, et_pwd, et_pwd_check, et_nick;
     private Button only_one_btn, sign_up_btn;
     private ImageButton back_btn;
     private FirebaseAuth firebaseAuth;
@@ -48,6 +48,7 @@ public class Sign_up extends AppCompatActivity {
         et_email = findViewById(R.id.et_email);
         et_pwd = findViewById(R.id.et_pwd);
         et_pwd_check = findViewById(R.id.et_pwd_check);
+        et_nick = findViewById(R.id.et_nickname);
         sign_up_btn = findViewById(R.id.sign_up_btn);
         firebaseAuth = FirebaseAuth.getInstance();
     }
@@ -81,6 +82,8 @@ public class Sign_up extends AppCompatActivity {
                 currentUser = firebaseAuth.getCurrentUser();
                 String user_UID = currentUser.getUid();
                 String user_email =currentUser.getEmail();
+                String user_nick = et_nick.getText().toString();
+
                 Log.e(this.getClass().getName(), currentUser.getUid());
 
                 //db에 user 추가
@@ -88,7 +91,7 @@ public class Sign_up extends AppCompatActivity {
                 Map<String, Object> childUpdates = new HashMap<>();
                 Map<String, Object> postValues = null;
                 if(true){
-                    FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID);
+                    FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID, user_nick);
                     postValues = post.toMap();}
                 String root ="/User/"+user_UID;
                 childUpdates.put(root, postValues);

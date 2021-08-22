@@ -16,20 +16,20 @@ public class HomeCategoryFragment extends Fragment implements View.OnClickListen
     RecommendFragment recommend_fragment;
 
 
-    Button best_year, best_month, best_week;
+    Button category_best, category_recommend, category_new;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup child_container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home_category, child_container, false);
 
-        best_year = rootView.findViewById(R.id.category_best);
-        best_month = rootView.findViewById(R.id.category_recommend);
-        best_week = rootView.findViewById(R.id.category_new);
+        category_best = rootView.findViewById(R.id.category_best);
+        category_recommend = rootView.findViewById(R.id.category_recommend);
+        category_new = rootView.findViewById(R.id.category_new);
 
-        best_year.setOnClickListener(this);
-        best_month.setOnClickListener(this);
-        best_week.setOnClickListener(this);
+        category_best.setOnClickListener(this);
+        category_recommend.setOnClickListener(this);
+        category_new.setOnClickListener(this);
 
         bestseller_fragment = new BestsellerFragment();
         new_fragment = new NewFragment();
@@ -47,27 +47,27 @@ public class HomeCategoryFragment extends Fragment implements View.OnClickListen
         switch (v.getId()){
 
             case R.id.category_best:
-                best_year.setBackgroundColor(Color.parseColor("#FF5F68"));
-                best_month.setBackgroundColor(Color.parseColor("#C4C4C4"));
-                best_week.setBackgroundColor(Color.parseColor("#C4C4C4"));
+                category_best.setBackgroundColor(Color.parseColor("#FF5F68"));
+                category_recommend.setBackgroundColor(Color.parseColor("#C4C4C4"));
+                category_new.setBackgroundColor(Color.parseColor("#C4C4C4"));
 
                 getFragmentManager().beginTransaction().replace(R.id.child_child_container, bestseller_fragment).commit();
                 break;
 
             case R.id.category_recommend:
-                best_year.setBackgroundColor(Color.parseColor("#C4C4C4"));
-                best_month.setBackgroundColor(Color.parseColor("#FF5F68"));
-                best_week.setBackgroundColor(Color.parseColor("#C4C4C4"));
+                category_best.setBackgroundColor(Color.parseColor("#C4C4C4"));
+                category_recommend.setBackgroundColor(Color.parseColor("#FF5F68"));
+                category_new.setBackgroundColor(Color.parseColor("#C4C4C4"));
 
-                getFragmentManager().beginTransaction().replace(R.id.child_child_container, new_fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.child_child_container, recommend_fragment).commit();
                 break;
 
             case R.id.category_new:
-                best_year.setBackgroundColor(Color.parseColor("#C4C4C4"));
-                best_month.setBackgroundColor(Color.parseColor("#C4C4C4"));
-                best_week.setBackgroundColor(Color.parseColor("#FF5F68"));
+                category_best.setBackgroundColor(Color.parseColor("#C4C4C4"));
+                category_recommend.setBackgroundColor(Color.parseColor("#C4C4C4"));
+                category_new.setBackgroundColor(Color.parseColor("#FF5F68"));
 
-                getFragmentManager().beginTransaction().replace(R.id.child_child_container, recommend_fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.child_child_container, new_fragment).commit();
                 break;
         }
 

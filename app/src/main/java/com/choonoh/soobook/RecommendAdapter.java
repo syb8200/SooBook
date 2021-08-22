@@ -17,12 +17,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.MyViewHolder> {
+public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<BestsellerList> mData;
+    private List<RecommendList> mData;
 
-    public BestsellerAdapter(Context mContext, List<BestsellerList> mData) {
+    public RecommendAdapter(Context mContext, List<RecommendList> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -33,7 +33,7 @@ public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.My
     public MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View v;
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        v = inflater.inflate(R.layout.activity_bestseller_list, parent, false);
+        v = inflater.inflate(R.layout.activity_recommend_list, parent, false);
 
         return new MyViewHolder(v);
     }
@@ -43,7 +43,6 @@ public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
-        holder.rank.setText(mData.get(position).getRank());
         holder.title.setText(mData.get(position).getTitle());
         holder.author.setText(mData.get(position).getAuthor());
         holder.publisher.setText(mData.get(position).getPublisher());
@@ -63,7 +62,6 @@ public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView rank;
         TextView title;
         TextView author;
         TextView publisher;
@@ -73,7 +71,6 @@ public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.My
         public MyViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
-            rank = itemView.findViewById(R.id.rank);
             title = itemView.findViewById(R.id.title);
             author = itemView.findViewById(R.id.author);
             publisher = itemView.findViewById(R.id.publisher);

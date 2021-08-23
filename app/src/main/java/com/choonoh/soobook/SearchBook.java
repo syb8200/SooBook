@@ -180,7 +180,11 @@ public class SearchBook  extends AppCompatActivity {
             if (!isbn.equals("")) {
                 if (!IsExistID()) {
                     postFirebaseDatabase(true);
-                    Intent intent = new Intent(this, Home.class);
+                    Toast toast = Toast.makeText(SearchBook.this, "읽는책에 추가되었습니다.", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(toast::cancel, 1000);
+                    Intent intent = new Intent(this, Mylib.class);
                     intent.putExtra("user_email", user_email);
                     intent.putExtra("user_UID", user_UID);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -44,7 +44,7 @@ public class Mylib extends AppCompatActivity {
         user_UID = getIntent().getStringExtra("user_UID");
 
         btn_add.setOnClickListener(v -> {
-            Intent intent = new Intent(this, QrReaderActivity.class);
+            Intent intent = new Intent(this, SearchBook.class);
             intent.putExtra("user_email", user_email);
             intent.putExtra("user_UID", user_UID);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

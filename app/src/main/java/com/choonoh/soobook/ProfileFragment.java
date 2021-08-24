@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ProfileFragment extends Fragment {
 
     ImageButton logout_btn;
-    TextView admin_btn, add_btn, changepw_btn, logout_txt_btn, del_id_btn;
+    TextView mylib_btn, changepw_btn, logout_txt_btn, del_id_btn;
     private FirebaseAuth mAuth;
 
 
@@ -35,9 +36,11 @@ public class ProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         String user_email = getArguments().getString("user_email");
         String user_UID = getArguments().getString("user_UID");
+
         changepw_btn = root.findViewById(R.id.changpw_btn);
         logout_txt_btn = root.findViewById(R.id.logout_txt_btn);
         del_id_btn = root.findViewById(R.id.del_id_btn);
+        mylib_btn= root.findViewById(R.id.my_lib);
 
 
         changepw_btn.setOnClickListener(v -> {
@@ -115,6 +118,18 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
             getActivity().finish();
         });
+
+        mylib_btn.setOnClickListener(v -> {
+
+            Log.e("user: ",user_email);
+            Intent intent = new Intent(getActivity(), Mylib.class);
+            intent.putExtra("user_email", user_email);
+            intent.putExtra("user_UID", user_UID);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
+        });
+
 
         return root;
     }

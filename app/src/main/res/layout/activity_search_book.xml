@@ -27,17 +27,17 @@
         <EditText
             android:id="@+id/et_search"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/search_book"
             app:layout_constraintStart_toEndOf="@+id/back_btn"
             app:layout_constraintTop_toTopOf="parent"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="12dp"
             android:gravity="center_vertical"
             android:textSize="13sp"
             android:fontFamily="@font/nanumgothicbold"
-            android:hint="isbn을 입력해주세요."
-            android:textColorHint="@color/sb_title"/>
+            android:hint="책 제목을 입력해주세요."
+            android:textColorHint="@color/sb_title" />
 
 
         <ImageButton

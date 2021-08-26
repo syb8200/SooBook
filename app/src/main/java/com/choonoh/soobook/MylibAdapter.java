@@ -1,12 +1,10 @@
 package com.choonoh.soobook;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,28 +12,27 @@ import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MylibAdapter extends RecyclerView.Adapter<MylibAdapter.MyViewHolder> {
 
-    private Context mContext;
-    private List<MylibList> mData;
 
-    public MylibAdapter(Context mContext, List<MylibList> mData) {
-        this.mContext = mContext;
-        this.mData = mData;
+    private ArrayList<MylibList> arrayList;
+    private Context context;
+
+    public MylibAdapter(ArrayList<MylibList> arrayList, Context context) {
+        this.arrayList = arrayList;
+        this.context = context;
     }
-
     @NonNull
-    @NotNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View v;
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        v = inflater.inflate(R.layout.activity_mylib_list, parent, false);
-
-        return new MyViewHolder(v);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_mylib_list, parent, false);
+        MyViewHolder holder = new MyViewHolder(view);
+        return holder;
     }
+
 
 
 
@@ -43,28 +40,28 @@ public class MylibAdapter extends RecyclerView.Adapter<MylibAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
 
-        Glide.with(mContext)
-                .load(mData.get(position).getCoverSmallUrl())
-                .into(holder.coverSmallUrl);
-
+        Glide.with(context)
+                .load(arrayList.get(position).getImg())
+                .into(holder.book_img);
+        holder.book_isbn.setText(arrayList.get(position).getisbn());
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        // 삼항 연산자
+        return (arrayList != null ? arrayList.size() : 0);
     }
+    public class MyViewHolder  extends RecyclerView.ViewHolder {
 
+        TextView book_isbn;
+        ImageView book_img;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
-
-        ImageView coverSmallUrl;
-
-        public MyViewHolder(@NonNull @NotNull View itemView) {
+        public MyViewHolder (@NonNull View itemView) {
             super(itemView);
-
-            coverSmallUrl = itemView.findViewById(R.id.coverSmallUrl);
-
+            this.book_isbn = itemView.findViewById(R.id.mylib_isbn);
+            book_img = itemView.findViewById(R.id.coverSmallUrl);
         }
+
     }
 
 }

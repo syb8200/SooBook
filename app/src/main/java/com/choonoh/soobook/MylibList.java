@@ -1,13 +1,23 @@
 package com.choonoh.soobook;
 
 public class MylibList {
-    String coverSmallUrl;
+    String isbn;
+    String img;
 
-    public String getCoverSmallUrl() {
-        return coverSmallUrl;
+    public String getImg() {
+        return img;
     }
 
-    public void setCoverSmallUrl(String coverSmallUrl) {
-        this.coverSmallUrl = coverSmallUrl;
+    public void setImg(String img) {
+        this.img = img;
     }
+
+    public String getisbn() {
+        return isbn;
+    }
+
+    public void setisbn(String isbn) {
+        this.isbn = isbn;
+    }
+
 }

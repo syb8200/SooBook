@@ -3,11 +3,14 @@ package com.choonoh.soobook;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +40,7 @@ public class Mylib extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mylib);
+
         mylibList = new ArrayList<>();
         recyclerView = findViewById(R.id.mylib_recycler_view);
         btn_add = findViewById(R.id.btn_add);

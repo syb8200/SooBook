@@ -4,9 +4,12 @@ package com.choonoh.soobook;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
@@ -28,6 +31,8 @@ public class QrReaderActivity extends AppCompatActivity implements DecoratedBarc
         m_captureManager.initializeFromIntent(getIntent(), savedInstanceState);
         m_captureManager.decode();
     }
+
+
     @Override
     public void onTorchOn() {
     }

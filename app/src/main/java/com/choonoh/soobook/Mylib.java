@@ -1,12 +1,16 @@
 package com.choonoh.soobook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,6 +79,8 @@ public class Mylib extends AppCompatActivity {
 
             }
 
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // 디비를 가져오던중 에러 발생 시
@@ -86,30 +92,30 @@ public class Mylib extends AppCompatActivity {
         recyclerView.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결
 
     }
-
-   /* private AdapterView.OnItemLongClickListener onClickListener = (parent, view, position, id) -> {
-        Log.d("Long Click", "position = " + position);
+/*
+    private AdapterView.OnItemClickListener onClickListener = (parent, view, position, id) -> {
+        Log.d("Click", "position = " + position);
         //     final String[] nowData = arrayData.get(position).split("\\s+");
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(AdminFrnd.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(Mylib.this);
         dialog.setTitle("데이터 삭제")
                 .setMessage("해당 데이터를 삭제 하시겠습니까?" + "\n" )
                 .setPositiveButton("네", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Toast.makeText(AdminFrnd.this, "데이터를 삭제했습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Mylib.this, "데이터를 삭제했습니다.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(AdminFrnd.this, "삭제를 취소했습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Mylib.this, "삭제를 취소했습니다.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .create()
                 .show();
-        return false;
+        return;
     };
 */
 }

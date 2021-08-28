@@ -128,7 +128,9 @@ public class SearchBook  extends AppCompatActivity {
                         if (inTitle) {
                             Title = parser.getText();
                             title_view.setText(Title);
-                            book_add_mylib.setText("+");
+
+
+                            book_add_mylib.setText("읽는책에 추가");
                             inTitle = false;
 
                         }
@@ -150,6 +152,8 @@ public class SearchBook  extends AppCompatActivity {
                         {
                             title_view.setText("검색결과없음");
                             pub_view.setText("정확한 isbn입력해라");
+                            book_add_mylib.setText("");
+                            book_add_mylib.setActivated(false);
                         }
                         break;
 
@@ -232,6 +236,21 @@ public class SearchBook  extends AppCompatActivity {
         boolean IsExist = arrayIndex.contains(isbn);
         return IsExist;
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                //result.getContents 를 이용 데이터 재가공
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                et_search.setText(result.getContents());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 }

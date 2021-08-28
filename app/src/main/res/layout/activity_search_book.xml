@@ -85,8 +85,9 @@
         android:id="@+id/book_add_mylib"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/sb_point"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:clickable="true"
         />
 

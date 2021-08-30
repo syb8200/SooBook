@@ -2,6 +2,7 @@ package com.choonoh.soobook;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +25,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener{
 
-    ImageButton logout_btn;
-    TextView mylib_btn, changepw_btn, logout_txt_btn, del_id_btn;
+    ImageButton settings,logout_btn;
+    Button profile_edit;
+    TextView statistics_tab, library_tab, friend_tab;       //changepw_btn, logout_txt_btn, del_id_btn;
+    View under_bar1, under_bar2, under_bar3;
+
+    StatisticsFragment statisticsFragment;
+    LibraryFragment libraryFragment;
+    FriendFragment friendFragment;
+
     private FirebaseAuth mAuth;
 
 
@@ -37,12 +46,59 @@ public class ProfileFragment extends Fragment {
         String user_email = getArguments().getString("user_email");
         String user_UID = getArguments().getString("user_UID");
 
-        changepw_btn = root.findViewById(R.id.changpw_btn);
-        logout_txt_btn = root.findViewById(R.id.logout_txt_btn);
-        del_id_btn = root.findViewById(R.id.del_id_btn);
-        mylib_btn= root.findViewById(R.id.my_lib);
+        //changepw_btn = root.findViewById(R.id.changpw_btn);
+        //logout_txt_btn = root.findViewById(R.id.logout_txt_btn);
+        //del_id_btn = root.findViewById(R.id.del_id_btn);
+
+        //상단
+        settings = root.findViewById(R.id.settings);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), Settings.class);
+                startActivity(intent);
+            }
+        });
+
+        //프로필 수정 버튼
+        profile_edit = root.findViewById(R.id.profile_edit);
+
+        //탭 3개
+        statistics_tab = root.findViewById(R.id.statistics_tab);
+        library_tab = root.findViewById(R.id.library_tab);
+        friend_tab = root.findViewById(R.id.friend_tab);
+        under_bar1 = root.findViewById(R.id.under_bar1);
+        under_bar2 = root.findViewById(R.id.under_bar2);
+        under_bar3 = root.findViewById(R.id.under_bar3);
+
+        statistics_tab.setOnClickListener(this);
+        library_tab.setOnClickListener(this);
+        friend_tab.setOnClickListener(this);
+
+        statisticsFragment = new StatisticsFragment();
+        libraryFragment = new LibraryFragment();
+        friendFragment = new FriendFragment();
+
+        getFragmentManager().beginTransaction().replace(R.id.child_container, statisticsFragment).commit();
 
 
+
+
+    /*
+        library_tab.setOnClickListener(v -> {
+
+            Log.e("user: ",user_email);
+            Intent intent = new Intent(getActivity(), Mylib.class);
+            intent.putExtra("user_email", user_email);
+            intent.putExtra("user_UID", user_UID);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
+        });
+
+
+
+    //여기에 들어가지 않는 버튼들
         changepw_btn.setOnClickListener(v -> {
 
           AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
@@ -87,11 +143,11 @@ public class ProfileFragment extends Fragment {
                         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
                         DatabaseReference data = database.getReference("User/" + user_UID);
                         data.removeValue();
-               /*         DatabaseReference data2 = database.getReference("Friend/" + user_UID);
-                        data2.removeValue();
-                        DatabaseReference data3 = database.getReference("Book/" + user_UID);
-                        data3.removeValue();
-*/
+               //         DatabaseReference data2 = database.getReference("Friend/" + user_UID);
+               //         data2.removeValue();
+               //         DatabaseReference data3 = database.getReference("Book/" + user_UID);
+               //         data3.removeValue();
+
                         mAuth = FirebaseAuth.getInstance();
                         mAuth.getCurrentUser().delete();
 
@@ -119,18 +175,52 @@ public class ProfileFragment extends Fragment {
             getActivity().finish();
         });
 
-        mylib_btn.setOnClickListener(v -> {
+     */
 
-            Log.e("user: ",user_email);
-            Intent intent = new Intent(getActivity(), Mylib.class);
-            intent.putExtra("user_email", user_email);
-            intent.putExtra("user_UID", user_UID);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-
-        });
 
 
         return root;
+    }
+
+    @Override
+    public void onClick(View v){
+
+        switch (v.getId()){
+
+            case R.id.statistics_tab:
+                statistics_tab.setTextColor(Color.parseColor("#FF5F68"));
+                library_tab.setTextColor(Color.parseColor("#B9BABE"));
+                friend_tab.setTextColor(Color.parseColor("#B9BABE"));
+                under_bar1.setVisibility(View.VISIBLE);
+                under_bar2.setVisibility(View.GONE);
+                under_bar3.setVisibility(View.GONE);
+
+                getFragmentManager().beginTransaction().replace(R.id.child_container, statisticsFragment).commit();
+                break;
+
+            case R.id.library_tab:
+                statistics_tab.setTextColor(Color.parseColor("#B9BABE"));
+                library_tab.setTextColor(Color.parseColor("#FF5F68"));
+                friend_tab.setTextColor(Color.parseColor("#B9BABE"));
+                under_bar1.setVisibility(View.GONE);
+                under_bar2.setVisibility(View.VISIBLE);
+                under_bar3.setVisibility(View.GONE);
+
+                getFragmentManager().beginTransaction().replace(R.id.child_container, libraryFragment).commit();
+                break;
+
+            case R.id.friend_tab:
+                statistics_tab.setTextColor(Color.parseColor("#B9BABE"));
+                library_tab.setTextColor(Color.parseColor("#B9BABE"));
+                friend_tab.setTextColor(Color.parseColor("#FF5F68"));
+                under_bar1.setVisibility(View.GONE);
+                under_bar2.setVisibility(View.GONE);
+                under_bar3.setVisibility(View.VISIBLE);
+
+                getFragmentManager().beginTransaction().replace(R.id.child_container, friendFragment).commit();
+                break;
+
+        }
+
     }
 }

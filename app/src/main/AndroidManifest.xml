@@ -43,6 +43,8 @@
         <activity android:name=".SearchBook"/>
         <activity android:name=".QrReaderActivity"/>
         <activity android:name=".Mylib"/>
+        <activity android:name=".SearchBookTitle"/>
+
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"

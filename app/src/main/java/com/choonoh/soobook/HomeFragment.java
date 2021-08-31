@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         search_book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getActivity(), SearchBook.class);
+                Intent intent = new Intent(getActivity(), SearchBookTitle.class);
                 startActivity(intent);
             }
         });

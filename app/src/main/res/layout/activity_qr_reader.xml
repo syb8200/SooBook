@@ -27,18 +27,21 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="ISBN 바코드를 인식시켜주세요."
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_skip_qr"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/button_radius_4"
         android:text="직접검색"
+        android:textSize="13sp"
         android:textColor="@color/white"
+        android:fontFamily="@font/nanumgothicbold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

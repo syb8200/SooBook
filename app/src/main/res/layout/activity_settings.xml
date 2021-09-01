@@ -99,6 +99,8 @@
         android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:id="@+id/changepw_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical">
@@ -238,6 +240,8 @@
         android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:id="@+id/del_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical">

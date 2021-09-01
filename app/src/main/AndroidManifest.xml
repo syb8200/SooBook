@@ -43,12 +43,9 @@
         <activity android:name=".SearchBook"/>
         <activity android:name=".QrReaderActivity"/>
         <activity android:name=".Mylib"/>
-<<<<<<< HEAD
         <activity android:name=".SearchBookTitle"/>
-
-=======
         <activity android:name=".Settings"/>
->>>>>>> 2442925e6ed092440c8986e5a773b0a63c13c12a
+
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"

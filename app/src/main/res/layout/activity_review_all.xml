@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/white">
 
@@ -52,8 +53,9 @@
         android:fontFamily="@font/nanumgothicbold"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        tool:listitem="@layout/activity_review_all_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginHorizontal="23dp"
         android:layout_marginTop="12dp"

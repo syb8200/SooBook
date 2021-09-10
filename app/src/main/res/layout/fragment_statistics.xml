@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="15dp"
-            android:text="읽는 책"
+            android:text="읽은 책"
             android:textColor="@color/sb_point"
             android:fontFamily="@font/nanumgothicbold"/>
 

@@ -21,17 +21,20 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     ImageButton settings,logout_btn;
     Button profile_edit;
-    TextView statistics_tab, library_tab, friend_tab;       //changepw_btn, logout_txt_btn, del_id_btn;
+    TextView statistics_tab, library_tab, friend_tab, nickname_tv;       //changepw_btn, logout_txt_btn, del_id_btn;
     View under_bar1, under_bar2, under_bar3;
-
+    String nickname;
     StatisticsFragment statisticsFragment;
     LibraryFragment libraryFragment;
     FriendFragment friendFragment;
@@ -50,7 +53,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         settings = root.findViewById(R.id.settings);
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Settings.class);
                 intent.putExtra("user_email", user_email);
                 intent.putExtra("user_UID", user_UID);
@@ -81,11 +84,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         getFragmentManager().beginTransaction().replace(R.id.child_container, statisticsFragment).commit();
 
 
+        nickname_tv = root.findViewById(R.id.nickname_tv);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
 
+        DatabaseReference databaseReference = database.getReference("User/" + user_UID + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Object value = snapshot.getValue(Object.class);
+                nickname_tv.setText(value.toString());
+            }
 
-        return root;
-    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    return root;
+
+}
 
     @Override
     public void onClick(View v){

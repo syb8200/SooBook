@@ -36,6 +36,7 @@ public class Settings extends AppCompatActivity {
     ImageButton back_btn;
     View changepw_btn, del_btn;
     String user_email, user_UID;
+    TextView email_tv;
     private FirebaseAuth mAuth;
 
     @Override
@@ -49,7 +50,8 @@ public class Settings extends AppCompatActivity {
                 changepw_btn = findViewById(R.id.changepw_btn);
                 logout_btn = findViewById(R.id.logout_btn);
                 del_btn = findViewById(R.id.del_btn);
-
+                email_tv = findViewById(R.id.email_tv);
+                email_tv.setText(user_email);
                 back_btn = findViewById(R.id.back_btn);
                 back_btn.setOnClickListener(new View.OnClickListener() {
                     @Override

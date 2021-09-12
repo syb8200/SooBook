@@ -53,6 +53,7 @@ dependencies {
     implementation 'com.naver.maps:map-sdk:3.7.0'
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.akexorcist:bluetoothspp:1.0.0' // 블루투스
 //파이어베이스
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
     implementation 'com.google.firebase:firebase-analytics'

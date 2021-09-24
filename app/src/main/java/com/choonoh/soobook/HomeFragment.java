@@ -26,12 +26,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
         search_book = rootView.findViewById(R.id.search_book);
-        search_book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getActivity(), SearchBookTitle.class);
-                startActivity(intent);
-            }
+        search_book.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SearchBookTitle.class);
+            startActivity(intent);
         });
 
         bestseller_tab = rootView.findViewById(R.id.total_books);
@@ -74,10 +71,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
                 getFragmentManager().beginTransaction().replace(R.id.child_container, wishlistFragment).commit();
                 break;
-
         }
-
     }
-
-
 }

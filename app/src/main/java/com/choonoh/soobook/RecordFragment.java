@@ -12,6 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
@@ -19,13 +28,24 @@ import app.akexorcist.bluetotohspp.library.DeviceList;
 
 public class RecordFragment extends Fragment {
     int h = 0, m = 0, s = 0;
+    int measured = 0;
     String hh, mm, ss;
     BluetoothSPP bt;
+    String user_email, user_UID;
+    Button store_btn;
+    long startTimeNum, endTimeNum;
+
+    private DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_record, container, false);
-        bt = new BluetoothSPP(this.getContext()); //Initializing * 수정 *
+        Bundle bundle = getArguments();
+
+        store_btn = rootView.findViewById(R.id.store_btn);
+        user_email = bundle.getString("user_email");
+        user_UID = bundle.getString("user_UID");
+        bt = new BluetoothSPP(this.getContext()); //Initializing
 
         if (!bt.isBluetoothAvailable()) { //블루투스 사용 불가
             Toast.makeText(getActivity().getApplicationContext() //* 수정 *
@@ -33,40 +53,40 @@ public class RecordFragment extends Fragment {
                     , Toast.LENGTH_SHORT).show();
             getActivity().finish(); //* 수정 *
         }
-
         // ------------------------------ 데이터 수신부 ----------------------------- //
-        bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() { //데이터 수신
-            public void onDataReceived(byte[] data, String message) {
-                TextView hour = getView().findViewById(R.id.hour);  //* 수정 *
-                TextView minute = getView().findViewById(R.id.minute);            //* 수정 *
-                TextView second = getView().findViewById(R.id.second);            //* 수정 *
+        //데이터 수신
+        bt.setOnDataReceivedListener((data, message) -> {
+            TextView hour = getView().findViewById(R.id.hour);  //* 수정 *
+            TextView minute = getView().findViewById(R.id.minute);            //* 수정 *
+            TextView second = getView().findViewById(R.id.second);            //* 수정 *
 
-                String[] array = message.split(",");
-                int measured = Integer.parseInt(array[0]);
+            String[] array = message.split(",");
+            measured = Integer.parseInt(array[0]);
 
-                s = measured;
-                if(s == 60)
-                    m += 1;
-                if(m == 60)
-                    h += 1;
+            s = measured;
+            if(s == 1)
+                startTimeNum = System.currentTimeMillis();
+            if(s == 60)
+                m += 1;
+            if(m == 60)
+                h += 1;
 
-                if(h < 10)
-                    hh = "0" + h;
-                else
-                    hh = "" + h;
-                if(m < 10)
-                    mm = "0" + m;
-                else
-                    mm = "" + m;
-                if(s < 10)
-                    ss = "0" + s;
-                else
-                    ss = "" + s;
+            if(h < 10)
+                hh = "0" + h;
+            else
+                hh = "" + h;
+            if(m < 10)
+                mm = "0" + m;
+            else
+                mm = "" + m;
+            if(s < 10)
+                ss = "0" + s;
+            else
+                ss = "" + s;
 
-                hour.setText(hh);
-                minute.setText(mm);
-                second.setText(ss);
-            }
+            hour.setText(hh);
+            minute.setText(mm);
+            second.setText(ss);
         });
 
         // ------------------------------ 데이터 수신부 ----------------------------- //
@@ -104,6 +124,34 @@ public class RecordFragment extends Fragment {
                 startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
             }
         });
+
+        store_btn.setOnClickListener(v -> {
+            endTimeNum = System.currentTimeMillis();
+
+            SimpleDateFormat month_day = new SimpleDateFormat("MM-dd");
+            SimpleDateFormat hour_minute = new SimpleDateFormat("hh:mm");
+            Date startTimeDate = new Date(startTimeNum);
+            Date endTimeDate = new Date(endTimeNum);
+
+            String readTime = Integer.toString(measured);
+            String startTime = hour_minute.format(startTimeDate);
+            String endTime = hour_minute.format(endTimeDate);
+            String date = month_day.format(startTimeDate);
+
+            Map<String, Object> childUpdates = new HashMap<>();
+            Map<String, Object> postValues = null;
+
+            //String uid, String readTime , String startTime, String endTime, String date
+            FirebaseReadTimePost post = new FirebaseReadTimePost(user_UID, readTime, startTime, endTime, date);
+            postValues = post.toMap();
+
+            String root ="/ReadTime/"+user_UID;
+            childUpdates.put(root, postValues);
+            mPostReference.updateChildren(childUpdates);
+
+            //animal animal = new animal(name,kind);
+            //databaseReference.child("ReadTime").child(user_UID).setValue(animal);
+    });
 
         return rootView;
     }

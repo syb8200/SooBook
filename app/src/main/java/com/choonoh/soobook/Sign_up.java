@@ -28,6 +28,8 @@ public class Sign_up extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference mPostReference;
+    private String state="상태메시지를 입력해주세요";
+    private String pic="none";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,7 @@ public class Sign_up extends AppCompatActivity {
                 Map<String, Object> childUpdates = new HashMap<>();
                 Map<String, Object> postValues = null;
                 if(true){
-                    FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID, user_nick);
+                    FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID, user_nick, state, pic);
                     postValues = post.toMap();}
                 String root ="/User/"+user_UID;
                 childUpdates.put(root, postValues);

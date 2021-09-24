@@ -2,45 +2,71 @@ package com.choonoh.soobook;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.loader.content.CursorLoader;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.net.URI;
+import java.net.URL;
+
+import static android.app.Activity.RESULT_OK;
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     ImageButton settings,logout_btn;
-    Button profile_edit;
-    TextView statistics_tab, library_tab, friend_tab, nickname_tv;       //changepw_btn, logout_txt_btn, del_id_btn;
+    Button profile_edit, changest_btn;
+    TextView statistics_tab, library_tab, friend_tab, nickname_tv, state_tv;       //changepw_btn, logout_txt_btn, del_id_btn;
     View under_bar1, under_bar2, under_bar3;
+    ImageView profile_img;
     String nickname;
     StatisticsFragment statisticsFragment;
     LibraryFragment libraryFragment;
     FriendFragment friendFragment;
+    private File tempFile;
+    private Uri imageUri;
+    private String pathUri;
+    public static final int PICK_FROM_ALBUM = 1;
+    String profileImageUrl;
 
-    private FirebaseAuth mAuth;
 
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +74,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         String user_email = getArguments().getString("user_email");
         String user_UID = getArguments().getString("user_UID");
+        String profileImgUrl = null;
 
         //상단
         settings = root.findViewById(R.id.settings);
@@ -85,10 +112,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
 
         nickname_tv = root.findViewById(R.id.nickname_tv);
+        state_tv = root.findViewById(R.id.state_tv);
+        changest_btn = root.findViewById(R.id.changest_btn);
+        profile_img  = root.findViewById(R.id.profile_img);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+        profile_img.setOnClickListener(v -> {
+
+            gotoAlbum();
+
+
+        });
+
 
         DatabaseReference databaseReference = database.getReference("User/" + user_UID + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference databaseReference2 = database.getReference("User/" + user_UID + "/state"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -101,10 +140,120 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
             }
         });
+        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Object value = snapshot.getValue(Object.class);
+                state_tv.setText(value.toString());
+            }
 
-    return root;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-}
+            }
+        });
+
+        changest_btn.setOnClickListener(v -> {
+            //프로필 변경 관련하여 논의 필요..
+
+            databaseReference2.setValue("변경한 상태메시지");
+
+            try {
+                final Uri file = Uri.fromFile(new File(pathUri)); // path
+              // 스토리지에 방생성 후 선택한 이미지 넣음
+                StorageReference storageReference = storage.getReference()
+
+                        .child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
+
+                storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        final Task<Uri> imageUrl = task.getResult().getStorage().getDownloadUrl();
+                        while (!imageUrl.isComplete()) ;
+
+                        profileImageUrl = imageUrl.getResult().toString();
+                        Log.e(TAG,"url: "+profileImgUrl);
+
+
+                        // database에 저장 근데 안돼 왜안되지
+
+                        DatabaseReference databaseReference3 = database.getReference("User/" + user_UID + "/pic");
+                        databaseReference3.setValue(profileImgUrl);
+                    }
+
+                });
+
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //fragment 새로고침 코드
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+            ft.detach(this).attach(this).commit();
+
+        });
+
+        return root;
+
+    }
+
+
+
+    // 앨범 메소드
+    private void gotoAlbum() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_FROM_ALBUM);
+        Log.e(TAG, "앨범메소드 성공");
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode != RESULT_OK) { // 코드가 틀릴경우
+            Toast.makeText(getContext(),"취소되었습니다.",Toast.LENGTH_SHORT);
+            if (tempFile != null) {
+                if (tempFile.exists()) {
+                    if (tempFile.delete()) {
+                        Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
+                        tempFile = null;
+                    }
+                }
+            }
+            return;
+        }
+        if (requestCode == PICK_FROM_ALBUM) {// 코드 일치
+            // Uri
+            imageUri = data.getData();
+
+
+            pathUri = getPath(data.getData());
+            Log.e(TAG, "PICK_FROM_ALBUM photoUri : " + imageUri);
+
+
+            profile_img.setImageURI(imageUri); // 이미지 띄움
+
+        }
+    }
+
+    // uri 절대경로 가져오기
+    public String getPath(Uri uri) {
+
+        Log.e(TAG, "갯패스 성공");
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(getContext(), uri, proj, null, null, null);
+
+        Cursor cursor = cursorLoader.loadInBackground();
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+        return cursor.getString(index);
+    }
+
+
+
 
     @Override
     public void onClick(View v){

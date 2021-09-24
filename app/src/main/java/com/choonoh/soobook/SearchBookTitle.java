@@ -52,7 +52,7 @@ public class SearchBookTitle extends AppCompatActivity {
 
     EditText ed_title;
     String title;
-    List<BookList> bestsellerList;
+    List<BookList> bookList;
     RecyclerView recyclerView;
     ImageButton btn_search;
 
@@ -65,10 +65,11 @@ public class SearchBookTitle extends AppCompatActivity {
         btn_search = findViewById(R.id.search_book);
 
         btn_search.setOnClickListener(v -> {
-            bestsellerList = new ArrayList<>();
+            bookList = new ArrayList<>();
             recyclerView = findViewById(R.id.search_recycler_view);
             GetData getData = new GetData();
             getData.execute();
+            Log.e("click", "잘됨");
 
         });
     }
@@ -130,26 +131,21 @@ public class SearchBookTitle extends AppCompatActivity {
                     for(int i = 0; i<jsonArray.length(); i++){
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         Log.e("json", "잘됨");
-                        BookList bestseller = new BookList();
-                        bestseller.setTitle(jsonObject1.getString("title"));
-                        bestseller.setAuthor(jsonObject1.getString("author"));
-                        bestseller.setPublisher(jsonObject1.getString("publisher"));
-                        bestseller.setCoverSmallUrl(jsonObject1.getString("coverSmallUrl"));
+                        BookList book = new BookList();
+                        book.setTitle(jsonObject1.getString("title"));
+                        book.setAuthor(jsonObject1.getString("author"));
+                        book.setPublisher(jsonObject1.getString("publisher"));
+                        book.setCoverSmallUrl(jsonObject1.getString("coverSmallUrl"));
 
-                        bestsellerList.add(bestseller);
+                        bookList.add(book);
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                PutDataIntoRecyclerView(bestsellerList);
-
-
+                PutDataIntoRecyclerView(bookList);
             }
-
-
-
 
         }
 

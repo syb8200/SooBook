@@ -45,13 +45,8 @@ public class Mylib extends AppCompatActivity {
             intent.putExtra("user_UID", user_UID);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-
-
         });
-
-
         Log.e(this.getClass().getName(), user_email + ", " + user_UID);
-
 
         RecyclerView recyclerView = findViewById(R.id.mylib_recycler_view); // 아디 연결
         recyclerView.setHasFixedSize(true); // 리사이클러뷰 기존성능 강화

@@ -8,7 +8,7 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class FirebaseReadTimePost {
-    public String uid;
+    //public String uid;
     public String readTime;
     public String startTime;
     public String endTime;
@@ -18,8 +18,8 @@ public class FirebaseReadTimePost {
         // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
 
-    public FirebaseReadTimePost(String uid, String readTime , String startTime, String endTime, String date) {
-        this.uid = uid;
+    public FirebaseReadTimePost(String readTime , String startTime, String endTime, String date) {
+        //this.uid = uid;
         this.readTime = readTime;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -29,7 +29,7 @@ public class FirebaseReadTimePost {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("uid",uid);
+       // result.put("uid",uid);
         result.put("readTime", readTime);
         result.put("startTime",startTime);
         result.put("endTime", endTime);

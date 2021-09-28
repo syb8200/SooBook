@@ -45,19 +45,14 @@ public class Mylib extends AppCompatActivity {
             intent.putExtra("user_UID", user_UID);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-
-
         });
-
-
         Log.e(this.getClass().getName(), user_email + ", " + user_UID);
-
 
         RecyclerView recyclerView = findViewById(R.id.mylib_recycler_view); // 아디 연결
         recyclerView.setHasFixedSize(true); // 리사이클러뷰 기존성능 강화
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Mylib.this);
         recyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<MylibList>(); // User 객체를 담을 어레이 리스트 (어댑터쪽으로)
+        arrayList = new ArrayList<>(); // User 객체를 담을 어레이 리스트 (어댑터쪽으로)
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
 
         DatabaseReference databaseReference = database.getReference("Mylib/"+user_UID+"/"); // DB 테이블 연결

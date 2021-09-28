@@ -1,13 +1,10 @@
 package com.choonoh.soobook;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * Created by DowonYoon on 2017-07-11.
- */
 
 @IgnoreExtraProperties
 public class FirebaseuserPost {

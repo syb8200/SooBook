@@ -1,6 +1,7 @@
 package com.choonoh.soobook;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,15 +55,13 @@ public class GridListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_item, parent, false);
         }
 
-     //   ImageView ddd = convertView.findViewById(R.id.book_img);
         TextView numberText = convertView.findViewById(R.id.numberText);
-
-       // nameText.setImageIcon(mylibList.getImg());
-
-        Log.e("어댑터","작동");
+        ImageView bookImg = convertView.findViewById(R.id.book_img);
+        Uri book= Uri.parse(mylibList.getImg());
+        Log.e("uri", book.toString());
         numberText.setText(mylibList.getisbn());
 
-
+        Glide.with(context).load(book).into(bookImg);
 
         return convertView;
     }

@@ -51,14 +51,14 @@ public class LibraryFragment extends Fragment {
 
 
       //  adapter.addItem(new MylibList("dddd"));
-     //   arrayList = new ArrayList<MylibList>(); // User 객체를 담을 어레이 리스트 (어댑터쪽으로)
+   //     arrayList = new ArrayList<MylibList>(); // User 객체를 담을 어레이 리스트 (어댑터쪽으로)
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
 
         DatabaseReference databaseReference = database.getReference("Mylib/A1adj9jHzrWPCvjmHiz1kaUfzZ33/"); // DB 테이블 연결
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-             //   arrayList.clear(); // 기존 배열리스트가 존재하지않게 초기화
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) { // 반복문으로 데이터 List를 추출해냄
                     MylibList mylibList = snapshot.getValue(MylibList.class); // 만들어뒀던 User 객체에 데이터를 담는다.
                     book_img = mylibList.getImg();
@@ -66,7 +66,7 @@ public class LibraryFragment extends Fragment {
                //     arrayList.add(mylibList); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
                     adapter.addItem(mylibList);
                 }
-                //  adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
+               //   adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
                 gridView.setAdapter(adapter);
 
             }

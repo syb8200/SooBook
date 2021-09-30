@@ -76,7 +76,7 @@ public class Mylib extends AppCompatActivity {
                 Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
-        adapter = new MylibAdapter(arrayList, Mylib.this);
+        //adapter = new MylibAdapter(arrayList, Mylib.this);
 
         recyclerView.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결
 

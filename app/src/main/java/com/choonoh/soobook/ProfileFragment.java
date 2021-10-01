@@ -25,7 +25,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,7 +78,30 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         String user_email = getArguments().getString("user_email");
         String user_UID = getArguments().getString("user_UID");
         String profileImgUrl = null;
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference pathReference = storageReference.child("usersprofileImages");
+        if(pathReference == null){
+            Log.e("profile pic: ","프로필사진이 없습니당");
+        }else {
+            StorageReference submitProfile = storageReference.child("usersprofileImages/"+user_UID);
 
+            Log.e("profile pic: ", "잘됨");
+
+            submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(getActivity()).load(uri).into(profile_img);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("profile pic: ", String.valueOf(e));
+                }
+            });
+
+
+        }
         //상단
         settings = root.findViewById(R.id.settings);
         settings.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +177,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        }
+
+        );
 
         changest_btn.setOnClickListener(v -> {
             //프로필 변경 관련하여 논의 필요..
@@ -161,9 +189,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             try {
                 final Uri file = Uri.fromFile(new File(pathUri)); // path
               // 스토리지에 방생성 후 선택한 이미지 넣음
-                StorageReference storageReference = storage.getReference()
+              //  StorageReference storageReference = storage.getReference()
 
-                        .child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
+                        storageReference.child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
 
                 storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -241,7 +269,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     // uri 절대경로 가져오기
     public String getPath(Uri uri) {
 
-        Log.e(TAG, "갯패스 성공");
         String[] proj = {MediaStore.Images.Media.DATA};
         CursorLoader cursorLoader = new CursorLoader(getContext(), uri, proj, null, null, null);
 
@@ -257,39 +284,50 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v){
-
+        Bundle bundle = new Bundle();
+        String user_email = getArguments().getString("user_email");
+        String user_UID = getArguments().getString("user_UID");
         switch (v.getId()){
 
             case R.id.statistics_tab:
+                StatisticsFragment statisticsFragment =new StatisticsFragment();
                 statistics_tab.setTextColor(Color.parseColor("#FF5F68"));
                 library_tab.setTextColor(Color.parseColor("#B9BABE"));
                 friend_tab.setTextColor(Color.parseColor("#B9BABE"));
                 under_bar1.setVisibility(View.VISIBLE);
                 under_bar2.setVisibility(View.GONE);
                 under_bar3.setVisibility(View.GONE);
-
+                bundle.putString("user_email", user_email);
+                bundle.putString("user_UID", user_UID);
+                statisticsFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.child_container, statisticsFragment).commit();
                 break;
 
             case R.id.library_tab:
+                LibraryFragment libraryFragment = new LibraryFragment();
                 statistics_tab.setTextColor(Color.parseColor("#B9BABE"));
                 library_tab.setTextColor(Color.parseColor("#FF5F68"));
                 friend_tab.setTextColor(Color.parseColor("#B9BABE"));
                 under_bar1.setVisibility(View.GONE);
                 under_bar2.setVisibility(View.VISIBLE);
                 under_bar3.setVisibility(View.GONE);
-
+                bundle.putString("user_email", user_email);
+                bundle.putString("user_UID", user_UID);
+                libraryFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.child_container, libraryFragment).commit();
                 break;
 
             case R.id.friend_tab:
+                FriendFragment friendFragment = new FriendFragment();
                 statistics_tab.setTextColor(Color.parseColor("#B9BABE"));
                 library_tab.setTextColor(Color.parseColor("#B9BABE"));
                 friend_tab.setTextColor(Color.parseColor("#FF5F68"));
                 under_bar1.setVisibility(View.GONE);
                 under_bar2.setVisibility(View.GONE);
                 under_bar3.setVisibility(View.VISIBLE);
-
+                bundle.putString("user_email", user_email);
+                bundle.putString("user_UID", user_UID);
+                friendFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.child_container, friendFragment).commit();
                 break;
 

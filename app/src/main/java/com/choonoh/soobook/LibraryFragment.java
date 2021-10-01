@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,62 +27,58 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class LibraryFragment extends Fragment {
-    private DatabaseReference mPostReference;
-    private TextView add_mylib;
-    private Button del_frnd;
-    private ArrayList<MylibList> arrayList;
-    static ArrayList<String> arrayIndex = new ArrayList<String>();
-    private AdapterView adapter;
     String book_img, book_isbn;
-    private String user_email, user_UID;
-
+    TextView add_btn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_library, container, false);
 
-      //String user_email = getArguments().getString("user_email");
-     //   String user_UID = getArguments().getString("user_UID");
-       // String user_email = "aaa";
-        //String user_UID = "A1adj9jHzrWPCvjmHiz1kaUfzZ33";
+        String user_email = getArguments().getString("user_email");
+        String user_UID = getArguments().getString("user_UID");
+
+        add_btn = root.findViewById(R.id.add_btn);
+
+        add_btn.setOnClickListener(v->{
+            Intent intent = new Intent(getContext(), SearchBook.class);
+            intent.putExtra("user_email", user_email);
+            intent.putExtra("user_UID", user_UID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+
 
         GridView gridView = root.findViewById(R.id.reading_gridview);
         GridListAdapter adapter = new GridListAdapter();
 
 
+        ///그리드뷰 스크롤 없애기기
+        gridView.setVerticalScrollBarEnabled(false);
 
-      //  adapter.addItem(new MylibList("dddd"));
-   //     arrayList = new ArrayList<MylibList>(); // User 객체를 담을 어레이 리스트 (어댑터쪽으로)
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+        DatabaseReference databaseReference = database.getReference("Mylib/"+user_UID+"/"); // DB 테이블 연결
 
-        DatabaseReference databaseReference = database.getReference("Mylib/A1adj9jHzrWPCvjmHiz1kaUfzZ33/"); // DB 테이블 연결
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { // 반복문으로 데이터 List를 추출해냄
-                    MylibList mylibList = snapshot.getValue(MylibList.class); // 만들어뒀던 User 객체에 데이터를 담는다.
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MylibList mylibList = snapshot.getValue(MylibList.class);
                     book_img = mylibList.getImg();
                     book_isbn = mylibList.getisbn();
-               //     arrayList.add(mylibList); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
                     adapter.addItem(mylibList);
                 }
-               //   adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
                 gridView.setAdapter(adapter);
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // 디비를 가져오던중 에러 발생 시
                 Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
-        //        adapter = new MylibAdapter(arrayList, getContext());
-
-        //   recyclerView.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결
-
-
 
         return root;
     }

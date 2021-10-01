@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -44,6 +45,10 @@ public class GridListAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
+
+
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

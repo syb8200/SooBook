@@ -181,14 +181,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             try {
                 final Uri file = Uri.fromFile(new File(pathUri)); // path
               // 스토리지에 방생성 후 선택한 이미지 넣음
+                /*
 <<<<<<< HEAD
                 StorageReference storageReference = storage.getReference()
                         .child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
-=======
+=======*/
               //  StorageReference storageReference = storage.getReference()
 
                         storageReference.child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
->>>>>>> f34e092aa842472f5e32385c70b51ad49bb6812f
+//>>>>>>> f34e092aa842472f5e32385c70b51ad49bb6812fz
 
                 storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -211,13 +212,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(this).attach(this).commit();
         });
-
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-
-        //fragmentTransaction.replace(R.id.child_container, child);
+/*
+        //FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        StatisticsGraphFragment statisticsGraphFragment = new StatisticsGraphFragment();
+        fragmentTransaction.add(R.id.child_container, statisticsGraphFragment.newInstance()).commit();
+        statisticsGraphFragment.
+/*
+        fragmentTransaction.replace(R.id.child_container, fragmentTransaction);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
+*/
         return root;
     }
 

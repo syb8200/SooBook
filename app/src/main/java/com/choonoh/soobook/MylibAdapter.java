@@ -3,6 +3,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -14,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class MylibAdapter extends RecyclerView.Adapter<MylibAdapter.MyViewHolder> {
+/*
+public class MylibAdapter extends GridViewdlT.Adapter<MylibAdapter.MyViewHolder> {
 
 
     private ArrayList<MylibList> arrayList;
@@ -51,7 +52,7 @@ public class MylibAdapter extends RecyclerView.Adapter<MylibAdapter.MyViewHolder
         // 삼항 연산자
         return (arrayList != null ? arrayList.size() : 0);
     }
-    public class MyViewHolder  extends RecyclerView.ViewHolder {
+    public class MyViewHolder  extends GridView.ViewHolder {
 
         TextView book_isbn;
         ImageView book_img;
@@ -65,3 +66,4 @@ public class MylibAdapter extends RecyclerView.Adapter<MylibAdapter.MyViewHolder
     }
 
 }
+*/

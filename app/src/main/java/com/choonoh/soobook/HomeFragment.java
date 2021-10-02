@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         search_book = rootView.findViewById(R.id.search_book);
         search_book.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SearchBookTitle.class);
+            Intent intent = new Intent(getActivity(), SearchBook.class);
             startActivity(intent);
         });
 

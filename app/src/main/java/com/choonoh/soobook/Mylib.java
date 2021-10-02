@@ -30,6 +30,7 @@ public class Mylib extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     String book_img, book_isbn;
     private String user_email, user_UID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,7 @@ public class Mylib extends AppCompatActivity {
         });
         Log.e(this.getClass().getName(), user_email + ", " + user_UID);
 
-        RecyclerView recyclerView = findViewById(R.id.mylib_recycler_view); // 아디 연결
+     /*   RecyclerView recyclerView = findViewById(R.id.mylib_recycler_view); // 아디 연결
         recyclerView.setHasFixedSize(true); // 리사이클러뷰 기존성능 강화
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Mylib.this);
         recyclerView.setLayoutManager(layoutManager);
@@ -76,11 +77,11 @@ public class Mylib extends AppCompatActivity {
                 Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
-        adapter = new MylibAdapter(arrayList, Mylib.this);
+        //adapter = new MylibAdapter(arrayList, Mylib.this);
 
         recyclerView.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결
 
-    }
+    }*/
 
    /* private AdapterView.OnItemLongClickListener onClickListener = (parent, view, position, id) -> {
         Log.d("Long Click", "position = " + position);
@@ -107,4 +108,5 @@ public class Mylib extends AppCompatActivity {
         return false;
     };
 */
+    }
 }

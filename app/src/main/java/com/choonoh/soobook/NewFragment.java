@@ -40,7 +40,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class NewFragment extends Fragment {
 
-    private static String JSON_URL = "https://book.interpark.com/api/newBook.api?key=D10E38E11FF9AF9A94BBFCEA6E7C69EB862A51DD8A9A6F6F0141AA42540FEF41&categoryId=100&output=json";
+    private static String JSON_URL = "https://book.interpark.com/api/newBook.api?key=B91AE6F8D1E9702FB8D9CD1FC356A6E0F422AA40510994A9DC06E2196E716175&categoryId=100&output=json";
 
     List<NewList> newList;
     RecyclerView recyclerView;

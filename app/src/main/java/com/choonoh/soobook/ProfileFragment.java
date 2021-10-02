@@ -54,17 +54,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     View under_bar1, under_bar2, under_bar3;
     ImageView profile_img;
     String nickname;
+
     StatisticsFragment statisticsFragment;
     LibraryFragment libraryFragment;
     FriendFragment friendFragment;
+
     private File tempFile;
     private Uri imageUri;
     private String pathUri;
     public static final int PICK_FROM_ALBUM = 1;
+
     String profileImageUrl;
-
-
-
     FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -110,23 +110,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         getFragmentManager().beginTransaction().replace(R.id.child_container, statisticsFragment).commit();
 
-
         nickname_tv = root.findViewById(R.id.nickname_tv);
         state_tv = root.findViewById(R.id.state_tv);
         changest_btn = root.findViewById(R.id.changest_btn);
         profile_img  = root.findViewById(R.id.profile_img);
 
         profile_img.setOnClickListener(v -> {
-
             gotoAlbum();
-
-
         });
-
 
         DatabaseReference databaseReference = database.getReference("User/" + user_UID + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
         DatabaseReference databaseReference2 = database.getReference("User/" + user_UID + "/state"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -134,12 +128,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 Object value = snapshot.getValue(Object.class);
                 nickname_tv.setText(value.toString());
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
         databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -155,14 +149,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         changest_btn.setOnClickListener(v -> {
             //프로필 변경 관련하여 논의 필요..
-
             databaseReference2.setValue("변경한 상태메시지");
-
             try {
                 final Uri file = Uri.fromFile(new File(pathUri)); // path
               // 스토리지에 방생성 후 선택한 이미지 넣음
                 StorageReference storageReference = storage.getReference()
-
                         .child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
 
                 storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -174,29 +165,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         profileImageUrl = imageUrl.getResult().toString();
                         Log.e(TAG,"url: "+profileImgUrl);
 
-
                         // database에 저장 근데 안돼 왜안되지
-
                         DatabaseReference databaseReference3 = database.getReference("User/" + user_UID + "/pic");
                         databaseReference3.setValue(profileImgUrl);
                     }
-
                 });
-
-
             } catch (Exception e){
                 e.printStackTrace();
             }
-
             //fragment 새로고침 코드
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-
             ft.detach(this).attach(this).commit();
-
         });
 
-        return root;
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
+        //fragmentTransaction.replace(R.id.child_container, child);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+        return root;
     }
 
 

@@ -74,7 +74,7 @@ public class SearchBookTitle extends AppCompatActivity {
         });
     }
         public class GetData extends AsyncTask<String, String, String>{
-            String JSON_URL = "http://book.interpark.com/api/search.api?key=D10E38E11FF9AF9A94BBFCEA6E7C69EB862A51DD8A9A6F6F0141AA42540FEF41&query=" + title+"&output=json";
+            String JSON_URL = "http://book.interpark.com/api/search.api?key=B91AE6F8D1E9702FB8D9CD1FC356A6E0F422AA40510994A9DC06E2196E716175&query=" + title+"&output=json";
 
             @Override
             protected String doInBackground(String... strings){

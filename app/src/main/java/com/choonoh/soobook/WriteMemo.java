@@ -1,10 +1,13 @@
 package com.choonoh.soobook;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,6 +20,8 @@ import java.util.List;
 
 public class WriteMemo extends AppCompatActivity {
     AppCompatRadioButton radio_left, radio_right;
+    EditText one_line_review;
+    ImageButton back_btn;
 
     private ArrayList<SpinnerItem> mSpinnerList;
     private SpinnerAdapter mAdapter;
@@ -27,9 +32,18 @@ public class WriteMemo extends AppCompatActivity {
         setContentView(R.layout.activity_write_memo);
 
 
-        //다 읽음, 읽는 중 라디오 버튼
+        //다 읽음, 읽는 중 라디오 버튼, 리뷰 한줄평 란
         radio_left = findViewById(R.id.radio_left);
         radio_right = findViewById(R.id.radio_right);
+        one_line_review = (EditText)findViewById(R.id.one_line_review);
+
+        //뒤로가기
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(v -> {
+            Intent intent=new Intent(WriteMemo.this, SelectReadBook.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
 
         initList();
 
@@ -62,13 +76,14 @@ public class WriteMemo extends AppCompatActivity {
                 if(isSelected){
                     radio_left.setTextColor(Color.parseColor("#FFFFFF"));
                     radio_right.setTextColor(Color.parseColor("#FF5F68"));
+                    one_line_review.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.radio_right:
                 if(isSelected){
                     radio_right.setTextColor(Color.parseColor("#FFFFFF"));
                     radio_left.setTextColor(Color.parseColor("#FF5F68"));
-
+                    one_line_review.setVisibility(View.GONE);
                 }
                 break;
         }

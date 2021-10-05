@@ -55,9 +55,14 @@ public class Home extends AppCompatActivity {
         recordFragment = new RecordFragment();
         profileFragment = new ProfileFragment();
 
-        user_email = getIntent().getStringExtra("user_email");
-        user_UID = getIntent().getStringExtra("user_UID");
+    //    user_email = getIntent().getStringExtra("user_email");
+    //    user_UID = getIntent().getStringExtra("user_UID");
+        FirebaseAuth  firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String user_UID = currentUser.getUid();
+        String user_email = currentUser.getEmail();
 
+        Log.e("uid",user_UID);
 
         final BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -80,6 +85,9 @@ public class Home extends AppCompatActivity {
                         switch (menuItem.getItemId()){
                             case R.id.home:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                                bundle.putString("user_email", user_email);
+                                bundle.putString("user_UID", user_UID);
+                                homeFragment.setArguments(bundle);
                                 return true;
 
                             case R.id.record:

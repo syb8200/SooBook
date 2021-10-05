@@ -121,7 +121,9 @@ public class RecommendFragment extends Fragment {
                     recommend.setPublisher(jsonObject1.getString("publisher"));
                     recommend.setCustomerReviewRank(jsonObject1.getString("customerReviewRank"));
                     recommend.setCoverSmallUrl(jsonObject1.getString("coverSmallUrl"));
-
+                    recommend.setIsbn(jsonObject1.getString("isbn"));
+                    recommend.setPubDate(jsonObject1.getString("pubDate"));
+                    recommend.setDescription(jsonObject1.getString("description"));
                     recommendList.add(recommend);
                 }
 

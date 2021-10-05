@@ -1,6 +1,7 @@
 package com.choonoh.soobook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,32 @@ public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.My
                 .load(mData.get(position).getCoverSmallUrl())
                 .into(holder.coverSmallUrl);
 
+        holder.itemView.setOnClickListener(v ->  {
+            String rank= mData.get(position).getRank();
+            String title = mData.get(position).getTitle();
+            String author = mData.get(position).getAuthor();
+            String publisher = mData.get(position).getPublisher();
+            String customerReviewRank = mData.get(position).getCustomerReviewRank();
+            String isbn = mData.get(position).getIsbn();
+            String pubDate = mData.get(position).getPubDate();
+            String description = mData.get(position).getDescription();
+            String cover = mData.get(position).getCoverSmallUrl();
+
+            Intent intent = new Intent(mContext,BookDetailActivity.class);
+            intent.putExtra("rank",rank);
+            intent.putExtra("title", title);
+            intent.putExtra("author", author);
+            intent.putExtra("publisher",publisher);
+            intent.putExtra("customerReviewRank", customerReviewRank);
+            intent.putExtra("isbn",isbn);
+            intent.putExtra("pubDate", pubDate);
+            intent.putExtra("description",description);
+            intent.putExtra("coverSmallUrl", cover);
+
+            mContext.startActivity(intent);
+        });
     }
+
 
     @Override
     public int getItemCount() {

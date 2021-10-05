@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class HomeFragment extends Fragment implements View.OnClickListener{
 
     TextView bestseller_tab, wishlist_tab;
@@ -52,23 +55,36 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v){
 
+        Bundle bundle = new Bundle();
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String user_UID = currentUser.getUid();
+        String user_email = currentUser.getEmail();
+
         switch (v.getId()){
 
             case R.id.total_books:
+                BestsellerFragment bestsellerFragment = new BestsellerFragment();
                 bestseller_tab.setTextColor(Color.parseColor("#FF5F68"));
                 wishlist_tab.setTextColor(Color.parseColor("#B9BABE"));
                 under_bar1.setVisibility(View.VISIBLE);
                 under_bar2.setVisibility(View.GONE);
-
+                bundle.putString("user_email", user_email);
+                bundle.putString("user_UID", user_UID);
+                bestsellerFragment.setArguments(bundle);
               getFragmentManager().beginTransaction().replace(R.id.child_container, bestsellerFragment).commit();
                 break;
 
             case R.id.wishlist_tab:
+                WishlistFragment wishlistFragment = new WishlistFragment();
                 bestseller_tab.setTextColor(Color.parseColor("#B9BABE"));
                 wishlist_tab.setTextColor(Color.parseColor("#FF5F68"));
                 under_bar1.setVisibility(View.GONE);
                 under_bar2.setVisibility(View.VISIBLE);
-
+                bundle.putString("user_email", user_email);
+                bundle.putString("user_UID", user_UID);
+                wishlistFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.child_container, wishlistFragment).commit();
                 break;
         }

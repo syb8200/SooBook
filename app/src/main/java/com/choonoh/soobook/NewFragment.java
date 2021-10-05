@@ -121,7 +121,9 @@ public class NewFragment extends Fragment {
                     newb.setPublisher(jsonObject1.getString("publisher"));
                     newb.setCustomerReviewRank(jsonObject1.getString("customerReviewRank"));
                     newb.setCoverSmallUrl(jsonObject1.getString("coverSmallUrl"));
-
+                    newb.setIsbn(jsonObject1.getString("isbn"));
+                    newb.setPubDate(jsonObject1.getString("pubDate"));
+                    newb.setDescription(jsonObject1.getString("description"));
                     newList.add(newb);
                 }
 

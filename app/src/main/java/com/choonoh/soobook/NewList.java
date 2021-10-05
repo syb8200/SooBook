@@ -7,6 +7,10 @@ public class NewList {
     String customerReviewRank;
     String coverSmallUrl;
 
+    String isbn;
+    String description;
+    String pubDate;
+
     /*
     public BestsellerList(String rank, String title, String author, String publisher, String customerReviewRank, String coverSmallUrl){
         this.rank = rank;
@@ -38,6 +42,18 @@ public class NewList {
     }
 
 
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPubDate() {
+        return pubDate;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -56,5 +72,17 @@ public class NewList {
 
     public void setCoverSmallUrl(String coverSmallUrl) {
         this.coverSmallUrl = coverSmallUrl;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
     }
 }

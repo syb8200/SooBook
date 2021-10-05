@@ -1,5 +1,6 @@
 package com.choonoh.soobook;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,6 +53,7 @@ public class BestsellerFragment extends Fragment {
 
         bestsellerList = new ArrayList<>();
         recyclerView = rootView.findViewById(R.id.recycler_view);
+
 
         GetData getData = new GetData();
         getData.execute();
@@ -122,8 +124,13 @@ public class BestsellerFragment extends Fragment {
                     bestseller.setPublisher(jsonObject1.getString("publisher"));
                     bestseller.setCustomerReviewRank(jsonObject1.getString("customerReviewRank"));
                     bestseller.setCoverSmallUrl(jsonObject1.getString("coverSmallUrl"));
+                    bestseller.setIsbn(jsonObject1.getString("isbn"));
+                    bestseller.setPubDate(jsonObject1.getString("pubDate"));
+                    bestseller.setDescription(jsonObject1.getString("description"));
 
                     bestsellerList.add(bestseller);
+
+
                 }
 
             } catch (JSONException e) {
@@ -146,9 +153,6 @@ public class BestsellerFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
-
-
-
 
 
 }

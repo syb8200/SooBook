@@ -52,7 +52,7 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_marginHorizontal="20dp"
             android:orientation="horizontal">
 
@@ -63,6 +63,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/white"
+                android:textSize="12sp"
                 android:text="다 읽음"
                 android:fontFamily="@font/nanumgothic"
                 android:button="@android:color/transparent"
@@ -77,6 +78,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/sb_main"
+                android:textSize="12sp"
                 android:text="읽는 중"
                 android:fontFamily="@font/nanumgothic"
                 android:button="@android:color/transparent"
@@ -95,10 +97,11 @@
             android:padding="10dp"
             android:background="@drawable/button_radius_9"
             android:hint="제목을 입력해 주세요."
+            android:textColorHint="@color/sb_gray2"
             android:gravity="center_vertical"
             android:textColor="@color/sb_title"
-            android:textSize="14sp"
-            android:fontFamily="@font/nanumgothic"/>
+            android:textSize="13sp"
+            android:fontFamily="@font/nanumgothic" />
 
         <EditText
             android:layout_width="match_parent"
@@ -109,9 +112,10 @@
             android:background="@drawable/button_radius_9"
             android:scrollbars="vertical"
             android:hint="내용을 입력해 주세요."
+            android:textColorHint="@color/sb_gray2"
             android:gravity="left|top"
             android:textColor="@color/sb_title"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:fontFamily="@font/nanumgothic"/>
 
 
@@ -125,38 +129,43 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="45dp"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:background="@drawable/button_radius_9"
                 android:fontFamily="@font/nanumgothic"
                 android:gravity="center"
                 android:hint="마지막 페이지"
+                android:textColorHint="@color/sb_gray2"
                 android:inputType="number"
                 android:padding="10dp"
                 android:textColor="@color/sb_title"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
             <Spinner
+                android:id="@+id/stars_spinner"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="2"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="12dp"
                 android:gravity="center"
                 android:spinnerMode="dropdown"
-                android:background="@drawable/button_radius_9"/>
+                android:background="@drawable/spinner_border"/>
 
         </LinearLayout>
 
         <EditText
+            android:id="@+id/one_line_review"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:padding="10dp"
             android:background="@drawable/button_radius_9"
             android:hint="리뷰 한 줄 평을 입력해 주세요."
+            android:textColorHint="@color/sb_gray2"
             android:gravity="center_vertical"
             android:textColor="@color/sb_title"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:fontFamily="@font/nanumgothic"/>
 
     </LinearLayout>
@@ -173,8 +182,8 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:layout_width="68dp"
-            android:layout_height="90dp"
+            android:layout_width="55dp"
+            android:layout_height="70dp"
             android:background="@color/sb_gray3"
             android:layout_marginLeft="20dp"
             android:layout_marginVertical="12dp"/>
@@ -193,6 +202,7 @@
                 android:text="다른 책 선택"
                 android:textSize="10sp"
                 android:textColor="@color/sb_point"
+                android:fontFamily="@font/nanumgothic"
                 android:layout_gravity="right" />
 
             <TextView

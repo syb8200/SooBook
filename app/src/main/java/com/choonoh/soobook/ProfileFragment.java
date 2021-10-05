@@ -188,10 +188,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
             try {
                 final Uri file = Uri.fromFile(new File(pathUri)); // path
+<<<<<<< HEAD
                 // 스토리지에 방생성 후 선택한 이미지 넣음
                 //  StorageReference storageReference = storage.getReference()
 
                 storageReference.child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
+=======
+              // 스토리지에 방생성 후 선택한 이미지 넣음
+                /*
+<<<<<<< HEAD
+                StorageReference storageReference = storage.getReference()
+                        .child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
+=======*/
+              //  StorageReference storageReference = storage.getReference()
+
+                        storageReference.child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
+//>>>>>>> f34e092aa842472f5e32385c70b51ad49bb6812fz
+>>>>>>> 1d82878bb6219386bf8f729d57904e8b145182de
 
                 storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -218,11 +231,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
             //fragment 새로고침 코드
             FragmentTransaction ft = getFragmentManager().beginTransaction();
+<<<<<<< HEAD
 
             ft.detach(this).attach(this).commit();
 
         });
 
+=======
+            ft.detach(this).attach(this).commit();
+        });
+/*
+        //FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        StatisticsGraphFragment statisticsGraphFragment = new StatisticsGraphFragment();
+        fragmentTransaction.add(R.id.child_container, statisticsGraphFragment.newInstance()).commit();
+        statisticsGraphFragment.
+/*
+        fragmentTransaction.replace(R.id.child_container, fragmentTransaction);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+*/
+>>>>>>> 1d82878bb6219386bf8f729d57904e8b145182de
         return root;
 
     }

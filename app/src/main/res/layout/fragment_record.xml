@@ -259,9 +259,5 @@
             android:text="기록"
             android:textColor="@color/white"
             android:textSize="15sp" />
-
     </LinearLayout>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

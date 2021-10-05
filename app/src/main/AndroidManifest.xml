@@ -45,6 +45,9 @@
         <activity android:name=".Mylib"/>
         <activity android:name=".SearchBookTitle"/>
         <activity android:name=".Settings"/>
+        <activity android:name=".WriteMemo" android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".SelectReadBook"/>
+
 
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

@@ -39,15 +39,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="15dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_cover"
             android:layout_width="90dp"
-            android:layout_height="130dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_vertical"
             android:background="@color/sb_gray3"/>
 
         <LinearLayout
@@ -55,7 +58,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="14dp">
+            android:layout_marginLeft="15dp">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -63,9 +66,9 @@
                 android:layout_height="wrap_content"
                 android:text="제목"
                 android:textColor="@color/sb_title"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:fontFamily="@font/nanumgothicbold"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="12dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -77,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="저자|"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/sb_title"
                     android:letterSpacing="0.2"
                     android:fontFamily="@font/nanumgothicbold"/>
@@ -88,9 +91,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="ddd"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/sb_title"
-                    android:fontFamily="@font/nanumgothic"/>
+                    android:fontFamily="@font/nanumgothic"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
             </LinearLayout>
 
@@ -106,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="출판사|"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/sb_title"
                     android:letterSpacing="0.2"
                     android:fontFamily="@font/nanumgothicbold"/>
@@ -117,9 +122,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="ddd"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/sb_title"
-                    android:fontFamily="@font/nanumgothic"/>
+                    android:fontFamily="@font/nanumgothic"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
             </LinearLayout>
 
@@ -135,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="출간일|"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/sb_title"
                     android:letterSpacing="0.2"
                     android:fontFamily="@font/nanumgothicbold"/>
@@ -146,9 +153,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="ddd"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/sb_title"
-                    android:fontFamily="@font/nanumgothic"/>
+                    android:fontFamily="@font/nanumgothic"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
             </LinearLayout>
 
@@ -164,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ISBN|"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/sb_title"
                     android:letterSpacing="0.1"
                     android:fontFamily="@font/nanumgothicbold"/>
@@ -175,9 +184,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="ddd"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/sb_title"
-                    android:fontFamily="@font/nanumgothic"/>
+                    android:fontFamily="@font/nanumgothic"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
             </LinearLayout>
 
@@ -192,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="별점|"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/sb_title"
                     android:letterSpacing="0.2"
                     android:fontFamily="@font/nanumgothicbold"/>
@@ -215,9 +226,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:text="ddd"
-                        android:textSize="11sp"
+                        android:textSize="10sp"
                         android:textColor="@color/sb_title"
-                        android:fontFamily="@font/nanumgothic"/>
+                        android:fontFamily="@font/nanumgothic"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
 
                 </LinearLayout>
 
@@ -240,9 +253,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
+            android:paddingVertical="14dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -269,9 +283,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
+            android:paddingVertical="14dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -309,7 +324,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginLeft="18dp"
                 android:text="책 소개"
                 android:textColor="@color/sb_point"
@@ -321,10 +336,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="18dp"
-                android:layout_marginVertical="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
                 android:text="ddd"
                 android:textSize="12sp"
                 android:textColor="@color/sb_title"
+                android:lineSpacingExtra="5dp"
                 android:fontFamily="@font/nanumgothic"/>
 
             <View
@@ -335,7 +352,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginLeft="18dp"
                 android:text="리뷰"
                 android:textColor="@color/sb_point"
@@ -348,8 +365,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="23dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -375,12 +392,12 @@
                             android:layout_height="wrap_content"
                             android:text="minion1001"
                             android:textColor="@color/sb_title"
-                            android:textSize="10sp"
+                            android:textSize="11sp"
                             android:fontFamily="@font/nanumgothicbold"/>
 
                         <ImageView
-                            android:layout_width="55dp"
-                            android:layout_height="12dp"
+                            android:layout_width="56dp"
+                            android:layout_height="13dp"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/stars_5"/>
 
@@ -392,7 +409,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="2dp"
                         android:text="ddd"
-                        android:textSize="10dp"
+                        android:textSize="11dp"
                         android:textColor="@color/sb_title"
                         android:fontFamily="@font/nanumgothic"/>
 
@@ -400,6 +417,118 @@
 
             </LinearLayout>
 
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@color/sb_gray3"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="minion1001"
+                            android:textColor="@color/sb_title"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/nanumgothicbold"/>
+
+                        <ImageView
+                            android:layout_width="56dp"
+                            android:layout_height="13dp"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/stars_5"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="ddd"
+                        android:textSize="11dp"
+                        android:textColor="@color/sb_title"
+                        android:fontFamily="@font/nanumgothic"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@color/sb_gray3"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="minion1001"
+                            android:textColor="@color/sb_title"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/nanumgothicbold"/>
+
+                        <ImageView
+                            android:layout_width="56dp"
+                            android:layout_height="13dp"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/stars_5"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="ddd"
+                        android:textSize="11dp"
+                        android:textColor="@color/sb_title"
+                        android:fontFamily="@font/nanumgothic"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
             <LinearLayout
@@ -432,12 +561,12 @@
                             android:layout_height="wrap_content"
                             android:text="minion1001"
                             android:textColor="@color/sb_title"
-                            android:textSize="10sp"
+                            android:textSize="11sp"
                             android:fontFamily="@font/nanumgothicbold"/>
 
                         <ImageView
-                            android:layout_width="55dp"
-                            android:layout_height="12dp"
+                            android:layout_width="56dp"
+                            android:layout_height="13dp"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/stars_5"/>
 
@@ -449,119 +578,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="2dp"
                         android:text="ddd"
-                        android:textSize="10dp"
-                        android:textColor="@color/sb_title"
-                        android:fontFamily="@font/nanumgothic"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="23dp"
-                android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@color/sb_gray3"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="minion1001"
-                            android:textColor="@color/sb_title"
-                            android:textSize="10sp"
-                            android:fontFamily="@font/nanumgothicbold"/>
-
-                        <ImageView
-                            android:layout_width="55dp"
-                            android:layout_height="12dp"
-                            android:layout_marginLeft="5dp"
-                            android:background="@drawable/stars_5"/>
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
-                        android:text="ddd"
-                        android:textSize="10dp"
-                        android:textColor="@color/sb_title"
-                        android:fontFamily="@font/nanumgothic"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="23dp"
-                android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@color/sb_gray3"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="minion1001"
-                            android:textColor="@color/sb_title"
-                            android:textSize="10sp"
-                            android:fontFamily="@font/nanumgothicbold"/>
-
-                        <ImageView
-                            android:layout_width="55dp"
-                            android:layout_height="12dp"
-                            android:layout_marginLeft="5dp"
-                            android:background="@drawable/stars_5"/>
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
-                        android:text="ddd"
-                        android:textSize="10dp"
+                        android:textSize="11dp"
                         android:textColor="@color/sb_title"
                         android:fontFamily="@font/nanumgothic"/>
 
@@ -571,6 +588,7 @@
 
 
             <TextView
+                android:id="@+id/total_reviews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"

@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,18 +30,34 @@ import java.util.Map;
 
 
 public class BookDetailActivity extends AppCompatActivity {
-    TextView reading_txt,isbn, title, auth, pub, star, date, disc;
+    TextView total_reviews, reading_txt, isbn, title, auth, pub, star, date, disc;
     ImageView cover;
+    ImageButton back_btn;
     String isbn_txt, title_txt, auth_txt, pub_txt, star_txt, date_txt, disc_txt, cover_txt;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
     String user_UID = currentUser.getUid();
     String user_email = currentUser.getEmail();
     static ArrayList<String> arrayIndex = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
+
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(v -> {
+            Intent intent=new Intent(BookDetailActivity.this, Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+
+        total_reviews = findViewById(R.id.total_reviews);
+        total_reviews.setOnClickListener(v -> {
+            Intent intent=new Intent(BookDetailActivity.this, TotalReviews.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
 
         setDetailView();
         getIntentString();

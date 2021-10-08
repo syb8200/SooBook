@@ -2,11 +2,15 @@ package com.choonoh.soobook;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,7 +40,7 @@ import java.util.Map;
 
 public class SearchBook  extends AppCompatActivity {
     Button search_isbn;
-    ImageButton btn_search;
+    ImageButton btn_search, back_btn;
     TextView title_view, pub_view, book_add_mylib;
     ImageView book_img_view;
     EditText et_search;
@@ -50,11 +54,20 @@ public class SearchBook  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_book);
 
-        search_isbn = findViewById(R.id.search_isbn);
-        search_isbn.setOnClickListener(v -> {
-            Intent intent = new Intent(SearchBook.this, QrReaderActivity.class);
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(v -> {
+            Intent intent=new Intent(SearchBook.this, Home.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+        });
+
+        search_isbn = findViewById(R.id.search_isbn);
+        search_isbn.setOnClickListener(v -> {
+
+           Intent intent = new Intent(SearchBook.this, QrReaderActivity.class);
+           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+           startActivity(intent);
+
         });
 
 
@@ -78,8 +91,112 @@ public class SearchBook  extends AppCompatActivity {
         Log.e(this.getClass().getName(), user_UID + "&" + user_email);
 
 
+        //키보드에 검색 버튼 생성
+        et_search.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if((event.getAction()==KeyEvent.ACTION_DOWN) && (keyCode==KeyEvent.KEYCODE_ENTER)){
+                    //엔터키 눌릴 때 하고 싶은 일
+                    Log.e(this.getClass().getName(), "클릭");
+
+                    URL url = null;
+                    try {
+                        url = new URL("http://book.interpark.com/api/search.api?key=B91AE6F8D1E9702FB8D9CD1FC356A6E0F422AA40510994A9DC06E2196E716175&query="+et_search.getText().toString()+"&queryType=isbn");
+                        //"" + et_search.getText().toString());
+
+                        XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
+                        XmlPullParser parser = parserCreator.newPullParser();
+
+                        parser.setInput(url.openStream(), null);
+
+                        int parserEvent = parser.getEventType();
+                        while (parserEvent != XmlPullParser.END_DOCUMENT) {
+                            switch (parserEvent) {
+                                case XmlPullParser.START_TAG://parser가 시작 태그를 만나면 실행
+
+                                    Log.e(this.getClass().getName(), "start parsing");
+
+                                    if(parser.getName().equals("isbn")){
+                                        inIsbn = true;
+                                    }
+                                    if (parser.getName().equals("title")) {
+                                        inTitle = true;
+                                    }
+
+                                    if (parser.getName().equals("publisher")) {
+                                        inPub = true;
+                                    }
+                                    if (parser.getName().equals("coverLargeUrl")) {
+                                        inImg = true;
+                                    }
+
+                                    break;
+
+                                case XmlPullParser.TEXT://parser가 내용에 접근했을때
+
+                                    if(inIsbn){
+                                        isbn = parser.getText();
+                                        inIsbn = false;
+                                    }
+
+                                    if (inTitle) {
+                                        Title = parser.getText();
+                                        title_view.setText(Title);
+
+                                        book_add_mylib.setText("읽는 책 추가");
+                                        inTitle = false;
+
+                                    }
+
+                                    if (inPub) { //isMapx이 true일 때 태그의 내용을 저장.
+                                        Pub = parser.getText();
+                                        pub_view.setText(Pub);
+                                        inPub = false;
+                                    }
+                                    if (inImg){
+                                        IMG = parser.getText();
+                                        Glide.with(SearchBook.this).load(IMG).into(book_img_view);
+
+                                        inImg = false;
+                                    }
 
 
+                                    if(title_view.getText().toString().equals("인터파크도서검색결과"))
+                                    {
+                                        title_view.setText("검색 결과 없음");
+                                        pub_view.setText("정확한 ISBN을 입력해주세요.");
+                                        book_add_mylib.setText("");
+                                        book_add_mylib.setActivated(false);
+                                    }
+                                    break;
+
+                                case XmlPullParser.END_TAG:
+                                    if (parser.getName().equals("mobileLink")) {
+                                        Log.e(this.getClass().getName(), "끝");
+                                        Log.e(this.getClass().getName(), "end parsing");
+                                    }
+                                    break;
+                            }
+                            parserEvent = parser.next();
+                        }
+
+                    } catch (IOException | XmlPullParserException e) {
+                        Toast toast = Toast.makeText(SearchBook.this, "책이 검색되지 않습니다.", Toast.LENGTH_SHORT); toast.show();
+                        Handler handler = new Handler();
+                        handler.postDelayed(toast::cancel, 1000);
+                        e.printStackTrace();
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+
+        });
+
+
+        //검색 버튼
         btn_search.setOnClickListener(v -> {
             Log.e(this.getClass().getName(), "클릭");
 
@@ -130,7 +247,7 @@ public class SearchBook  extends AppCompatActivity {
                             title_view.setText(Title);
 
 
-                            book_add_mylib.setText("읽는책에 추가");
+                            book_add_mylib.setText("읽는 책 추가");
                             inTitle = false;
 
                         }
@@ -150,8 +267,8 @@ public class SearchBook  extends AppCompatActivity {
 
                         if(title_view.getText().toString().equals("인터파크도서검색결과"))
                         {
-                            title_view.setText("검색결과없음");
-                            pub_view.setText("정확한 isbn입력해라");
+                            title_view.setText("검색 결과 없음");
+                            pub_view.setText("정확한 ISBN을 입력해주세요.");
                             book_add_mylib.setText("");
                             book_add_mylib.setActivated(false);
                         }
@@ -165,7 +282,6 @@ public class SearchBook  extends AppCompatActivity {
                         break;
                 }
                 parserEvent = parser.next();
-
 
             }
 
@@ -242,7 +358,7 @@ public class SearchBook  extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null) {
             if(result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 //result.getContents 를 이용 데이터 재가공
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
@@ -251,6 +367,24 @@ public class SearchBook  extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    //다른 곳 터치했을 때 키보드 내리기
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View focusView = getCurrentFocus();
+        if(focusView != null){
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if(!rect.contains(x,y)){
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if(imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(),0);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
 }

@@ -36,8 +36,13 @@
             android:gravity="center_vertical"
             android:textSize="13sp"
             android:fontFamily="@font/nanumgothicbold"
-            android:hint="책 제목을 입력해주세요."
-            android:textColorHint="@color/sb_title" />
+            android:hint="ISBN을 입력해주세요."
+            android:textColorHint="@color/sb_title"
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionSearch">
+            <requestFocus/>
+        </EditText>
 
 
         <ImageButton
@@ -62,34 +67,41 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
+
     <ImageView
         android:id="@+id/book_img_view"
         android:layout_width="200dp"
-        android:layout_height="250dp"/>
+        android:layout_height="250dp"
+        android:layout_marginBottom="25dp"/>
 
 
     <TextView
         android:id="@+id/book_title_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/sb_title"
+        android:fontFamily="@font/nanumgothicbold"
         android:textSize="16sp"/>
+
     <TextView
         android:id="@+id/book_pub_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        />
+        android:layout_marginBottom="50dp"
+        android:textColor="@color/sb_title"
+        android:fontFamily="@font/nanumgothic"
+        android:textSize="13sp"/>
+
     <TextView
         android:id="@+id/book_add_mylib"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/sb_point"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:clickable="true"
-        />
+        android:textColor="@color/sb_main"
+        android:fontFamily="@font/nanumgothicbold"
+        android:textSize="20sp"
+        android:clickable="true" />
 
 
 
@@ -108,10 +120,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/tv_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/sb_title"
+        android:textSize="14sp"
+        android:fontFamily="@font/nanumgothicbold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="300dp"

@@ -1,6 +1,6 @@
 package com.choonoh.soobook;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -39,9 +39,9 @@ import java.util.Locale;
 import java.util.Map;
 
 public class SearchBook  extends AppCompatActivity {
-    Button search_isbn;
+    Button book_add;
     ImageButton btn_search, back_btn;
-    TextView title_view, pub_view, book_add_mylib;
+    TextView title_view, pub_view;
     ImageView book_img_view;
     EditText et_search;
     String user_email, user_UID, isbn;
@@ -56,20 +56,15 @@ public class SearchBook  extends AppCompatActivity {
 
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(v -> {
-            Intent intent=new Intent(SearchBook.this, Home.class);
+            Intent intent = new Intent(SearchBook.this, Home.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-        });
 
-        search_isbn = findViewById(R.id.search_isbn);
-        search_isbn.setOnClickListener(v -> {
-
-           Intent intent = new Intent(SearchBook.this, QrReaderActivity.class);
-           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-           startActivity(intent);
+            //키보드 내리기
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
         });
-
 
         StrictMode.enableDefaults();
 
@@ -84,7 +79,10 @@ public class SearchBook  extends AppCompatActivity {
         pub_view = findViewById(R.id.book_pub_view);
         et_search = findViewById(R.id.et_search);
         book_img_view = findViewById(R.id.book_img_view);
-        book_add_mylib = findViewById(R.id.book_add_mylib);
+        book_add = findViewById(R.id.book_add);
+
+        //처음에는 읽는 책 추가 버튼 보이지 않음
+        book_add.setVisibility(View.INVISIBLE);
 
         user_email = getIntent().getStringExtra("user_email");
         user_UID = getIntent().getStringExtra("user_UID");
@@ -92,16 +90,17 @@ public class SearchBook  extends AppCompatActivity {
 
 
         //키보드에 검색 버튼 생성
-        et_search.setOnKeyListener(new View.OnKeyListener(){
+        et_search.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event){
-                if((event.getAction()==KeyEvent.ACTION_DOWN) && (keyCode==KeyEvent.KEYCODE_ENTER)){
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
                     //엔터키 눌릴 때 하고 싶은 일
                     Log.e(this.getClass().getName(), "클릭");
 
                     URL url = null;
                     try {
-                        url = new URL("http://book.interpark.com/api/search.api?key=B91AE6F8D1E9702FB8D9CD1FC356A6E0F422AA40510994A9DC06E2196E716175&query="+et_search.getText().toString()+"&queryType=isbn");
+                        url = new URL("http://book.interpark.com/api/search.api?key=B91AE6F8D1E9702FB8D9CD1FC356A6E0F422AA40510994A9DC06E2196E716175&query=" + et_search.getText().toString() + "&queryType=isbn");
                         //"" + et_search.getText().toString());
 
                         XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
@@ -116,7 +115,7 @@ public class SearchBook  extends AppCompatActivity {
 
                                     Log.e(this.getClass().getName(), "start parsing");
 
-                                    if(parser.getName().equals("isbn")){
+                                    if (parser.getName().equals("isbn")) {
                                         inIsbn = true;
                                     }
                                     if (parser.getName().equals("title")) {
@@ -134,7 +133,7 @@ public class SearchBook  extends AppCompatActivity {
 
                                 case XmlPullParser.TEXT://parser가 내용에 접근했을때
 
-                                    if(inIsbn){
+                                    if (inIsbn) {
                                         isbn = parser.getText();
                                         inIsbn = false;
                                     }
@@ -142,10 +141,7 @@ public class SearchBook  extends AppCompatActivity {
                                     if (inTitle) {
                                         Title = parser.getText();
                                         title_view.setText(Title);
-
-                                        book_add_mylib.setText("읽는 책 추가");
                                         inTitle = false;
-
                                     }
 
                                     if (inPub) { //isMapx이 true일 때 태그의 내용을 저장.
@@ -153,20 +149,18 @@ public class SearchBook  extends AppCompatActivity {
                                         pub_view.setText(Pub);
                                         inPub = false;
                                     }
-                                    if (inImg){
+
+                                    if (inImg) {
                                         IMG = parser.getText();
                                         Glide.with(SearchBook.this).load(IMG).into(book_img_view);
-
                                         inImg = false;
                                     }
 
-
-                                    if(title_view.getText().toString().equals("인터파크도서검색결과"))
-                                    {
+                                    if (title_view.getText().toString().equals("인터파크도서검색결과")) {
                                         title_view.setText("검색 결과 없음");
                                         pub_view.setText("정확한 ISBN을 입력해주세요.");
-                                        book_add_mylib.setText("");
-                                        book_add_mylib.setActivated(false);
+                                        book_img_view.setImageResource(0);
+                                        book_add.setVisibility(View.INVISIBLE);
                                     }
                                     break;
 
@@ -181,11 +175,15 @@ public class SearchBook  extends AppCompatActivity {
                         }
 
                     } catch (IOException | XmlPullParserException e) {
-                        Toast toast = Toast.makeText(SearchBook.this, "책이 검색되지 않습니다.", Toast.LENGTH_SHORT); toast.show();
+                        Toast toast = Toast.makeText(SearchBook.this, "책이 검색되지 않습니다.", Toast.LENGTH_SHORT);
+                        toast.show();
                         Handler handler = new Handler();
                         handler.postDelayed(toast::cancel, 1000);
                         e.printStackTrace();
                     }
+
+                    //클릭했을 때 읽는 책 추가버튼 보임
+                    book_add.setVisibility(View.VISIBLE);
 
                     return true;
                 }
@@ -200,102 +198,99 @@ public class SearchBook  extends AppCompatActivity {
         btn_search.setOnClickListener(v -> {
             Log.e(this.getClass().getName(), "클릭");
 
-
-            URL url = null; 
+            URL url = null;
             try {
-                url = new URL("http://book.interpark.com/api/search.api?key=B91AE6F8D1E9702FB8D9CD1FC356A6E0F422AA40510994A9DC06E2196E716175&query="+et_search.getText().toString()+"&queryType=isbn");
-                        //"" + et_search.getText().toString());
+                url = new URL("http://book.interpark.com/api/search.api?key=B91AE6F8D1E9702FB8D9CD1FC356A6E0F422AA40510994A9DC06E2196E716175&query=" + et_search.getText().toString() + "&queryType=isbn");
+                //"" + et_search.getText().toString());
 
+                XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
+                XmlPullParser parser = parserCreator.newPullParser();
 
-            XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
-            XmlPullParser parser = parserCreator.newPullParser();
+                parser.setInput(url.openStream(), null);
 
-            parser.setInput(url.openStream(), null);
+                int parserEvent = parser.getEventType();
+                while (parserEvent != XmlPullParser.END_DOCUMENT) {
+                    switch (parserEvent) {
+                        case XmlPullParser.START_TAG://parser가 시작 태그를 만나면 실행
 
-            int parserEvent = parser.getEventType();
-            while (parserEvent != XmlPullParser.END_DOCUMENT) {
-                switch (parserEvent) {
-                    case XmlPullParser.START_TAG://parser가 시작 태그를 만나면 실행
+                            Log.e(this.getClass().getName(), "start parsing");
 
-                        Log.e(this.getClass().getName(), "start parsing");
+                            if (parser.getName().equals("isbn")) {
+                                inIsbn = true;
+                            }
+                            if (parser.getName().equals("title")) {
+                                inTitle = true;
+                            }
 
-                        if(parser.getName().equals("isbn")){
-                            inIsbn = true;
-                        }
-                        if (parser.getName().equals("title")) {
-                            inTitle = true;
-                        }
+                            if (parser.getName().equals("publisher")) {
+                                inPub = true;
+                            }
+                            if (parser.getName().equals("coverLargeUrl")) {
+                                inImg = true;
+                            }
 
-                        if (parser.getName().equals("publisher")) {
-                            inPub = true;
-                        }
-                        if (parser.getName().equals("coverLargeUrl")) {
-                            inImg = true;
-                        }
+                            break;
 
+                        case XmlPullParser.TEXT://parser가 내용에 접근했을때
 
-                        break;
-                    case XmlPullParser.TEXT://parser가 내용에 접근했을때
+                            if (inIsbn) {
+                                isbn = parser.getText();
+                                inIsbn = false;
+                            }
 
-                        if(inIsbn){
-                            isbn = parser.getText();
-                            inIsbn = false;
-                        }
+                            if (inTitle) {
+                                Title = parser.getText();
+                                title_view.setText(Title);
+                                inTitle = false;
+                            }
 
-                        if (inTitle) {
-                            Title = parser.getText();
-                            title_view.setText(Title);
+                            if (inPub) { //isMapx이 true일 때 태그의 내용을 저장.
+                                Pub = parser.getText();
+                                pub_view.setText(Pub);
+                                inPub = false;
+                            }
 
+                            if (inImg) {
+                                IMG = parser.getText();
+                                Glide.with(this).load(IMG).into(book_img_view);
+                                inImg = false;
+                            }
 
-                            book_add_mylib.setText("읽는 책 추가");
-                            inTitle = false;
+                            if (title_view.getText().toString().equals("인터파크도서검색결과")) {
+                                title_view.setText("검색 결과 없음");
+                                pub_view.setText("정확한 ISBN을 입력해주세요.");
+                                book_img_view.setImageResource(0);
+                                book_add.setVisibility(View.INVISIBLE);
+                            }
+                            break;
 
-                        }
-
-                        if (inPub) { //isMapx이 true일 때 태그의 내용을 저장.
-                            Pub = parser.getText();
-                            pub_view.setText(Pub);
-                            inPub = false;
-                        }
-                        if (inImg){
-                            IMG = parser.getText();
-                            Glide.with(this).load(IMG).into(book_img_view);
-
-                            inImg = false;
-                        }
-
-
-                        if(title_view.getText().toString().equals("인터파크도서검색결과"))
-                        {
-                            title_view.setText("검색 결과 없음");
-                            pub_view.setText("정확한 ISBN을 입력해주세요.");
-                            book_add_mylib.setText("");
-                            book_add_mylib.setActivated(false);
-                        }
-                        break;
-
-                    case XmlPullParser.END_TAG:
-                           if (parser.getName().equals("mobileLink")) {
+                        case XmlPullParser.END_TAG:
+                            if (parser.getName().equals("mobileLink")) {
                                 Log.e(this.getClass().getName(), "끝");
                                 Log.e(this.getClass().getName(), "end parsing");
                             }
-                        break;
-                }
-                parserEvent = parser.next();
+                            break;
+                    }
+                    parserEvent = parser.next();
 
-            }
+                }
 
             } catch (IOException | XmlPullParserException e) {
-                Toast toast = Toast.makeText(SearchBook.this, "책이 검색되지 않습니다.", Toast.LENGTH_SHORT); toast.show();
+                Toast toast = Toast.makeText(SearchBook.this, "책이 검색되지 않습니다.", Toast.LENGTH_SHORT);
+                toast.show();
                 Handler handler = new Handler();
                 handler.postDelayed(toast::cancel, 1000);
                 e.printStackTrace();
             }
+
+            //클릭했을 때 읽는 책 추가버튼 보임
+            book_add.setVisibility(View.VISIBLE);
         });
 
-        book_add_mylib.setOnClickListener(v -> {
+        //읽는 책 추가
+        book_add.setOnClickListener(v -> {
 
-            Log.e(this.getClass().getName(), isbn+"클릭");
+            Log.e(this.getClass().getName(), isbn + "클릭");
 
             if (!isbn.equals("")) {
                 if (!IsExistID()) {
@@ -324,10 +319,9 @@ public class SearchBook  extends AppCompatActivity {
                 handler.postDelayed(toast::cancel, 1000);
             }
 
-
-
         });
     }
+
 
     public void postFirebaseDatabase(boolean add){
         SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
@@ -335,7 +329,6 @@ public class SearchBook  extends AppCompatActivity {
         long now = System.currentTimeMillis();
         Date time = new Date(now);
         String time2 = format.format(time);
-
 
         DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> childUpdates = new HashMap<>();
@@ -348,11 +341,12 @@ public class SearchBook  extends AppCompatActivity {
         childUpdates.put(root, postValues);
         mPostReference.updateChildren(childUpdates);
     }
+
     public boolean IsExistID(){
         boolean IsExist = arrayIndex.contains(isbn);
         return IsExist;
-
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -361,8 +355,10 @@ public class SearchBook  extends AppCompatActivity {
                 //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 //result.getContents 를 이용 데이터 재가공
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+
                 et_search.setText(result.getContents());
+                Toast.makeText(this, "검색 버튼을 눌러주세요.", Toast.LENGTH_LONG).show();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -388,5 +384,6 @@ public class SearchBook  extends AppCompatActivity {
     }
 
 }
+
 
 

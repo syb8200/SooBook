@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -36,6 +37,7 @@
             android:gravity="center_vertical"
             android:textSize="13sp"
             android:fontFamily="@font/nanumgothicbold"
+            android:backgroundTint="@color/sb_main"
             android:hint="ISBN을 입력해주세요."
             android:textColorHint="@color/sb_title"
             android:inputType="text"
@@ -43,7 +45,6 @@
             android:imeOptions="actionSearch">
             <requestFocus/>
         </EditText>
-
 
         <ImageButton
             android:id="@+id/search_book"
@@ -55,71 +56,61 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
-
-    <ImageView
-        android:id="@+id/book_img_view"
-        android:layout_width="200dp"
-        android:layout_height="250dp"
-        android:layout_marginBottom="25dp"/>
 
 
-    <TextView
-        android:id="@+id/book_title_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/sb_title"
-        android:fontFamily="@font/nanumgothicbold"
-        android:textSize="16sp"/>
+        android:layout_marginBottom="110dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/book_pub_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:textColor="@color/sb_title"
-        android:fontFamily="@font/nanumgothic"
-        android:textSize="13sp"/>
+        <ImageView
+            android:id="@+id/book_img_view"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="30dp" />
 
-    <TextView
-        android:id="@+id/book_add_mylib"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/sb_point"
-        android:textColor="@color/sb_main"
-        android:fontFamily="@font/nanumgothicbold"
-        android:textSize="20sp"
-        android:clickable="true" />
+        <TextView
+            android:id="@+id/book_title_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/nanumgothicbold"
+            android:textColor="@color/sb_title"
+            android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/book_pub_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:fontFamily="@font/nanumgothic"
+            android:textColor="@color/sb_title"
+            android:textSize="13sp" />
 
+    </LinearLayout>
 
-</LinearLayout>
     <Button
-        android:id="@+id/search_isbn"
+        android:id="@+id/book_add"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/button_radius_4"
         android:fontFamily="@font/nanumgothicbold"
         android:gravity="center"
-        android:text="바코드로 검색하기"
+        android:text="읽는 책 추가"
         android:textColor="@color/white"
         android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
     <TextView
         android:id="@+id/tv_test"

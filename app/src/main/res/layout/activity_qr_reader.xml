@@ -12,10 +12,21 @@
         android:layout_height="match_parent">
     </com.journeyapps.barcodescanner.DecoratedBarcodeView>
 
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_marginLeft="11dp"
+        android:background="@drawable/back_btn_white"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/Theme.SOOBOOK.PopupOverlay">
@@ -27,8 +38,9 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="ISBN 바코드를 인식시켜주세요."
+            android:fontFamily="@font/nanumgothic"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

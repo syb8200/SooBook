@@ -45,8 +45,8 @@ public class SearchBook  extends AppCompatActivity {
     ImageView book_img_view;
     EditText et_search;
     String user_email, user_UID, isbn;
-    String Title = null, Pub = null, IMG = null;
-    boolean inTitle = false, inPub = false, inImg = false, inIsbn=false;
+    String Title = null, Pub = null, IMG = null, Author = null, Pdate = null, Custrank = null, Desc = null, IMG_s;
+    boolean inTitle = false, inAuthor=false, inPub = false, inPdate=false, inImg = false, inIsbn=false, inCustrank=false, inDesc=false, inImg_s=false;
     static ArrayList<String> arrayIndex = new ArrayList<String>();
 
     @Override
@@ -54,6 +54,7 @@ public class SearchBook  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_book);
 
+        //뒤로가기 버튼
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(v -> {
             Intent intent = new Intent(SearchBook.this, Home.class);
@@ -128,6 +129,18 @@ public class SearchBook  extends AppCompatActivity {
                                     if (parser.getName().equals("coverLargeUrl")) {
                                         inImg = true;
                                     }
+                                    if(parser.getName().equals("author")){
+                                        inAuthor = true;
+                                    }
+                                    if(parser.getName().equals("pubDate")){
+                                        inPdate = true;
+                                    }
+                                    if(parser.getName().equals("customerReviewRank")){
+                                        inCustrank = true;
+                                    }
+                                    if(parser.getName().equals("description")){
+                                        inDesc = true;
+                                    }
 
                                     break;
 
@@ -135,6 +148,8 @@ public class SearchBook  extends AppCompatActivity {
 
                                     if (inIsbn) {
                                         isbn = parser.getText();
+                                        //클릭했을 때 읽는 책 추가버튼 보임
+                                        book_add.setVisibility(View.VISIBLE);
                                         inIsbn = false;
                                     }
 
@@ -155,6 +170,65 @@ public class SearchBook  extends AppCompatActivity {
                                         Glide.with(SearchBook.this).load(IMG).into(book_img_view);
                                         inImg = false;
                                     }
+
+                                    //책 검색 이후 이미지 클릭하면 책 정보로 넘어감
+                                    book_img_view.setOnClickListener(new View.OnClickListener(){
+                                        @Override
+                                        public void onClick(View v){
+                                            Intent intent = new Intent(getApplicationContext(),BookDetailActivity.class);
+
+                                            if (inTitle) {
+                                                Title = parser.getText();
+                                                inTitle = false;
+                                            }
+
+                                            if (inImg_s){
+                                                IMG_s = parser.getText();
+                                                inImg_s = false;
+                                            }
+
+                                            if (inAuthor) {
+                                                Author = parser.getText();
+                                                inAuthor = false;
+                                            }
+                                            if (inPub) {
+                                                Pub = parser.getText();
+                                                inPub = false;
+                                            }
+                                            if (inPdate) {
+                                                Pdate = parser.getText();
+                                                inPdate = false;
+                                            }
+
+                                            if (inIsbn) {
+                                                isbn = parser.getText();
+                                                inIsbn = false;
+                                            }
+
+                                            if (inCustrank) {
+                                                Custrank = parser.getText();
+                                                inCustrank = false;
+                                            }
+                                            if (inDesc) {
+                                                Desc = parser.getText();
+                                                inDesc = false;
+                                            }
+
+
+                                            Intent intent1 = new Intent(getApplicationContext(), BookDetailActivity.class);
+                                            intent1.putExtra("title", Title);
+                                            intent1.putExtra("coverSmallUrl", IMG_s);
+                                            intent1.putExtra("author", Author);
+                                            intent1.putExtra("publisher", Pub);
+                                            intent1.putExtra("pubDate", Pdate);
+                                            intent1.putExtra("isbn", isbn);
+                                            intent1.putExtra("customerReviewRank", Custrank);
+                                            intent1.putExtra("description", Desc);
+
+                                            startActivity(intent1);
+
+                                        }
+                                    });
 
                                     if (title_view.getText().toString().equals("인터파크도서검색결과")) {
                                         title_view.setText("검색 결과 없음");
@@ -181,9 +255,6 @@ public class SearchBook  extends AppCompatActivity {
                         handler.postDelayed(toast::cancel, 1000);
                         e.printStackTrace();
                     }
-
-                    //클릭했을 때 읽는 책 추가버튼 보임
-                    book_add.setVisibility(View.VISIBLE);
 
                     return true;
                 }
@@ -221,12 +292,26 @@ public class SearchBook  extends AppCompatActivity {
                             if (parser.getName().equals("title")) {
                                 inTitle = true;
                             }
-
                             if (parser.getName().equals("publisher")) {
                                 inPub = true;
                             }
                             if (parser.getName().equals("coverLargeUrl")) {
                                 inImg = true;
+                            }
+                            if (parser.getName().equals("coverSmallUrl")){
+                                inImg_s = true;
+                            }
+                            if(parser.getName().equals("author")){
+                                inAuthor = true;
+                            }
+                            if(parser.getName().equals("pubDate")){
+                                inPdate = true;
+                            }
+                            if(parser.getName().equals("customerReviewRank")){
+                                inCustrank = true;
+                            }
+                            if(parser.getName().equals("description")){
+                                inDesc = true;
                             }
 
                             break;
@@ -235,6 +320,8 @@ public class SearchBook  extends AppCompatActivity {
 
                             if (inIsbn) {
                                 isbn = parser.getText();
+                                //클릭했을 때 읽는 책 추가버튼 보임
+                                book_add.setVisibility(View.VISIBLE);
                                 inIsbn = false;
                             }
 
@@ -256,12 +343,97 @@ public class SearchBook  extends AppCompatActivity {
                                 inImg = false;
                             }
 
+                            if (inImg_s) {
+                                IMG_s = parser.getText();
+                                inImg_s = false;
+                            }
+
+                            if(inAuthor){
+                                Author = parser.getText();
+                                inAuthor = false;
+                            }
+
+                            if(inPdate){
+                                Pdate = parser.getText();
+                                inPdate = false;
+                            }
+
+                            if(inCustrank){
+                                Custrank = parser.getText();
+                                inCustrank = false;
+                            }
+
+                            if(inDesc){
+                                Desc = parser.getText();
+                                inDesc = false;
+                            }
+
+                            //책 검색 이후 이미지 클릭하면 책 정보로 넘어감
+                            book_img_view.setOnClickListener(new View.OnClickListener(){
+                                @Override
+                                public void onClick(View v){
+                                    Intent intent = new Intent(getApplicationContext(),BookDetailActivity.class);
+
+                                    if (inTitle) {
+                                        Title = parser.getText();
+                                        inTitle = false;
+                                    }
+
+                                    if (inImg_s){
+                                        IMG_s = parser.getText();
+                                        inImg_s = false;
+                                    }
+
+                                    if (inAuthor) {
+                                        Author = parser.getText();
+                                        inAuthor = false;
+                                    }
+                                    if (inPub) {
+                                        Pub = parser.getText();
+                                        inPub = false;
+                                    }
+                                    if (inPdate) {
+                                        Pdate = parser.getText();
+                                        inPdate = false;
+                                    }
+
+                                    if (inIsbn) {
+                                        isbn = parser.getText();
+                                        inIsbn = false;
+                                    }
+
+                                    if (inCustrank) {
+                                        Custrank = parser.getText();
+                                        inCustrank = false;
+                                    }
+                                    if (inDesc) {
+                                        Desc = parser.getText();
+                                        inDesc = false;
+                                    }
+
+
+                                    Intent intent1 = new Intent(getApplicationContext(), BookDetailActivity.class);
+                                    intent1.putExtra("title", Title);
+                                    intent1.putExtra("coverSmallUrl", IMG_s);
+                                    intent1.putExtra("author", Author);
+                                    intent1.putExtra("publisher", Pub);
+                                    intent1.putExtra("pubDate", Pdate);
+                                    intent1.putExtra("isbn", isbn);
+                                    intent1.putExtra("customerReviewRank", Custrank);
+                                    intent1.putExtra("description", Desc);
+
+                                    startActivity(intent1);
+
+                                }
+                            });
+
                             if (title_view.getText().toString().equals("인터파크도서검색결과")) {
                                 title_view.setText("검색 결과 없음");
                                 pub_view.setText("정확한 ISBN을 입력해주세요.");
                                 book_img_view.setImageResource(0);
                                 book_add.setVisibility(View.INVISIBLE);
                             }
+
                             break;
 
                         case XmlPullParser.END_TAG:
@@ -282,9 +454,6 @@ public class SearchBook  extends AppCompatActivity {
                 handler.postDelayed(toast::cancel, 1000);
                 e.printStackTrace();
             }
-
-            //클릭했을 때 읽는 책 추가버튼 보임
-            book_add.setVisibility(View.VISIBLE);
         });
 
         //읽는 책 추가
@@ -358,7 +527,7 @@ public class SearchBook  extends AppCompatActivity {
                 //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 
                 et_search.setText(result.getContents());
-                Toast.makeText(this, "검색 버튼을 눌러주세요.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "검색 버튼을 눌러주세요.", Toast.LENGTH_SHORT).show();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

@@ -252,6 +252,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/reading_book_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -260,18 +261,19 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/reading_book_plus"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/add_icon"/>
+                android:background="@drawable/reading_book_img_selector"/>
 
             <TextView
-                android:id="@+id/reading_txt"
+                android:id="@+id/reading_book_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="읽는 책"
                 android:textSize="12dp"
-                android:textColor="@color/sb_gray4"
+                android:textColor="@drawable/reading_book_text_selector"
                 android:fontFamily="@font/nanumgothic"/>
 
         </LinearLayout>
@@ -282,6 +284,7 @@
             android:background="@color/sb_gray2"/>
 
         <LinearLayout
+            android:id="@+id/wishlist_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -290,17 +293,19 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/wishlist_heart"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/heart_icon"/>
+                android:background="@drawable/wishlist_img_selector"/>
 
             <TextView
+                android:id="@+id/wishlist_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="위시리스트"
                 android:textSize="12dp"
-                android:textColor="@color/sb_gray4"
+                android:textColor="@drawable/wishlist_text_selector"
                 android:fontFamily="@font/nanumgothic"/>
 
         </LinearLayout>

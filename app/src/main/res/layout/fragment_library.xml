@@ -28,12 +28,13 @@
             android:fontFamily="@font/nanumgothicbold"/>
 
         <GridView
+            android:id="@+id/reading_gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnWidth="100dp"
             android:verticalSpacing="15dp"
             android:numColumns="auto_fit"
-            android:id="@+id/reading_gridview">
+            android:scrollbars="none">
         </GridView>
 
         <TextView
@@ -46,12 +47,14 @@
             android:fontFamily="@font/nanumgothicbold"/>
 
         <GridView
+            android:id="@+id/read_gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnWidth="100dp"
             android:horizontalSpacing="20dp"
             android:verticalSpacing="15dp"
-            android:numColumns="auto_fit">
+            android:numColumns="auto_fit"
+            android:scrollbars="none">
         </GridView>
 
     </LinearLayout>

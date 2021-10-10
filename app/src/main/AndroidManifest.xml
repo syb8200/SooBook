@@ -49,6 +49,8 @@
         <activity android:name=".SelectReadBook"/>
         <activity android:name=".BookDetailActivity"/>
         <activity android:name=".TotalReviews"/>
+        <activity android:name=".FriendLibrary"/>
+        <activity android:name=".DirectRecord"/>
 
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

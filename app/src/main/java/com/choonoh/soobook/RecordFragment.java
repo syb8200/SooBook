@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.bluetooth.BluetoothAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class RecordFragment extends Fragment {
     BluetoothSPP bt;
     String user_email, user_UID;
     Button store_btn;
+    ImageButton direct_record;
     long startTimeNum, endTimeNum;
 
     private DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
@@ -41,6 +43,16 @@ public class RecordFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_record, container, false);
         Bundle bundle = getArguments();
+
+        direct_record = rootView.findViewById(R.id.direct_record);
+        direct_record.setOnClickListener(v->{
+            Intent intent = new Intent(getContext(), DirectRecord.class);
+            intent.putExtra("user_email", user_email);
+            intent.putExtra("user_UID", user_UID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+
 
         store_btn = rootView.findViewById(R.id.store_btn);
         user_email = bundle.getString("user_email");
@@ -115,6 +127,8 @@ public class RecordFragment extends Fragment {
             }
         });
 
+
+        //기기연결 버튼 (DeviceList로 연결)
         Button btnConnect = rootView.findViewById(R.id.btnConnect); //연결시도
         btnConnect.setOnClickListener(v -> {
             if (bt.getServiceState() == BluetoothState.STATE_CONNECTED) {

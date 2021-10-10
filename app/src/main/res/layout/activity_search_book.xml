@@ -40,7 +40,7 @@
             android:backgroundTint="@color/sb_main"
             android:hint="ISBN을 입력해주세요."
             android:textColorHint="@color/sb_title"
-            android:inputType="text"
+            android:inputType="number"
             android:maxLines="1"
             android:imeOptions="actionSearch">
             <requestFocus/>

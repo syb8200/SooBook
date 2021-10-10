@@ -28,6 +28,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
+        //오른쪽 상단 돋보기 (책 검색)
         search_book = rootView.findViewById(R.id.search_book);
         search_book.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SearchBook.class);

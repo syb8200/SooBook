@@ -96,14 +96,14 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_radius_2"
                 android:fontFamily="@font/nanumgothic"
-                android:hint="별명(2~13자 이내)"
+                android:hint="별명(영문)"
                 android:inputType="text"
                 android:padding="18dp"
                 android:textColor="@color/sb_title"
                 android:textColorHint="@color/sb_gray2"
                 android:textSize="17sp" />
 
-
+<!--
             <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -126,14 +126,14 @@
                     android:textColor="@color/sb_title"
                     android:textSize="15sp"/>
 
-        </LinearLayout>
-
+            </LinearLayout>
+-->
         <Button
             android:id="@+id/sign_up_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicbold"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/button_radius_1"
             android:padding="17dp"
             android:text="이메일로 가입하기"

@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class LibraryFragment extends Fragment {
-    String book_img, book_isbn;
+    String book_img, book_isbn, book_title;
     TextView add_btn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +68,8 @@ public class LibraryFragment extends Fragment {
                     MylibList mylibList = snapshot.getValue(MylibList.class);
                     book_img = mylibList.getImg();
                     book_isbn = mylibList.getisbn();
+                    book_title = mylibList.getTitle();
+
                     adapter.addItem(mylibList);
                 }
                 gridView.setAdapter(adapter);

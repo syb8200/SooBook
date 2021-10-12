@@ -11,6 +11,7 @@ public class FirebaseMylibPost {
     public String uid;
     public String owner;
     public String isbn;
+    public String title;
     public String img;
     public String time;
 
@@ -18,10 +19,11 @@ public class FirebaseMylibPost {
         // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
 
-    public FirebaseMylibPost(String uid, String owner , String isbn, String img, String time) {
+    public FirebaseMylibPost(String uid, String owner , String isbn, String title, String img, String time) {
         this.uid = uid;
         this.owner = owner;
         this.isbn = isbn;
+        this.title = title;
         this.img = img;
         this.time = time;
     }
@@ -32,6 +34,7 @@ public class FirebaseMylibPost {
         result.put("uid",uid);
         result.put("owner", owner);
         result.put("isbn",isbn);
+        result.put("title",title);
         result.put("img", img);
         result.put("time",time);
         return result;

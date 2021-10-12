@@ -94,6 +94,28 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
+                if (!isbn_txt.equals("")) {
+                    if (!IsExistID()) {
+                        postWishFirebaseDatabase(true);
+                        Toast toast = Toast.makeText(BookDetailActivity.this, "위시리스트에 추가되었습니다.", Toast.LENGTH_SHORT);
+                        toast.show();
+                        Handler handler = new Handler();
+                        handler.postDelayed(toast::cancel, 1000);
+
+                        //finish();
+                    } else {
+                        Toast toast = Toast.makeText(BookDetailActivity.this, "이미 등록한 책입니다.", Toast.LENGTH_SHORT);
+                        toast.show();
+                        Handler handler = new Handler();
+                        handler.postDelayed(toast::cancel, 1000);
+                    }
+
+                } else {
+                    Toast toast = Toast.makeText(BookDetailActivity.this, "error", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(toast::cancel, 1000);
+                }
             }
         });
 
@@ -129,13 +151,13 @@ public class BookDetailActivity extends AppCompatActivity {
         long now = System.currentTimeMillis();
         Date time = new Date(now);
         String time2 = format.format(time);
-
+        String title_s = title.getText().toString();
         String isbn_s = isbn.getText().toString();
         DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if(add){
-            FirebaseMylibPost post = new FirebaseMylibPost(user_UID, user_email ,isbn_s, cover_txt, time2);
+            FirebaseMylibPost post = new FirebaseMylibPost(user_UID, user_email, isbn_s, title_s,cover_txt, time2);
             postValues = post.toMap();
         }
         String root ="/Mylib/"+user_UID+"/"+isbn_txt;
@@ -145,7 +167,27 @@ public class BookDetailActivity extends AppCompatActivity {
 
     }
 
+    public void postWishFirebaseDatabase(boolean add){
+        SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
+        //시간 좀 안맞음 수정해야함
+        long now = System.currentTimeMillis();
+        Date time = new Date(now);
+        String time2 = format.format(time);
+        String title_s = title.getText().toString();
+        String isbn_s = isbn.getText().toString();
+        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
+        if(add){
+            FirebaseMylibPost post = new FirebaseMylibPost(user_UID, user_email, isbn_s, title_s,cover_txt, time2);
+            postValues = post.toMap();
+        }
+        String root ="/Wishlist/"+user_UID+"/"+isbn_txt;
+        childUpdates.put(root, postValues);
+        mPostReference.updateChildren(childUpdates);
 
+
+    }
 
 
     public boolean IsExistID() {

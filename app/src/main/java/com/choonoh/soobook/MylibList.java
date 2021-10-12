@@ -6,6 +6,16 @@ public class MylibList {
     String isbn;
     String img;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    String title;
+
     public String getImg() {
         return img;
     }
@@ -14,6 +24,7 @@ public class MylibList {
         this.img = img;
     }
 
+
     public String getisbn() {
         return isbn;
     }
@@ -21,5 +32,6 @@ public class MylibList {
     public void setisbn(String isbn) {
         this.isbn = isbn;
     }
+
 
 }

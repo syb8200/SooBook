@@ -64,7 +64,7 @@ public class GridListAdapter extends BaseAdapter {
         ImageView bookImg = convertView.findViewById(R.id.book_img);
         Uri book= Uri.parse(mylibList.getImg());
         Log.e("uri", book.toString());
-        numberText.setText(mylibList.getisbn());
+        numberText.setText(mylibList.getTitle());
 
         Glide.with(context).load(book).into(bookImg);
 

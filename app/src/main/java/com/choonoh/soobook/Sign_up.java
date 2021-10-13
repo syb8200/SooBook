@@ -17,7 +17,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Sign_up extends AppCompatActivity {
@@ -81,25 +84,7 @@ public class Sign_up extends AppCompatActivity {
             Toast toast;
             Handler handler = new Handler();
             if (task.isSuccessful()) {
-                currentUser = firebaseAuth.getCurrentUser();
-                String user_UID = currentUser.getUid();
-                String user_email =currentUser.getEmail();
-                String user_nick = et_nick.getText().toString();
-
-                Log.e(this.getClass().getName(), currentUser.getUid());
-
-                //db에 user 추가
-                mPostReference = FirebaseDatabase.getInstance().getReference();
-                Map<String, Object> childUpdates = new HashMap<>();
-                Map<String, Object> postValues = null;
-                if(true){
-                    FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID, user_nick, state, pic);
-                    postValues = post.toMap();}
-                String root ="/User/"+user_UID;
-                childUpdates.put(root, postValues);
-                mPostReference.updateChildren(childUpdates);
-
-
+                postFirebaseDatabase(true);
 
                 firebaseAuth.signOut();
                 Intent intent = new Intent(Sign_up.this, Login.class);
@@ -113,5 +98,28 @@ public class Sign_up extends AppCompatActivity {
                 handler.postDelayed(toast::cancel, 1000);
             }
         });
+    }
+
+    public void postFirebaseDatabase(boolean add){
+        currentUser = firebaseAuth.getCurrentUser();
+        String user_UID = currentUser.getUid();
+        String user_email =currentUser.getEmail();
+        String user_nick = et_nick.getText().toString();
+
+        Log.e(this.getClass().getName(), currentUser.getUid());
+
+        //db에 user 추가
+        mPostReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
+        if(true){
+            FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID, user_nick, state, pic);
+            postValues = post.toMap();}
+        String root ="/User/"+user_UID;
+        childUpdates.put(root, postValues);
+        mPostReference.updateChildren(childUpdates);
+
+
+
     }
 }

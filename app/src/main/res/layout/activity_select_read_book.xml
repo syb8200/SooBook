@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicbold"
-            android:text="읽은 책 선택"
+            android:text="읽는 책 선택"
             android:textColor="@color/sb_title"
             android:textSize="17sp"
             android:textStyle="bold"
@@ -59,18 +59,26 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="읽은 책 목록"
+            android:text="읽는 책 목록"
             android:textSize="15sp"
             android:textColor="@color/sb_point"
             android:fontFamily="@font/nanumgothicbold"/>
-
-        /*책 이미지 들어올 곳 (그리드? 리스트뷰?) */
+        <GridView
+            android:id="@+id/list_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="100dp"
+            android:verticalSpacing="15dp"
+            android:numColumns="auto_fit"
+            android:scrollbars="none">
+        </GridView>
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/sb_main"

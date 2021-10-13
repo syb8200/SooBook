@@ -468,12 +468,12 @@ public class SearchBook  extends AppCompatActivity {
                     toast.show();
                     Handler handler = new Handler();
                     handler.postDelayed(toast::cancel, 1000);
-                    Intent intent = new Intent(this, Mylib.class);
+                 /*   Intent intent = new Intent(this, Mylib.class);
                     intent.putExtra("user_email", user_email);
                     intent.putExtra("user_UID", user_UID);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    finish();
+                    finish();*/
                 } else {
                     Toast toast = Toast.makeText(SearchBook.this, "이미 등록한 책입니다.", Toast.LENGTH_SHORT);
                     toast.show();

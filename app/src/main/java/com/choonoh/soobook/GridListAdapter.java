@@ -1,6 +1,7 @@
 package com.choonoh.soobook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,6 +69,31 @@ public class GridListAdapter extends BaseAdapter {
 
         Glide.with(context).load(book).into(bookImg);
 
+        //클릭시 디테일뷰로 넘어감 (근데 제목이랑  isbn이랑 사진밖에 안넘어감)
+
+     /*   convertView.setOnClickListener(v ->  {
+
+            String title = items.get(position).getTitle();
+     //      String author = items.get(position).getAuthor();
+     //    String publisher = items.get(position).getPublisher();
+        //    String customerReviewRank = items.get(position).getCustomerReviewRank();
+            String isbn = items.get(position).getisbn();
+     //       String pubDate = items.get(position).getPubDate();
+      //      String description = items.get(position).getDescription();
+            String cover = items.get(position).getImg();
+
+            Intent intent = new Intent(context,BookDetailActivity.class);
+            intent.putExtra("title", title);
+         //   intent.putExtra("author", author);
+        //    intent.putExtra("publisher",publisher);
+        //    intent.putExtra("customerReviewRank", customerReviewRank);
+            intent.putExtra("isbn",isbn);
+        //    intent.putExtra("pubDate", pubDate);
+         //   intent.putExtra("description",description);
+            intent.putExtra("coverSmallUrl", cover);
+
+            context.startActivity(intent);
+        });*/
         return convertView;
     }
 }

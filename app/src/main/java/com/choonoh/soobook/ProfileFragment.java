@@ -45,6 +45,8 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.app.Activity.RESULT_OK;
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
@@ -56,6 +58,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     TextView statistics_tab, library_tab, friend_tab, nickname_tv, state_tv;       //changepw_btn, logout_txt_btn, del_id_btn;
     View under_bar1, under_bar2, under_bar3;
     ImageView profile_img;
+    CircleImageView ProfileImage;
+
     String nickname;
     StatisticsFragment statisticsFragment;
     LibraryFragment libraryFragment;
@@ -117,6 +121,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         //프로필 수정 버튼
         profile_edit = root.findViewById(R.id.profile_edit);
+        profile_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ProfileEdit.class);
+                intent.putExtra("user_email", user_email);
+                intent.putExtra("user_UID", user_UID);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         //탭 3개
         statistics_tab = root.findViewById(R.id.statistics_tab);
@@ -189,7 +203,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             try {
                 final Uri file = Uri.fromFile(new File(pathUri)); // path
 
-                        storageReference.child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
+                storageReference.child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
 
                 storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override

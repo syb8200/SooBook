@@ -95,7 +95,7 @@ public class Login extends AppCompatActivity{
                                 intent.putExtra("user_email",et_email.getText().toString());
                                 intent.putExtra("user_UID",currentUser.getUid());
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                Toast toast = Toast.makeText(Login.this, "로긴성공", Toast.LENGTH_SHORT); toast.show();
+                                Toast toast = Toast.makeText(Login.this, "로그인 성공", Toast.LENGTH_SHORT); toast.show();
                                 startActivity(intent);
 
                                 finish();
@@ -116,7 +116,7 @@ public class Login extends AppCompatActivity{
                     intent.putExtra("user_email",currentUser.getEmail());
                     intent.putExtra("user_UID",currentUser.getUid());
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    Toast toast = Toast.makeText(Login.this, "자동로그인 되었습니다.", Toast.LENGTH_SHORT); toast.show();
+                    Toast toast = Toast.makeText(Login.this, "자동 로그인 되었습니다.", Toast.LENGTH_SHORT); toast.show();
                     Handler handler = new Handler();
                     handler.postDelayed(toast::cancel, 1000);
                     startActivity(intent);

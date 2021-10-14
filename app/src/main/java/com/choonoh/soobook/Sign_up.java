@@ -30,7 +30,6 @@ public class Sign_up extends AppCompatActivity {
     private ImageButton back_btn;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
-    private DatabaseReference mPostReference;
     private String state="상태메시지를 입력해주세요";
     private String pic="none";
 
@@ -76,16 +75,54 @@ public class Sign_up extends AppCompatActivity {
         });
     }
 
+    public void postFirebaseDatabase(boolean add){
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String user_UID = currentUser.getUid();
+        String user_email= currentUser.getEmail();
+        String user_nick = et_nick.getText().toString();
 
+        //db에 user 추가
+        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
+        if(add){
+            FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID, user_nick, state, pic);
+            postValues = post.toMap();
+        }
+        String root ="/User/"+user_UID;
+        childUpdates.put(root, postValues);
+        mPostReference.updateChildren(childUpdates);
+    }
 
 
     public void startSignUp() {
+
         firebaseAuth.createUserWithEmailAndPassword(et_email.getText().toString(), et_pwd.getText().toString()).addOnCompleteListener(this, task -> {
+            postFirebaseDatabase(true);
+
+
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            String user_UID = currentUser.getUid();
+            String user_email= currentUser.getEmail();
+            String user_nick = et_nick.getText().toString();
+
+            //db에 user 추가
+            DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
+            Map<String, Object> childUpdates = new HashMap<>();
+            Map<String, Object> postValues = null;
+            if(true){
+                FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID, user_nick, state, pic);
+                postValues = post.toMap();
+            }
+            String root ="/User/"+user_UID;
+            childUpdates.put(root, postValues);
+            mPostReference.updateChildren(childUpdates);
+
+
+
             Toast toast;
             Handler handler = new Handler();
             if (task.isSuccessful()) {
-                postFirebaseDatabase(true);
-
                 firebaseAuth.signOut();
                 Intent intent = new Intent(Sign_up.this, Login.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -94,32 +131,11 @@ public class Sign_up extends AppCompatActivity {
                 handler.postDelayed(toast::cancel, 1000);
                 finish();
             } else {
-                toast = Toast.makeText(Sign_up.this, "오류(이메일 형식/ 비번 영+숫)으로 다시해보샘~", Toast.LENGTH_SHORT); toast.show();
+                toast = Toast.makeText(Sign_up.this, "이메일,비밀번호 형식(영문, 숫자, 특수문자)을 확인하고 다시 시도해주세요.", Toast.LENGTH_SHORT); toast.show();
                 handler.postDelayed(toast::cancel, 1000);
             }
         });
     }
 
-    public void postFirebaseDatabase(boolean add){
-        currentUser = firebaseAuth.getCurrentUser();
-        String user_UID = currentUser.getUid();
-        String user_email =currentUser.getEmail();
-        String user_nick = et_nick.getText().toString();
 
-        Log.e(this.getClass().getName(), currentUser.getUid());
-
-        //db에 user 추가
-        mPostReference = FirebaseDatabase.getInstance().getReference();
-        Map<String, Object> childUpdates = new HashMap<>();
-        Map<String, Object> postValues = null;
-        if(true){
-            FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID, user_nick, state, pic);
-            postValues = post.toMap();}
-        String root ="/User/"+user_UID;
-        childUpdates.put(root, postValues);
-        mPostReference.updateChildren(childUpdates);
-
-
-
-    }
 }

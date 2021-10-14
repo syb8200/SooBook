@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.util.Log;
 import android.widget.Button;
 
 import android.widget.EditText;
@@ -18,6 +19,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Login extends AppCompatActivity{
@@ -89,6 +95,7 @@ public class Login extends AppCompatActivity{
                 firebaseAuth.signInWithEmailAndPassword(et_email.getText().toString(), et_pwd.getText().toString())
                         .addOnCompleteListener(this, task -> {
                             if(task.isSuccessful()){
+
                                 Intent intent = new Intent(Login.this, Home.class);
                              //   intent.putExtra("fragment","my_lib");
                                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -112,6 +119,7 @@ public class Login extends AppCompatActivity{
                 super.onStart();
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                 if(currentUser != null){
+
                     Intent intent = new Intent(Login.this, Home.class);
                     intent.putExtra("user_email",currentUser.getEmail());
                     intent.putExtra("user_UID",currentUser.getUid());
@@ -123,4 +131,5 @@ public class Login extends AppCompatActivity{
                     finish();
                 }
             }
+
 }

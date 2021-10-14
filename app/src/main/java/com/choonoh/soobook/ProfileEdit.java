@@ -1,8 +1,10 @@
 package com.choonoh.soobook;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,8 +14,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -70,6 +75,8 @@ public class ProfileEdit extends AppCompatActivity {
         change_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+
+
                 Intent galleryIntent = new Intent();
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
                 galleryIntent.setType("image/*");
@@ -77,24 +84,8 @@ public class ProfileEdit extends AppCompatActivity {
             }
         });
 
-        Profile_Edit_Ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    String image = dataSnapshot.child("profileimage").getValue().toString();
 
-                    //하아 왜 안될까....
-                    Picasso.get().load(image).placeholder(R.drawable.profile_first).into(profile_img);
-                    //Picasso.get().load(Uri.parse(image)).placeholder(R.drawable.profile_first).into(profile_img);
-                    //Picasso.with(ProfileEdit.this).load(image).placeholder(R.drawable.profile_first).into(profile_img);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
 
     }
 
@@ -109,50 +100,75 @@ public class ProfileEdit extends AppCompatActivity {
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setAspectRatio(1,1)
                     .start(this);
+
+            profile_img.setImageURI(ImageUri); // 이미지 띄움
         }
 
-        if(requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-            if(resultCode == RESULT_OK){
-                Uri resultUri = result.getUri();
-                StorageReference filePath = Profile_Image_Ref.child(currentUserId + ".jpg");
-                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
 
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) {
-                        if(task.isSuccessful())
-                            Toast.makeText(ProfileEdit.this, "사진 변경에 성공하였습니다.",Toast.LENGTH_SHORT).show();
 
-                        //왜 안될까...흠
-                        final String downloadUrl = task.getResult().getUploadSessionUri().toString();
 
-                        Profile_Edit_Ref.child("profileimage").setValue(downloadUrl)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+        profile_edit_btn.setOnClickListener(v->{
+
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+            DatabaseReference databaseReference = database.getReference("User/" + currentUserId + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            DatabaseReference databaseReference2 = database.getReference("User/" + currentUserId + "/state"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.setValue(nickname_et.getText().toString());
+            databaseReference2.setValue(status_et.getText().toString());
+
+
+            if(requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if(resultCode == RESULT_OK){
+                    Uri resultUri = result.getUri();
+                    StorageReference filePath = Profile_Image_Ref.child(currentUserId + ".jpg");
+
+                    filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) {
+                            if(task.isSuccessful())
+                                filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
-                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            Intent profileIntent = new Intent(ProfileEdit.this, ProfileEdit.class);
-                                            startActivity(profileIntent);
-
-                                            Toast.makeText(ProfileEdit.this, "사진 변경에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else{
-                                            String message = task.getException().getMessage();
-                                            Toast.makeText(ProfileEdit.this, "Error Occured: " + message, Toast.LENGTH_SHORT).show();
-                                        }
+                                    public void onSuccess(Uri uri) {
+                                       // Glide.with(ProfileEdit.this).load(uri).into(profile_img);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("profile pic: ", String.valueOf(e));
                                     }
                                 });
-                    }
+                            final String downloadUrl = task.getResult().getUploadSessionUri().toString();
+                            Log.e("사진 주소: ", downloadUrl);
+                            Profile_Edit_Ref.child("profileimage").setValue(downloadUrl)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                            if(task.isSuccessful()){
 
 
-                });
+                                                Toast.makeText(ProfileEdit.this, "프로필 변경이 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                                            }
+                                            else{
+                                                String message = task.getException().getMessage();
+                                                Toast.makeText(ProfileEdit.this, "Error Occured: " + message, Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        }
 
-            }
-            else{
-                Toast.makeText(this, "Error Occured: Image can not be cropped Try Again." , Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+
+                    });
+
+
+
+                    Intent intent = new Intent(ProfileEdit.this, Home.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }});}
+
 }
-

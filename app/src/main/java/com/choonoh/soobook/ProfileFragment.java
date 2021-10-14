@@ -153,15 +153,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         nickname_tv = root.findViewById(R.id.nickname_tv);
         state_tv = root.findViewById(R.id.state_tv);
-        changest_btn = root.findViewById(R.id.changest_btn);
         profile_img  = root.findViewById(R.id.profile_img);
-
-        profile_img.setOnClickListener(v -> {
-
-            gotoAlbum();
-
-
-        });
 
 
         DatabaseReference databaseReference = database.getReference("User/" + user_UID + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -195,102 +187,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         );
 
-        changest_btn.setOnClickListener(v -> {
-            //프로필 변경 관련하여 논의 필요..
-
-            databaseReference2.setValue("변경한 상태메시지");
-
-            try {
-                final Uri file = Uri.fromFile(new File(pathUri)); // path
-
-                storageReference.child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
-
-                storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        final Task<Uri> imageUrl = task.getResult().getStorage().getDownloadUrl();
-                        while (!imageUrl.isComplete()) ;
-
-                        profileImageUrl = imageUrl.getResult().toString();
-                        Log.e(TAG,"url: "+profileImgUrl);
-
-
-                        // database에 저장 근데 안돼 왜안되지
-
-                        DatabaseReference databaseReference3 = database.getReference("User/" + user_UID + "/pic");
-                        databaseReference3.setValue(profileImgUrl);
-                    }
-
-                });
-
-
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-
-            //fragment 새로고침 코드
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-
-
-            ft.detach(this).attach(this).commit();
-
-        });
 
 
         return root;
 
-    }
-
-
-
-    // 앨범 메소드
-    private void gotoAlbum() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, PICK_FROM_ALBUM);
-        Log.e(TAG, "앨범메소드 성공");
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode != RESULT_OK) { // 코드가 틀릴경우
-            Toast.makeText(getContext(),"취소되었습니다.",Toast.LENGTH_SHORT);
-            if (tempFile != null) {
-                if (tempFile.exists()) {
-                    if (tempFile.delete()) {
-                        Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
-                        tempFile = null;
-                    }
-                }
-            }
-            return;
-        }
-        if (requestCode == PICK_FROM_ALBUM) {// 코드 일치
-            // Uri
-            imageUri = data.getData();
-
-
-            pathUri = getPath(data.getData());
-            Log.e(TAG, "PICK_FROM_ALBUM photoUri : " + imageUri);
-
-
-            profile_img.setImageURI(imageUri); // 이미지 띄움
-
-        }
-    }
-
-    // uri 절대경로 가져오기
-    public String getPath(Uri uri) {
-
-        String[] proj = {MediaStore.Images.Media.DATA};
-        CursorLoader cursorLoader = new CursorLoader(getContext(), uri, proj, null, null, null);
-
-        Cursor cursor = cursorLoader.loadInBackground();
-        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-        cursor.moveToFirst();
-        return cursor.getString(index);
     }
 
 

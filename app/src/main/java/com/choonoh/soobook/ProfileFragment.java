@@ -155,6 +155,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         state_tv = root.findViewById(R.id.state_tv);
         profile_img  = root.findViewById(R.id.profile_img);
 
+        FirebaseStorage picstorage = FirebaseStorage.getInstance("gs://soobook-donghwa.appspot.com");
+        StorageReference storageRef = picstorage.getReference();
+
+
+        storageRef.child("Profile Images/"+user_UID+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                //이미지 로드 성공시
+
+                Glide.with(getContext())
+                        .load(uri)
+                        .into(profile_img);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                //이미지 로드 실패시
+                Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         DatabaseReference databaseReference = database.getReference("User/" + user_UID + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
         DatabaseReference databaseReference2 = database.getReference("User/" + user_UID + "/state"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {

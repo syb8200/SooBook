@@ -82,13 +82,6 @@
                 android:textColor="@color/sb_title"
                 android:textSize="11sp"
                 android:fontFamily="@font/nanumgothic"/>
-            <Button
-                android:id="@+id/changest_btn"
-                android:layout_width="40dp"
-                android:layout_height="30dp"
-                android:text="변경"
-                android:textSize="8dp"
-                />
         </LinearLayout>
        </LinearLayout>
 

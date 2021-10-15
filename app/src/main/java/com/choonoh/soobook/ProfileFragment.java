@@ -57,6 +57,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     View under_bar1, under_bar2, under_bar3;
     ImageView profile_img;
     String nickname, user_email, user_UID;
+
     StatisticsFragment statisticsFragment;
     LibraryFragment libraryFragment;
     FriendFragment friendFragment;
@@ -142,9 +143,34 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         changest_btn = root.findViewById(R.id.changest_btn);
         profile_img  = root.findViewById(R.id.profile_img);
 
+
         profile_img.setOnClickListener(v -> {
             gotoAlbum();
         });
+
+        FirebaseStorage picstorage = FirebaseStorage.getInstance("gs://soobook-donghwa.appspot.com");
+        StorageReference storageRef = picstorage.getReference();
+
+
+        storageRef.child("Profile Images/"+user_UID+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                //이미지 로드 성공시
+
+                Glide.with(getContext())
+                        .load(uri)
+                        .into(profile_img);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                //이미지 로드 실패시
+                Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         DatabaseReference databaseReference = database.getReference("User/" + user_UID + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
         DatabaseReference databaseReference2 = database.getReference("User/" + user_UID + "/state"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -163,8 +189,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-              Object value = snapshot.getValue(Object.class);
-            //state_tv.setText(value.toString());
+                Object value = snapshot.getValue(Object.class);
+                //state_tv.setText(value.toString());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -204,6 +230,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         });
         return root;
     }
+
     // 앨범 메소드
     private void gotoAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -248,6 +275,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         cursor.moveToFirst();
         return cursor.getString(index);
     }
+
     @Override
     public void onClick(View v){
         Bundle bundle = new Bundle();

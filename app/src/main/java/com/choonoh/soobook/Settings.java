@@ -133,8 +133,10 @@ public class Settings extends AppCompatActivity {
             firebaseAuth.signOut();
             Intent intent = new Intent(Settings.this, Login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
             startActivity(intent);
             Settings.this.finish();
+
         });
 
 

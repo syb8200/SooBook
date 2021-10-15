@@ -40,6 +40,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
 
 
+
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
         holder.title.setText(mData.get(position).getTitle());

@@ -45,6 +45,8 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.app.Activity.RESULT_OK;
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
@@ -56,7 +58,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     TextView statistics_tab, library_tab, friend_tab, nickname_tv, state_tv;       //changepw_btn, logout_txt_btn, del_id_btn;
     View under_bar1, under_bar2, under_bar3;
     ImageView profile_img;
+<<<<<<< HEAD
     String nickname, user_email, user_UID;
+=======
+    CircleImageView ProfileImage;
+
+    String nickname;
+>>>>>>> 0421ff16992e7ecb6693a3a07efe8b771c88962a
     StatisticsFragment statisticsFragment;
     LibraryFragment libraryFragment;
     FriendFragment friendFragment;
@@ -113,6 +121,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         //프로필 수정 버튼
         profile_edit = root.findViewById(R.id.profile_edit);
+        profile_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ProfileEdit.class);
+                intent.putExtra("user_email", user_email);
+                intent.putExtra("user_UID", user_UID);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         //탭 3개
         statistics_tab = root.findViewById(R.id.statistics_tab);
@@ -139,12 +157,36 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         nickname_tv = root.findViewById(R.id.nickname_tv);
         state_tv = root.findViewById(R.id.state_tv);
-        changest_btn = root.findViewById(R.id.changest_btn);
         profile_img  = root.findViewById(R.id.profile_img);
 
+<<<<<<< HEAD
         profile_img.setOnClickListener(v -> {
             gotoAlbum();
         });
+=======
+        FirebaseStorage picstorage = FirebaseStorage.getInstance("gs://soobook-donghwa.appspot.com");
+        StorageReference storageRef = picstorage.getReference();
+
+
+        storageRef.child("Profile Images/"+user_UID+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                //이미지 로드 성공시
+
+                Glide.with(getContext())
+                        .load(uri)
+                        .into(profile_img);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                //이미지 로드 실패시
+                Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+>>>>>>> 0421ff16992e7ecb6693a3a07efe8b771c88962a
         DatabaseReference databaseReference = database.getReference("User/" + user_UID + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
         DatabaseReference databaseReference2 = database.getReference("User/" + user_UID + "/state"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -172,6 +214,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+<<<<<<< HEAD
         changest_btn.setOnClickListener(v -> {
             //프로필 변경 관련하여 논의 필요..
             databaseReference2.setValue("변경한 상태메시지");
@@ -202,8 +245,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(this).attach(this).commit();
         });
+=======
+
+
+>>>>>>> 0421ff16992e7ecb6693a3a07efe8b771c88962a
         return root;
     }
+<<<<<<< HEAD
     // 앨범 메소드
     private void gotoAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -248,6 +296,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         cursor.moveToFirst();
         return cursor.getString(index);
     }
+=======
+
+
+
+
+>>>>>>> 0421ff16992e7ecb6693a3a07efe8b771c88962a
     @Override
     public void onClick(View v){
         Bundle bundle = new Bundle();

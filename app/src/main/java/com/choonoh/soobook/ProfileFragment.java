@@ -45,6 +45,8 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.app.Activity.RESULT_OK;
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
@@ -114,6 +116,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         //프로필 수정 버튼
         profile_edit = root.findViewById(R.id.profile_edit);
+        profile_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ProfileEdit.class);
+                intent.putExtra("user_email", user_email);
+                intent.putExtra("user_UID", user_UID);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         //탭 3개
         statistics_tab = root.findViewById(R.id.statistics_tab);
@@ -140,7 +152,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         nickname_tv = root.findViewById(R.id.nickname_tv);
         state_tv = root.findViewById(R.id.state_tv);
-        changest_btn = root.findViewById(R.id.changest_btn);
         profile_img  = root.findViewById(R.id.profile_img);
 
 
@@ -170,7 +181,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-
         DatabaseReference databaseReference = database.getReference("User/" + user_UID + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
         DatabaseReference databaseReference2 = database.getReference("User/" + user_UID + "/state"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -197,7 +207,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
             }
         });
-
         changest_btn.setOnClickListener(v -> {
             //프로필 변경 관련하여 논의 필요..
             databaseReference2.setValue("변경한 상태메시지");

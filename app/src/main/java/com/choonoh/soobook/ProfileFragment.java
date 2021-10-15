@@ -207,36 +207,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
             }
         });
-        changest_btn.setOnClickListener(v -> {
-            //프로필 변경 관련하여 논의 필요..
-            databaseReference2.setValue("변경한 상태메시지");
 
-            try {
-                final Uri file = Uri.fromFile(new File(pathUri)); // path
-
-                storageReference.child("usersprofileImages").child(user_UID+"/"+file.getLastPathSegment());
-                storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        final Task<Uri> imageUrl = task.getResult().getStorage().getDownloadUrl();
-                        while (!imageUrl.isComplete()) ;
-
-                        profileImageUrl = imageUrl.getResult().toString();
-                        Log.e(TAG,"url: "+profileImgUrl);
-
-                        // database에 저장 근데 안돼 왜안되지
-                        DatabaseReference databaseReference3 = database.getReference("User/" + user_UID + "/pic");
-                        databaseReference3.setValue(profileImgUrl);
-                    }
-                });
-
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            //fragment 새로고침 코드
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(this).attach(this).commit();
-        });
         return root;
     }
 

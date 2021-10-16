@@ -65,11 +65,13 @@
             android:textSize="15sp"
             android:textColor="@color/sb_point"
             android:fontFamily="@font/nanumgothicbold"/>
+
         <GridView
             android:id="@+id/list_gridview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:columnWidth="100dp"
+
             android:verticalSpacing="15dp"
             android:numColumns="auto_fit"
             android:scrollbars="none">

@@ -1,43 +1,30 @@
 package com.choonoh.soobook;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
+
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 public class BestsellerFragment extends Fragment {
 
@@ -54,7 +41,6 @@ public class BestsellerFragment extends Fragment {
         bestsellerList = new ArrayList<>();
         recyclerView = rootView.findViewById(R.id.recycler_view);
 
-
         GetData getData = new GetData();
         getData.execute();
 
@@ -62,10 +48,8 @@ public class BestsellerFragment extends Fragment {
     }
 
     public class GetData extends AsyncTask<String, String, String>{
-
         @Override
         protected String doInBackground(String... strings){
-
             String current = "";
 
             try{
@@ -87,7 +71,6 @@ public class BestsellerFragment extends Fragment {
 
                     }
                     return current;
-
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -97,13 +80,9 @@ public class BestsellerFragment extends Fragment {
                         urlConnection.disconnect();
                     }
                 }
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
             return current;
         }
 
@@ -129,30 +108,18 @@ public class BestsellerFragment extends Fragment {
                     bestseller.setDescription(jsonObject1.getString("description"));
 
                     bestsellerList.add(bestseller);
-
-
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             PutDataIntoRecyclerView(bestsellerList);
-
-
         }
-
-
-
-
     }
-
 
     private void PutDataIntoRecyclerView(List<BestsellerList> bestsellerList){
         BestsellerAdapter adapter = new BestsellerAdapter(getContext(), bestsellerList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }
-
-
 }

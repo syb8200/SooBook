@@ -44,18 +44,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         bestseller_tab.setOnClickListener(this);
         wishlist_tab.setOnClickListener(this);
 
-
         bestsellerFragment = new HomeCategoryFragment();
         wishlistFragment = new WishlistFragment();
 
         getFragmentManager().beginTransaction().replace(R.id.child_container, bestsellerFragment).commit();
-
         return rootView;
     }
 
     @Override
     public void onClick(View v){
-
         Bundle bundle = new Bundle();
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -64,17 +61,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         String user_email = currentUser.getEmail();
 
         switch (v.getId()){
-
             case R.id.total_books:
                 BestsellerFragment bestsellerFragment = new BestsellerFragment();
                 bestseller_tab.setTextColor(Color.parseColor("#FF5F68"));
                 wishlist_tab.setTextColor(Color.parseColor("#B9BABE"));
                 under_bar1.setVisibility(View.VISIBLE);
                 under_bar2.setVisibility(View.GONE);
+
                 bundle.putString("user_email", user_email);
                 bundle.putString("user_UID", user_UID);
                 bestsellerFragment.setArguments(bundle);
-              getFragmentManager().beginTransaction().replace(R.id.child_container, bestsellerFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.child_container, bestsellerFragment).commit();
                 break;
 
             case R.id.wishlist_tab:
@@ -83,6 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 wishlist_tab.setTextColor(Color.parseColor("#FF5F68"));
                 under_bar1.setVisibility(View.GONE);
                 under_bar2.setVisibility(View.VISIBLE);
+
                 bundle.putString("user_email", user_email);
                 bundle.putString("user_UID", user_UID);
                 wishlistFragment.setArguments(bundle);

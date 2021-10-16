@@ -33,7 +33,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -96,10 +95,7 @@
                     android:fontFamily="@font/nanumgothic"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -127,10 +123,7 @@
                     android:fontFamily="@font/nanumgothic"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -158,10 +151,7 @@
                     android:fontFamily="@font/nanumgothic"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -189,10 +179,7 @@
                     android:fontFamily="@font/nanumgothic"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -208,38 +195,33 @@
                     android:letterSpacing="0.2"
                     android:fontFamily="@font/nanumgothicbold"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_marginLeft="3dp"
-                        android:background="@drawable/star_rate"/>
-
-
-                    <TextView
-                        android:id="@+id/tv_star"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:text="ddd"
-                        android:textSize="10sp"
-                        android:textColor="@color/sb_title"
-                        android:fontFamily="@font/nanumgothic"
-                        android:maxLines="1"
-                        android:ellipsize="end"/>
+                        android:orientation="horizontal">
 
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="3dp"
+                            android:background="@drawable/star_rate"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_star"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="1dp"
+                            android:text="ddd"
+                            android:textSize="10sp"
+                            android:textColor="@color/sb_title"
+                            android:fontFamily="@font/nanumgothic"
+                            android:maxLines="1"
+                            android:ellipsize="end"/>
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
-
 
     <View
         android:layout_width="match_parent"
@@ -275,7 +257,6 @@
                 android:textSize="12dp"
                 android:textColor="@drawable/reading_book_text_selector"
                 android:fontFamily="@font/nanumgothic"/>
-
         </LinearLayout>
 
         <View
@@ -307,9 +288,7 @@
                 android:textSize="12dp"
                 android:textColor="@drawable/wishlist_text_selector"
                 android:fontFamily="@font/nanumgothic"/>
-
         </LinearLayout>
-
     </LinearLayout>
 
     <View
@@ -364,8 +343,6 @@
                 android:textSize="14sp"
                 android:fontFamily="@font/nanumgothicbold"/>
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -406,7 +383,6 @@
                             android:layout_height="13dp"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/stars_5"/>
-
                     </LinearLayout>
 
                     <TextView
@@ -418,12 +394,8 @@
                         android:textSize="11dp"
                         android:textColor="@color/sb_title"
                         android:fontFamily="@font/nanumgothic"/>
-
                 </LinearLayout>
-
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -463,7 +435,6 @@
                             android:layout_height="13dp"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/stars_5"/>
-
                     </LinearLayout>
 
                     <TextView
@@ -475,11 +446,8 @@
                         android:textSize="11dp"
                         android:textColor="@color/sb_title"
                         android:fontFamily="@font/nanumgothic"/>
-
                 </LinearLayout>
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -519,7 +487,6 @@
                             android:layout_height="13dp"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/stars_5"/>
-
                     </LinearLayout>
 
                     <TextView
@@ -531,11 +498,8 @@
                         android:textSize="11dp"
                         android:textColor="@color/sb_title"
                         android:fontFamily="@font/nanumgothic"/>
-
                 </LinearLayout>
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -575,7 +539,6 @@
                             android:layout_height="13dp"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/stars_5"/>
-
                     </LinearLayout>
 
                     <TextView
@@ -587,11 +550,8 @@
                         android:textSize="11dp"
                         android:textColor="@color/sb_title"
                         android:fontFamily="@font/nanumgothic"/>
-
                 </LinearLayout>
-
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/total_reviews"
@@ -604,11 +564,6 @@
                 android:textColor="@color/sb_gray4"
                 android:textSize="11sp"
                 android:fontFamily="@font/nanumgothic"/>
-
-
-
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

@@ -503,7 +503,7 @@ public class SearchBook  extends AppCompatActivity {
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if(add){
-            FirebaseMylibPost post = new FirebaseMylibPost(user_UID, user_email ,isbn, Title,IMG, time2);
+            FirebaseMylibPost post = new FirebaseMylibPost(user_UID, user_email ,isbn, Title, IMG, time2, Author, Pub);
             postValues = post.toMap();
         }
         String root ="/Mylib/"+user_UID+"/"+isbn;

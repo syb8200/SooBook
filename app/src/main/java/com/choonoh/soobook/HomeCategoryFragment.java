@@ -15,7 +15,6 @@ public class HomeCategoryFragment extends Fragment implements View.OnClickListen
     NewFragment new_fragment;
     RecommendFragment recommend_fragment;
 
-
     Button category_best, category_recommend, category_new;
 
     @Override
@@ -35,17 +34,13 @@ public class HomeCategoryFragment extends Fragment implements View.OnClickListen
         new_fragment = new NewFragment();
         recommend_fragment = new RecommendFragment();
 
-
         getFragmentManager().beginTransaction().replace(R.id.child_child_container, bestseller_fragment).commit();
-
         return rootView;
     }
 
     @Override
     public void onClick(View v){
-
         switch (v.getId()){
-
             case R.id.category_best:
                 category_best.setBackgroundColor(Color.parseColor("#FF5F68"));
                 category_recommend.setBackgroundColor(Color.parseColor("#C4C4C4"));
@@ -70,7 +65,5 @@ public class HomeCategoryFragment extends Fragment implements View.OnClickListen
                 getFragmentManager().beginTransaction().replace(R.id.child_child_container, new_fragment).commit();
                 break;
         }
-
     }
-
 }

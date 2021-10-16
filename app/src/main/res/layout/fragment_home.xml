@@ -36,9 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,7 +73,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/sb_main"/>
-
             </LinearLayout>
 
             <LinearLayout
@@ -103,9 +100,7 @@
                     android:layout_height="2dp"
                     android:visibility="gone"
                     android:background="@color/sb_main"/>
-
             </LinearLayout>
-
         </LinearLayout>
 
         <FrameLayout
@@ -116,8 +111,5 @@
             android:layout_marginBottom="?attr/actionBarSize"
             android:layout_marginHorizontal="20dp">
         </FrameLayout>
-
-
     </LinearLayout>
-
 </LinearLayout>

@@ -39,9 +39,6 @@ public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.My
         return new MyViewHolder(v);
     }
 
-
-
-
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
         holder.rank.setText(mData.get(position).getRank());
@@ -80,12 +77,10 @@ public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.My
         });
     }
 
-
     @Override
     public int getItemCount() {
         return mData.size();
     }
-
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
@@ -108,5 +103,4 @@ public class BestsellerAdapter extends RecyclerView.Adapter<BestsellerAdapter.My
 
         }
     }
-
 }

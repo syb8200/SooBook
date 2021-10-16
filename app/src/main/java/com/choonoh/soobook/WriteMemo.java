@@ -185,7 +185,7 @@ public class WriteMemo extends AppCompatActivity {
                         FirebaseMemoPost post1 = new FirebaseMemoPost(s_title, s_content, s_last, nick);
                         postValues = post1.toMap();
 
-                        String root1 ="Memo/"+isbn+"/"+user_uid+"/"+time2;
+                        String root1 ="Memo/"+user_uid+"/"+isbn+"/"+time2;
 
                         childUpdates.put(root1, postValues);
                         memoPostReference.updateChildren(childUpdates);
@@ -194,7 +194,7 @@ public class WriteMemo extends AppCompatActivity {
                         FirebaseReviewPost post2 = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5", nick);
                         postValues = post2.toMap();
 
-                        String root2 = "Review/"+user_uid+"/"+isbn;
+                        String root2 = "Review/"+isbn+"/"+user_uid;
                         childUpdates.put(root2, postValues);
                         memoPostReference.updateChildren(childUpdates);
                     }

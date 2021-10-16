@@ -55,10 +55,22 @@ public class BookDetailActivity extends AppCompatActivity {
     static ArrayList<String> arrayIndex = new ArrayList<String>();
     List<ReviewList> reviewList;
     RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
+
+        setDetailView();
+
+        //책 검색에서 넘어옴
+        getIntentString_search();
+        setTextViews_search();
+
+        //기존
+        getIntentString();
+        setTextViews();
+
         reviewList = new ArrayList<>();
         recyclerView = findViewById(R.id.review_recycler_view);
 
@@ -67,17 +79,15 @@ public class BookDetailActivity extends AppCompatActivity {
         String user_UID = currentUser.getUid();
         String user_email = currentUser.getEmail();
 
-      RecyclerView recyclerView =findViewById(R.id.review_recycler_view);
+        RecyclerView recyclerView =findViewById(R.id.review_recycler_view);
         ReviewAdapter adapter = new ReviewAdapter(BookDetailActivity.this, reviewList);
         recyclerView.setLayoutManager(new LinearLayoutManager(BookDetailActivity.this));
         recyclerView.setAdapter(adapter);
 
-
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
-        DatabaseReference databaseReference = database.getReference("Review/"+user_UID+"/"); // DB 테이블 연결
+        DatabaseReference databaseReference = database.getReference("Review/"+isbn_txt_s+"/"); // DB 테이블 연결
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            int i = 0;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -127,7 +137,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     Handler handler = new Handler();
                     handler.postDelayed(toast::cancel, 1000);
                     //finish();
-                } else {
+                } else {//이거 동작 안함
                     Toast toast = Toast.makeText(BookDetailActivity.this, "이미 등록한 책입니다.", Toast.LENGTH_SHORT);
                     toast.show();
                     Handler handler = new Handler();
@@ -179,15 +189,6 @@ public class BookDetailActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
-        setDetailView();
-
-        //책 검색에서 넘어옴
-        getIntentString_search();
-        setTextViews_search();
-
-        //기존
-        getIntentString();
-        setTextViews();
 
         String isbn_s = isbn.getText().toString();
         Log.e(this.getClass().getName(), isbn_s+"클릭");

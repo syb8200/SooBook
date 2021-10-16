@@ -63,6 +63,7 @@ public class WriteMemo extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
 
     private String user_uid = currentUser.getUid();
+    private String user_email = currentUser.getEmail();
     private ArrayList<SpinnerItem> mSpinnerList;
     private SpinnerAdapter mAdapter;
 
@@ -103,7 +104,6 @@ public class WriteMemo extends AppCompatActivity {
         time2 = format.format(time);
 
 
-// ...
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
@@ -232,7 +232,8 @@ public class WriteMemo extends AppCompatActivity {
                             }
                             i++;
                         }
-
+                        postFirebaseDatabase(true);
+                        postFirebaseDatabase1(false);
                         Intent intent = new Intent(WriteMemo.this, Home.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
@@ -308,4 +309,42 @@ public class WriteMemo extends AppCompatActivity {
         mSpinnerList.add(new SpinnerItem(R.drawable.stars_2));
         mSpinnerList.add(new SpinnerItem(R.drawable.stars_1));
     }
+
+    public void postFirebaseDatabase(boolean add){
+        SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
+        //시간 좀 안맞음 수정해야함
+        long now = System.currentTimeMillis();
+        Date time = new Date(now);
+        String time2 = format.format(time);
+        Intent intent2 = getIntent();
+        img = intent2.getStringExtra("img");
+        auth = intent2.getStringExtra("auth");
+        pub = intent2.getStringExtra("pub");
+        title = intent2.getStringExtra("title");
+        isbn = intent2.getStringExtra("isbn");
+        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
+        if(add){
+            FirebaseMylibPost post = new FirebaseMylibPost(user_uid, user_email, isbn, title,img, time2, auth, pub);
+            postValues = post.toMap();
+        }
+        String root ="/Oldlib/"+user_uid+"/"+isbn;
+        childUpdates.put(root, postValues);
+        mPostReference.updateChildren(childUpdates);
+    }
+    public void postFirebaseDatabase1(boolean add){
+
+        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
+        if(add){
+            FirebaseMylibPost post = new FirebaseMylibPost(null,null,null,null,null,null,null,null);
+            postValues = post.toMap();
+        }
+        String root ="/Mylib/"+user_uid+"/"+isbn;
+        childUpdates.put(root, postValues);
+        mPostReference.updateChildren(childUpdates);
+    }
+
 }

@@ -82,6 +82,34 @@ public class LibraryFragment extends Fragment {
             }
         });
 
+        GridView gridView1 = root.findViewById(R.id.read_gridview);
+        GridListAdapter adapter1 = new GridListAdapter();
+
+
+
+        DatabaseReference databaseReference1 = database.getReference("Oldlib/"+user_UID+"/"); // DB 테이블 연결
+
+        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MylibList mylibList = snapshot.getValue(MylibList.class);
+                    book_img = mylibList.getImg();
+                    book_isbn = mylibList.getisbn();
+                    book_title = mylibList.getTitle();
+
+                    adapter1.addItem(mylibList);
+                }
+                gridView1.setAdapter(adapter1);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Oldlib", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+        });
         return root;
     }
 }

@@ -61,11 +61,11 @@ public class GridListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_item, parent, false);
         }
 
-        TextView numberText = convertView.findViewById(R.id.numberText);
+    //    TextView numberText = convertView.findViewById(R.id.numberText);
         ImageView bookImg = convertView.findViewById(R.id.book_img);
         Uri book= Uri.parse(mylibList.getImg());
         Log.e("uri", book.toString());
-        numberText.setText(mylibList.getTitle());
+   //     numberText.setText(mylibList.getTitle());
 
         Glide.with(context).load(book).into(bookImg);
 

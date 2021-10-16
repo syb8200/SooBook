@@ -32,7 +32,6 @@ import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 
-
 public class RecordFragment extends Fragment {
     int h = 0, m = 0, s = 0;
     int measured = 0, pre_measured = 0;
@@ -67,9 +66,6 @@ public class RecordFragment extends Fragment {
         GridView gridView = rootView.findViewById(R.id.list_gridview);
         GridListAdapter adapter = new GridListAdapter();
 
-        ///그리드뷰 스크롤 없애기기
-        //gridView.setVerticalScrollBarEnabled(false);
-
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         DatabaseReference databaseReference = database.getReference("Mylib/"+user_UID+"/"); // DB 테이블 연결
 
@@ -84,13 +80,9 @@ public class RecordFragment extends Fragment {
                     book_title = mylibList.getTitle();
                     book_auth = mylibList.getauth();
                     book_pub = mylibList.getPub();
-                    //myLibLists[i++] = mylibList;
-                    //Log.e("myLibLists", "" + (i-1) + "th title: " + myLibLists[(i-1)].img);
-
                     adapter.addItem(mylibList);
                 }
                 gridView.setAdapter(adapter);
-
             }
 
             @Override
@@ -127,45 +119,50 @@ public class RecordFragment extends Fragment {
 
             String[] array = message.split(",");
             measured = Integer.parseInt(array[0]);
-            if(pre_measured > 0 && pre_measured == measured){
 
+            if(pre_measured > 0 && measured == -1){
+                androidx.constraintlayout.widget.ConstraintLayout constraintLayout = rootView.findViewById(R.id.const_record);
+                constraintLayout.setVisibility(View.VISIBLE);
+                
             }
             pre_measured = measured;
             Log.e("array[0]", array[0]);
 
             s = measured;
-            if(s == 1)
-                startTimeNum = System.currentTimeMillis();
-            if(s > 60) {
-                s -= (s/60)*60;
-                if(s % 60 == 0)
-                    m += 1;
+            if(s > 0){
+                if(s == 1)
+                    startTimeNum = System.currentTimeMillis();
+                if(s >= 60) {
+                    s -= (s/60)*60;
+                    if(s % 60 == 0)
+                        m += 1;
+                }
+                if(m >= 60){
+                    m -= (m/60)*60;
+                    if(m % 60 == 0)
+                        h += 1;
+                }
+
+                if(h < 10)
+                    hh = "0" + h;
+                else
+                    hh = "" + h;
+
+                if(m < 10)
+                    mm = "0" + m;
+                else
+                    mm = "" + m;
+
+                if(s < 10)
+                    ss = "0" + s;
+                else
+                    ss = "" + s;
+
+                hour.setText(hh);
+                minute.setText(mm);
+                second.setText(ss);
             }
-            if(m % 60 == 0 && m > 60){
-                m -= (m/60)*60;
-                h += 1;
-            }
 
-            if(h < 10)
-                hh = "0" + h;
-            else
-                hh = "" + h;
-
-            if(m < 10)
-                mm = "0" + m;
-            else
-                mm = "" + m;
-
-            if(s < 10)
-                ss = "0" + s;
-            else
-                ss = "" + s;
-
-            Log.e("simgle_time", h + ":" + m + ":" + s);
-            Log.e("double_time", hh + ":" + mm + ":" + ss);
-            hour.setText(hh);
-            minute.setText(mm);
-            second.setText(ss);
         });
 
         // ------------------------------ 데이터 수신부 ----------------------------- //

@@ -56,7 +56,7 @@ public class WriteMemo extends AppCompatActivity {
     EditText memo_title, memo_content, memo_last;
     Button save_btn;
     Bitmap bitmap;
-    String nick;
+    String nick,  time2;
     int i;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -96,6 +96,11 @@ public class WriteMemo extends AppCompatActivity {
         memo_title = findViewById(R.id.memo_title);
         memo_content = findViewById(R.id.memo_content);
         memo_last = findViewById(R.id.memo_last);
+
+        SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
+        long now = System.currentTimeMillis();
+        Date time = new Date(now);
+        time2 = format.format(time);
 
 
 // ...
@@ -169,35 +174,45 @@ public class WriteMemo extends AppCompatActivity {
                         Log.e("firebase", "Error getting data", task.getException());
                     }
                     else {
-                        Log.e("nick", String.valueOf(task.getResult().getValue()));
                         nick = String.valueOf(task.getResult().getValue());
+
+
+
+                        DatabaseReference memoPostReference = FirebaseDatabase.getInstance().getReference();
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        Map<String, Object> postValues = null;
+
+                        FirebaseMemoPost post1 = new FirebaseMemoPost(s_title, s_content, s_last, nick);
+                        postValues = post1.toMap();
+
+                        String root1 ="Memo/"+isbn+"/"+user_uid+"/"+time2;
+
+                        childUpdates.put(root1, postValues);
+                        memoPostReference.updateChildren(childUpdates);
+
+
+                        FirebaseReviewPost post2 = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5", nick);
+                        postValues = post2.toMap();
+
+                        String root2 = "Review/"+user_uid+"/"+isbn;
+                        childUpdates.put(root2, postValues);
+                        memoPostReference.updateChildren(childUpdates);
                     }
                 }
             });
 
-            SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
-            long now = System.currentTimeMillis();
-            Date time = new Date(now);
-            String time2 = format.format(time);
-            DatabaseReference memoPostReference = FirebaseDatabase.getInstance().getReference();
+
+
 
             DatabaseReference mPostReference = database.getReference("ReadTime/"+user_uid+"/info/");
             s_title = memo_title.getText().toString();
             s_content = memo_content.getText().toString();
             s_last = memo_last.getText().toString();
 
-            Map<String, Object> childUpdates = new HashMap<>();
-            Map<String, Object> postValues = null;
-            if(true){
-                FirebaseMemoPost post = new FirebaseMemoPost(s_title, s_content, s_last, nick);
-                postValues = post.toMap();
-            }
 
 
-            String root1 ="Memo/"+user_uid+"/"+isbn+"/"+time2;
 
-            childUpdates.put(root1, postValues);
-            memoPostReference.updateChildren(childUpdates);
+
 
             if(!one_line_review.getText().toString().equals("")){
                 ValueEventListener postListener = new ValueEventListener() {
@@ -232,13 +247,7 @@ public class WriteMemo extends AppCompatActivity {
                 };
                 mPostReference.addValueEventListener(postListener);
 
-                if(true){
-                    FirebaseReviewPost post = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5", nick);
-                    postValues = post.toMap();
-                }
-                String root2 = "Review/"+user_uid+"/"+isbn;
-                childUpdates.put(root2, postValues);
-                memoPostReference.updateChildren(childUpdates);
+
             }
 
             Intent intent = new Intent(WriteMemo.this, Home.class);

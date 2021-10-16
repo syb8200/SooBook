@@ -21,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -58,12 +60,16 @@ public class WriteMemo extends AppCompatActivity {
     int i;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+    FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
 
     private String user_uid = currentUser.getUid();
     private ArrayList<SpinnerItem> mSpinnerList;
     private SpinnerAdapter mAdapter;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference mDatabase;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -92,26 +98,8 @@ public class WriteMemo extends AppCompatActivity {
         memo_last = findViewById(R.id.memo_last);
 
 
-        DatabaseReference databaseReference = database.getReference("User/" + user_uid + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Object value = snapshot.getValue(Object.class);
-                nick = value.toString();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-
-
+// ...
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
 
@@ -171,8 +159,21 @@ public class WriteMemo extends AppCompatActivity {
 
         initList();
 
-       i = 0;
+
+        i = 0;
         save_btn.setOnClickListener(v -> {
+            mDatabase.child("User").child(user_uid).child("nick").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                    else {
+                        Log.e("nick", String.valueOf(task.getResult().getValue()));
+                        nick = String.valueOf(task.getResult().getValue());
+                    }
+                }
+            });
 
             SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
             long now = System.currentTimeMillis();
@@ -191,6 +192,7 @@ public class WriteMemo extends AppCompatActivity {
                 FirebaseMemoPost post = new FirebaseMemoPost(s_title, s_content, s_last, nick);
                 postValues = post.toMap();
             }
+
 
             String root1 ="Memo/"+user_uid+"/"+isbn+"/"+time2;
 
@@ -231,7 +233,7 @@ public class WriteMemo extends AppCompatActivity {
                 mPostReference.addValueEventListener(postListener);
 
                 if(true){
-                    FirebaseReviewPost post = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5");
+                    FirebaseReviewPost post = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5", nick);
                     postValues = post.toMap();
                 }
                 String root2 = "Review/"+user_uid+"/"+isbn;

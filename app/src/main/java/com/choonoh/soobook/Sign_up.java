@@ -96,18 +96,39 @@ public class Sign_up extends AppCompatActivity {
 
 
     public void startSignUp() {
-
         firebaseAuth.createUserWithEmailAndPassword(et_email.getText().toString(), et_pwd.getText().toString()).addOnCompleteListener(this, task -> {
             postFirebaseDatabase(true);
+            Toast toast;
+            Handler handler = new Handler();
+            if (task.isSuccessful()) {
+                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                String user_UID = currentUser.getUid();
+                String user_email= currentUser.getEmail();
+                String user_nick = et_nick.getText().toString();
+                //db에 user 추가
+
+                HashMap<Object,String> hashMap = new HashMap<>();
+
+                hashMap.put("uid",user_UID);
+                hashMap.put("email",user_email);
+                hashMap.put("nick",user_nick);
+                hashMap.put("state", "상태메세지를 입력해주세요");
 
 
-            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-            String user_UID = currentUser.getUid();
-            String user_email= currentUser.getEmail();
-            String user_nick = et_nick.getText().toString();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference reference = database.getReference("User");
+                reference.child(user_UID).setValue(hashMap);
 
-            //db에 user 추가
-            DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
+/*
+            DatabaseReference hopperRef = database.getReference("ReadTime/0ABGKRMonqbw6Pbx3aASBJvxyEa2/").child("info");
+            Map<String, Object> hopperUpdates = new HashMap<>();
+            hopperUpdates.put("readBookNum", plusOne);
+
+            hopperRef.updateChildren(hopperUpdates);
+            */
+
+
+/*
             Map<String, Object> childUpdates = new HashMap<>();
             Map<String, Object> postValues = null;
             if(true){
@@ -117,13 +138,8 @@ public class Sign_up extends AppCompatActivity {
             String root ="/User/"+user_UID;
             childUpdates.put(root, postValues);
             mPostReference.updateChildren(childUpdates);
-
-
-
-            Toast toast;
-            Handler handler = new Handler();
-            if (task.isSuccessful()) {
-                firebaseAuth.signOut();
+*/
+               // firebaseAuth.signOut();
                 Intent intent = new Intent(Sign_up.this, Login.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
@@ -136,6 +152,4 @@ public class Sign_up extends AppCompatActivity {
             }
         });
     }
-
-
 }

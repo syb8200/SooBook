@@ -154,7 +154,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         state_tv = root.findViewById(R.id.state_tv);
         profile_img  = root.findViewById(R.id.profile_img);
 
-
         profile_img.setOnClickListener(v -> {
             gotoAlbum();
         });
@@ -188,7 +187,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Object value = snapshot.getValue(Object.class);
-                //nickname_tv.setText(value.toString());
+                nickname_tv.setText(value.toString());
             }
 
             @Override
@@ -200,7 +199,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Object value = snapshot.getValue(Object.class);
-                //state_tv.setText(value.toString());
+                state_tv.setText(value.toString());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -154,7 +154,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         state_tv = root.findViewById(R.id.state_tv);
         profile_img  = root.findViewById(R.id.profile_img);
 
-
         profile_img.setOnClickListener(v -> {
             gotoAlbum();
         });

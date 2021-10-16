@@ -92,7 +92,9 @@ public class BookDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ReviewList reviewList = snapshot.getValue(ReviewList.class);
+
                     review_title = reviewList.getReview();
+                    Log.e("review_title", review_title); // 에러문 출력
                    // review_content = reviewList.getContent();
 
 

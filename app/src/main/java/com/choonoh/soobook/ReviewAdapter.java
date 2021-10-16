@@ -42,13 +42,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
         return new MyViewHolder(v);
     }
 
-
-
-
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
+        holder.nick.setText(mData.get(position).getNick());
         holder.review.setText(mData.get(position).getReview());
-        holder.content.setText(mData.get(position).getReview());
         holder.star.setText(mData.get(position).getStar());
     }
 
@@ -59,16 +56,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-
+        TextView nick;
         TextView review;
-        TextView content;
         TextView star;
 
         public MyViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
-            review = itemView.findViewById(R.id.review_title);
-            content = itemView.findViewById(R.id.review_content);
+            nick = itemView.findViewById(R.id.review_nick);
+            review = itemView.findViewById(R.id.review_content);
             star = itemView.findViewById(R.id.tv_star);
 
         }

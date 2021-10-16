@@ -3,19 +3,25 @@ package com.choonoh.soobook;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.bluetooth.BluetoothAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,18 +32,18 @@ import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 
-
 public class RecordFragment extends Fragment {
     int h = 0, m = 0, s = 0;
-    int measured = 0;
+    int measured = 0, pre_measured = 0;
     String hh, mm, ss;
+    String book_img, book_isbn, book_title, book_auth, book_pub;
     BluetoothSPP bt;
     String user_email, user_UID;
     Button store_btn;
     ImageButton direct_record;
     long startTimeNum, endTimeNum;
 
-    private DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
+    private final DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,10 +59,49 @@ public class RecordFragment extends Fragment {
             startActivity(intent);
         });
 
-
         store_btn = rootView.findViewById(R.id.store_btn);
         user_email = bundle.getString("user_email");
         user_UID = bundle.getString("user_UID");
+
+        GridView gridView = rootView.findViewById(R.id.list_gridview);
+        GridListAdapter adapter = new GridListAdapter();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+        DatabaseReference databaseReference = database.getReference("Mylib/"+user_UID+"/"); // DB 테이블 연결
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            int i = 0;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MylibList mylibList = snapshot.getValue(MylibList.class);
+                    book_img = mylibList.getImg();
+                    book_isbn = mylibList.getisbn();
+                    book_title = mylibList.getTitle();
+                    book_auth = mylibList.getauth();
+                    book_pub = mylibList.getPub();
+                    adapter.addItem(mylibList);
+                }
+                gridView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+        });
+        gridView.setOnItemClickListener((parent, view, position, id) -> {
+            /*
+            Intent intent=new Intent(SelectReadBook.this, WriteMemo.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("img", myLibLists[(position)].img);
+            intent.putExtra("title", myLibLists[(position)].title);
+            intent.putExtra("auth", myLibLists[(position)].auth);
+            intent.putExtra("pub", myLibLists[(position)].pub);
+
+            startActivity(intent);*/
+        });
+
         bt = new BluetoothSPP(this.getContext()); //Initializing
 
         if (!bt.isBluetoothAvailable()) { //블루투스 사용 불가
@@ -68,41 +113,59 @@ public class RecordFragment extends Fragment {
         // ------------------------------ 데이터 수신부 ----------------------------- //
         //데이터 수신
         bt.setOnDataReceivedListener((data, message) -> {
-            TextView hour = getView().findViewById(R.id.hour);  //* 수정 *
-            TextView minute = getView().findViewById(R.id.minute);            //* 수정 *
-            TextView second = getView().findViewById(R.id.second);            //* 수정 *
+            TextView hour = getView().findViewById(R.id.hour);
+            TextView minute = getView().findViewById(R.id.minute);
+            TextView second = getView().findViewById(R.id.second);
 
             String[] array = message.split(",");
             measured = Integer.parseInt(array[0]);
 
+            if(pre_measured > 0 && measured == -1){
+                androidx.constraintlayout.widget.ConstraintLayout constraintLayout = rootView.findViewById(R.id.const_record);
+                constraintLayout.setVisibility(View.VISIBLE);
+                
+            }
+            pre_measured = measured;
+            Log.e("array[0]", array[0]);
+
             s = measured;
-            if(s == 1)
-                startTimeNum = System.currentTimeMillis();
-            if(s == 60)
-                m += 1;
-            if(m == 60)
-                h += 1;
+            if(s > 0){
+                if(s == 1)
+                    startTimeNum = System.currentTimeMillis();
+                if(s >= 60) {
+                    s -= (s/60)*60;
+                    if(s % 60 == 0)
+                        m += 1;
+                }
+                if(m >= 60){
+                    m -= (m/60)*60;
+                    if(m % 60 == 0)
+                        h += 1;
+                }
 
-            if(h < 10)
-                hh = "0" + h;
-            else
-                hh = "" + h;
-            if(m < 10)
-                mm = "0" + m;
-            else
-                mm = "" + m;
-            if(s < 10)
-                ss = "0" + s;
-            else
-                ss = "" + s;
+                if(h < 10)
+                    hh = "0" + h;
+                else
+                    hh = "" + h;
 
-            hour.setText(hh);
-            minute.setText(mm);
-            second.setText(ss);
+                if(m < 10)
+                    mm = "0" + m;
+                else
+                    mm = "" + m;
+
+                if(s < 10)
+                    ss = "0" + s;
+                else
+                    ss = "" + s;
+
+                hour.setText(hh);
+                minute.setText(mm);
+                second.setText(ss);
+            }
+
         });
 
         // ------------------------------ 데이터 수신부 ----------------------------- //
-
         bt.setBluetoothConnectionListener(new BluetoothSPP.BluetoothConnectionListener() { //연결됐을 때
             public void onDeviceConnected(String name, String address) {
 //                TextView isConnect = getActivity().findViewById(R.id.isConnect);
@@ -126,7 +189,6 @@ public class RecordFragment extends Fragment {
                         , "연결할 수 없습니다.", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         //기기연결 버튼 (DeviceList로 연결)
         Button btnConnect = rootView.findViewById(R.id.btnConnect); //연결시도

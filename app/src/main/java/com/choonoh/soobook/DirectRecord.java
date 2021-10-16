@@ -25,14 +25,11 @@ public class DirectRecord extends AppCompatActivity {
 
     Calendar myCalendar = Calendar.getInstance();
 
-    DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, month);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel();
-        }
+    DatePickerDialog.OnDateSetListener myDatePicker = (view, year, month, dayOfMonth) -> {
+        myCalendar.set(Calendar.YEAR, year);
+        myCalendar.set(Calendar.MONTH, month);
+        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        updateLabel();
     };
 
         @Override
@@ -50,65 +47,50 @@ public class DirectRecord extends AppCompatActivity {
 
             //날짜 선택 텍스트뷰
             date_picker = findViewById(R.id.date_picker);
-            date_picker.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    new DatePickerDialog(DirectRecord.this, myDatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                }
-            });
+            date_picker.setOnClickListener(v -> new DatePickerDialog(
+                    DirectRecord.this, myDatePicker, myCalendar.get(Calendar.YEAR),
+                    myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show());
 
             //시작 시간 선택 텍스트뷰
             start_time = findViewById(R.id.start_time);
-            start_time.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    Calendar mstartTime = Calendar.getInstance();
-                    int hour = mstartTime.get(Calendar.HOUR_OF_DAY);
-                    int minute = mstartTime.get(Calendar.MINUTE);
-                    TimePickerDialog mTimPicker;
-                    mTimPicker = new TimePickerDialog(DirectRecord.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            String state = "AM";
-                            //선택한 시간이 12 넘을 경우 "PM"으로 변경 및 -12시간 하여 출력
-                            if(selectedHour > 12){
-                                selectedHour -= 12;
-                                state = "PM";
-                            }
-                            //EditText에 출력할 형식 지정
-                            start_time.setText(state+" "+ selectedHour + "시" + selectedMinute + "분");
-                        }
-                    }, hour, minute, false);
-                    mTimPicker.setTitle("Select Time");
-                    mTimPicker.show();
-                }
+            start_time.setOnClickListener(v -> {
+                Calendar mstartTime = Calendar.getInstance();
+                int hour = mstartTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mstartTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimPicker;
+                mTimPicker = new TimePickerDialog(DirectRecord.this, (timePicker, selectedHour, selectedMinute) -> {
+                    String state = "AM";
+                    //선택한 시간이 12 넘을 경우 "PM"으로 변경 및 -12시간 하여 출력
+                    if(selectedHour > 12){
+                        selectedHour -= 12;
+                        state = "PM";
+                    }
+                    //EditText에 출력할 형식 지정
+                    start_time.setText(state+" "+ selectedHour + "시" + selectedMinute + "분");
+                }, hour, minute, false);
+                mTimPicker.setTitle("Select Time");
+                mTimPicker.show();
             });
 
             //종료 시간 선택 텍스트뷰
             end_time = findViewById(R.id.end_time);
-            end_time.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    Calendar mendTime = Calendar.getInstance();
-                    int hour = mendTime.get(Calendar.HOUR_OF_DAY);
-                    int minute = mendTime.get(Calendar.MINUTE);
-                    TimePickerDialog mTimPicker;
-                    mTimPicker = new TimePickerDialog(DirectRecord.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                            String state = "AM";
-                            //선택한 시간이 12 넘을 경우 "PM"으로 변경 및 -12시간 하여 출력
-                            if(selectedHour > 12){
-                                selectedHour -= 12;
-                                state = "PM";
-                            }
-                            //EditText에 출력할 형식 지정
-                            end_time.setText(state + " " + selectedHour + "시" + selectedMinute + "분");
-                        }
-                    }, hour, minute, false);
-                    mTimPicker.setTitle("Select Time");
-                    mTimPicker.show();
-                }
+            end_time.setOnClickListener(v -> {
+                Calendar mendTime = Calendar.getInstance();
+                int hour = mendTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mendTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimPicker;
+                mTimPicker = new TimePickerDialog(DirectRecord.this, (timePicker, selectedHour, selectedMinute) -> {
+                    String state = "AM";
+                    //선택한 시간이 12 넘을 경우 "PM"으로 변경 및 -12시간 하여 출력
+                    if(selectedHour > 12){
+                        selectedHour -= 12;
+                        state = "PM";
+                    }
+                    //EditText에 출력할 형식 지정
+                    end_time.setText(state + " " + selectedHour + "시" + selectedMinute + "분");
+                }, hour, minute, false);
+                mTimPicker.setTitle("Select Time");
+                mTimPicker.show();
             });
 
             select_read_book = findViewById(R.id.select_read_book);
@@ -117,7 +99,6 @@ public class DirectRecord extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             });
-
         }
 
         private void updateLabel() {
@@ -127,5 +108,4 @@ public class DirectRecord extends AppCompatActivity {
             date_picker = findViewById(R.id.date_picker);
             date_picker.setText(sdf.format(myCalendar.getTime()));
         }
-
 }

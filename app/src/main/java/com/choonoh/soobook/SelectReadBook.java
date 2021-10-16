@@ -52,6 +52,8 @@ public class SelectReadBook extends AppCompatActivity {
                     book_title = mylibList.getTitle();
                     book_auth = mylibList.getauth();
                     book_pub = mylibList.getPub();
+                    book_isbn = mylibList.getisbn();
+
                     myLibLists[i++] = mylibList;
                     Log.e("myLibLists", "" + (i-1) + "th title: " + myLibLists[(i-1)].img);
 
@@ -73,6 +75,7 @@ public class SelectReadBook extends AppCompatActivity {
             intent.putExtra("title", myLibLists[(position)].title);
             intent.putExtra("auth", myLibLists[(position)].auth);
             intent.putExtra("pub", myLibLists[(position)].pub);
+            intent.putExtra("isbn",myLibLists[(position)].isbn);
 
             startActivity(intent);
         });

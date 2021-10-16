@@ -81,17 +81,7 @@ public class Sign_up extends AppCompatActivity {
         String user_email= currentUser.getEmail();
         String user_nick = et_nick.getText().toString();
 
-        //db에 user 추가
-        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
-        Map<String, Object> childUpdates = new HashMap<>();
-        Map<String, Object> postValues = null;
-        if(add){
-            FirebaseuserPost post = new FirebaseuserPost(user_email, user_UID, user_nick, state, pic);
-            postValues = post.toMap();
-        }
-        String root ="/User/"+user_UID;
-        childUpdates.put(root, postValues);
-        mPostReference.updateChildren(childUpdates);
+
     }
 
 

@@ -159,7 +159,6 @@ public class BookDetailActivity extends AppCompatActivity {
 
     public void postWishFirebaseDatabase(boolean add){
         SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
-        //시간 좀 안맞음 수정해야함
         long now = System.currentTimeMillis();
         Date time = new Date(now);
         String time2 = format.format(time);

@@ -7,27 +7,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 @IgnoreExtraProperties
-public class FirebaseMemoPost {
-    public String title;
-    public String content;
-    public String last;
+public class FirebaseReviewPost {
+    public String now;
+    public String review;
+    public String star;
 
-    public FirebaseMemoPost(){
+
+
+    public FirebaseReviewPost(){
         // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
 
-    public FirebaseMemoPost(String title, String content, String last) {
-        this.title = title;
-        this.content = content;
-        this.last = last;
+    public FirebaseReviewPost(String now, String review, String star) {
+        this.now = now;
+        this.review = review;
+        this.star = star;
     }
 
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("title",title);
-        result.put("content", content);
-        result.put("last",last);
+        result.put("now",now);
+        result.put("review", review);
+        result.put("star", star);
         return result;
     }
 }

@@ -9,6 +9,16 @@ public class MylibList {
     String auth;
     String pub;
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    String content;
+
     public String getTitle() {
         return title;
     }

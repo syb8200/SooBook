@@ -162,44 +162,61 @@ public class WriteMemo extends AppCompatActivity {
             Map<String, Object> childUpdates = new HashMap<>();
             Map<String, Object> postValues = null;
             if(true){
-                FirebaseMemoPost post = new FirebaseMemoPost(s_title, s_content, s_last, "5");
+                FirebaseMemoPost post = new FirebaseMemoPost(s_title, s_content, s_last);
                 postValues = post.toMap();
             }
 
             String root1 ="Memo/"+user_uid+"/"+isbn+"/"+time2;
+
             childUpdates.put(root1, postValues);
             memoPostReference.updateChildren(childUpdates);
 
-            ValueEventListener postListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if(i == 1){
-                            readBookNum = snapshot.getValue().toString();
-                            plusOne = String.valueOf(Integer.parseInt(readBookNum)+1);
-                            Log.e("readBookNum", readBookNum);
+            if(!one_line_review.getText().toString().equals("")){
+                ValueEventListener postListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            if(i == 1){
+                                readBookNum = snapshot.getValue().toString();
+                                plusOne = String.valueOf(Integer.parseInt(readBookNum)+1);
+                                Log.e("readBookNum", readBookNum);
 
-                            DatabaseReference hopperRef = database.getReference("ReadTime/"+user_uid+"/").child("info");
-                            Map<String, Object> hopperUpdates = new HashMap<>();
-                            hopperUpdates.put("readBookNum", plusOne);
+                                DatabaseReference hopperRef = database.getReference("ReadTime/"+user_uid+"/").child("info");
+                                Map<String, Object> hopperUpdates = new HashMap<>();
+                                hopperUpdates.put("readBookNum", plusOne);
 
-                            hopperRef.updateChildren(hopperUpdates);
+                                hopperRef.updateChildren(hopperUpdates);
+                            }
+                            i++;
                         }
-                        i++;
+
+                        Intent intent = new Intent(WriteMemo.this, Home.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+
                     }
-                    
-                    Intent intent = new Intent(WriteMemo.this, Home.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Getting Post failed, log a message
+                        Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
+                    }
+                };
+                mPostReference.addValueEventListener(postListener);
+
+                if(true){
+                    FirebaseReviewPost post = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5");
+                    postValues = post.toMap();
                 }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Getting Post failed, log a message
-                    Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
-                }
-            };
-            mPostReference.addValueEventListener(postListener);
+                String root2 = "Review/"+user_uid+"/"+isbn;
+                childUpdates.put(root2, postValues);
+                memoPostReference.updateChildren(childUpdates);
+            }
+
+            Intent intent = new Intent(WriteMemo.this, Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
 
 
         });

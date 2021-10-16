@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
@@ -53,6 +54,7 @@ public class WriteMemo extends AppCompatActivity {
     EditText memo_title, memo_content, memo_last;
     Button save_btn;
     Bitmap bitmap;
+    String nick;
     int i;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -88,6 +90,31 @@ public class WriteMemo extends AppCompatActivity {
         memo_title = findViewById(R.id.memo_title);
         memo_content = findViewById(R.id.memo_content);
         memo_last = findViewById(R.id.memo_last);
+
+
+        DatabaseReference databaseReference = database.getReference("User/" + user_uid + "/nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Object value = snapshot.getValue(Object.class);
+                nick = value.toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+
+
+
+
 
         Thread mThread = new Thread() {
             @Override
@@ -153,7 +180,6 @@ public class WriteMemo extends AppCompatActivity {
             String time2 = format.format(time);
             DatabaseReference memoPostReference = FirebaseDatabase.getInstance().getReference();
 
-
             DatabaseReference mPostReference = database.getReference("ReadTime/"+user_uid+"/info/");
             s_title = memo_title.getText().toString();
             s_content = memo_content.getText().toString();
@@ -162,7 +188,7 @@ public class WriteMemo extends AppCompatActivity {
             Map<String, Object> childUpdates = new HashMap<>();
             Map<String, Object> postValues = null;
             if(true){
-                FirebaseMemoPost post = new FirebaseMemoPost(s_title, s_content, s_last);
+                FirebaseMemoPost post = new FirebaseMemoPost(s_title, s_content, s_last, nick);
                 postValues = post.toMap();
             }
 

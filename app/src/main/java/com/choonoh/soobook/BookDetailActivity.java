@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -52,6 +53,7 @@ public class BookDetailActivity extends AppCompatActivity {
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
     String user_UID = currentUser.getUid();
     String user_email = currentUser.getEmail();
+    String user_state;
     static ArrayList<String> arrayIndex = new ArrayList<String>();
     List<ReviewList> reviewList;
     RecyclerView recyclerView;
@@ -79,13 +81,18 @@ public class BookDetailActivity extends AppCompatActivity {
         String user_UID = currentUser.getUid();
         String user_email = currentUser.getEmail();
 
+
+        //리뷰 리스트
         RecyclerView recyclerView =findViewById(R.id.review_recycler_view);
         ReviewAdapter adapter = new ReviewAdapter(BookDetailActivity.this, reviewList);
         recyclerView.setLayoutManager(new LinearLayoutManager(BookDetailActivity.this));
         recyclerView.setAdapter(adapter);
 
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         DatabaseReference databaseReference = database.getReference("Review/"+isbn_txt_s+"/"); // DB 테이블 연결
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -95,19 +102,17 @@ public class BookDetailActivity extends AppCompatActivity {
 
                     review_title = reviewList.getReview();
                     Log.e("review_title", review_title); // 에러문 출력
+
+                 //   String myuid = reviewList.setMyd(user_UID);
+                //    myuid = reviewList.getMyuid();
+
+
                    // review_content = reviewList.getContent();
-
-
 
                     adapter.addItem(reviewList);
                 }
                 recyclerView.setAdapter(adapter);
-
             }
-
-
-
-
 
 
             private void PutDataIntoRecyclerView(List<ReviewList> reviewList){
@@ -121,6 +126,7 @@ public class BookDetailActivity extends AppCompatActivity {
             }
         });
 
+        //뒤로가기 버튼
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(v -> {
             Intent intent=new Intent(BookDetailActivity.this, Home.class);

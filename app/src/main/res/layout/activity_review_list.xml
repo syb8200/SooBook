@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="10dp"
+        android:layout_marginVertical="15dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -24,21 +24,22 @@
                 android:id="@+id/review_nick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="8dp"
                 android:text="review title"
                 android:textColor="@color/sb_title"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:fontFamily="@font/nanumgothicbold"/>
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
                     android:layout_marginLeft="3dp"
                     android:background="@drawable/star_rate"/>
 
@@ -49,13 +50,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="1dp"
                     android:text="5"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     android:textColor="@color/sb_title"
                     android:fontFamily="@font/nanumgothic"
                     android:maxLines="1"
                     android:ellipsize="end"/>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/myuid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:text="uid 안보이지롱"
+                android:textSize="3sp"
+                android:visibility="invisible"/>
+
+
         </LinearLayout>
 
         <TextView
@@ -63,9 +76,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:text="내용이에요"
-            android:textSize="11dp"
+            android:textSize="12dp"
             android:textColor="@color/sb_title"
             android:fontFamily="@font/nanumgothic"/>
     </LinearLayout>

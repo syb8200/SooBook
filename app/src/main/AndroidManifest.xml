@@ -42,7 +42,7 @@
         <activity android:name=".Home"/>
         <activity android:name=".SearchBook"/>
         <activity android:name=".QrReaderActivity"/>
-        <activity android:name=".Mylib"/>
+        <activity android:name=".RecordHistoryActivity"/>
         <activity android:name=".SearchBookTitle"/>
         <activity android:name=".Settings"/>
         <activity android:name=".WriteMemo" android:windowSoftInputMode="adjustPan"/>

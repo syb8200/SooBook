@@ -154,10 +154,10 @@ public class WriteMemo extends AppCompatActivity {
         radio_right = findViewById(R.id.radio_right);
         one_line_review = (EditText)findViewById(R.id.one_line_review);
 
-        //뒤로가기
+        //뒤로가기 버튼
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(v -> {
-            Intent intent=new Intent(WriteMemo.this, SelectReadBook.class);
+            Intent intent=new Intent(WriteMemo.this, RecordFragment.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
@@ -191,7 +191,7 @@ public class WriteMemo extends AppCompatActivity {
                         memoPostReference.updateChildren(childUpdates);
 
 
-                        FirebaseReviewPost post2 = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5", nick);
+                        FirebaseReviewPost post2 = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5", nick, user_uid);
                         postValues = post2.toMap();
 
                         String root2 = "Review/"+isbn+"/"+user_uid;

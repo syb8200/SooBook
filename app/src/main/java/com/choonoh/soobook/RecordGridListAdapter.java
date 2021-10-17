@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridListAdapter extends BaseAdapter {
+public class RecordGridListAdapter extends BaseAdapter {
 
     ArrayList<MylibList> items = new ArrayList<MylibList>();
     Context context;
@@ -61,11 +61,11 @@ public class GridListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_item, parent, false);
         }
 
-    //    TextView numberText = convertView.findViewById(R.id.numberText);
+        //    TextView numberText = convertView.findViewById(R.id.numberText);
         ImageView bookImg = convertView.findViewById(R.id.book_img);
         Uri book= Uri.parse(mylibList.getImg());
         Log.e("uri", book.toString());
-   //     numberText.setText(mylibList.getTitle());
+        //     numberText.setText(mylibList.getTitle());
 
         Glide.with(context).load(book).into(bookImg);
 
@@ -73,12 +73,12 @@ public class GridListAdapter extends BaseAdapter {
         convertView.setOnClickListener(v ->  {
 
             String title = items.get(position).getTitle();
-          String auth = items.get(position).getauth();
-         String pub = items.get(position).getPub();
+            String auth = items.get(position).getauth();
+            String pub = items.get(position).getPub();
             String isbn = items.get(position).getisbn();
             String cover = items.get(position).getImg();
 
-            Intent intent = new Intent(context,RecordHistoryActivity.class);
+            Intent intent = new Intent(context,WriteMemo.class);
             intent.putExtra("title", title);
             intent.putExtra("auth", auth);
             intent.putExtra("pub",pub);

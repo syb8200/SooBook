@@ -2,41 +2,33 @@ package com.choonoh.soobook;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHolder> {
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-
     private final Context mContext;
-    private List<ReviewList> mData;
+    private List<HistoryReviewList> mData;
 
-    public ReviewAdapter(Context mContext, List<ReviewList> mData) {
+    public HistoryAdapter(Context mContext, List<HistoryReviewList> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
-    public void addItem(ReviewList item){
+    public void addItem(HistoryReviewList item){
         mData.add(item);
 
     }
@@ -47,7 +39,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
     public MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View v;
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        v = inflater.inflate(R.layout.activity_review_list, parent, false);
+        v = inflater.inflate(R.layout.activity_record_history_list, parent, false);
 
         return new MyViewHolder(v);
     }
@@ -56,27 +48,27 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
         String user_UID = currentUser.getUid();
 
-        holder.nick.setText(mData.get(position).getNick());
-        holder.review.setText(mData.get(position).getReview());
-        holder.star.setText(mData.get(position).getStar());
-        holder.myuid.setText(mData.get(position).getUid());
-        
-
+        holder.title.setText(mData.get(position).getTitle());
+        holder.date.setText(mData.get(position).getLast());
+/*
         //리스트 아이템 클릭 시 데이터 전달
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 String user_UID = currentUser.getUid();
+                //String myuid;
 
-                String nick = holder.nick.getText().toString();
-                String uid = holder.myuid.getText().toString();
+                String nick = holder.title.getText().toString();
+                String uid = holder.date.getText().toString();
+
+
                 Intent intent = new Intent(mContext,FriendLibrary.class);
                 intent.putExtra("nick", nick);
                 intent.putExtra("uid", uid);
 
                 mContext.startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override
@@ -86,18 +78,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView nick;
-        TextView review;
-        TextView star;
-        TextView myuid;
+        TextView title;
+        TextView date;
 
         public MyViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-
-            nick = itemView.findViewById(R.id.review_nick);
-            review = itemView.findViewById(R.id.review_content);
-            star = itemView.findViewById(R.id.tv_star);
-            myuid = itemView.findViewById(R.id.myuid);
+            title = itemView.findViewById(R.id.histoli_title);
+            date = itemView.findViewById(R.id.histoli_date);
 
         }
     }

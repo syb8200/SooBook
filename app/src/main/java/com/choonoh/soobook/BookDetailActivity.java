@@ -8,19 +8,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -28,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -39,17 +47,79 @@ public class BookDetailActivity extends AppCompatActivity {
     ImageButton back_btn;
     String isbn_txt, title_txt, auth_txt, pub_txt, star_txt, date_txt, disc_txt, cover_txt;
     String isbn_txt_s, title_txt_s, auth_txt_s, pub_txt_s, star_txt_s, date_txt_s, disc_txt_s, cover_txt_s;
-
+    String review_title, review_content;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
     String user_UID = currentUser.getUid();
     String user_email = currentUser.getEmail();
     static ArrayList<String> arrayIndex = new ArrayList<String>();
+    List<ReviewList> reviewList;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
+
+        setDetailView();
+
+        //책 검색에서 넘어옴
+        getIntentString_search();
+        setTextViews_search();
+
+        //기존
+        getIntentString();
+        setTextViews();
+
+        reviewList = new ArrayList<>();
+        recyclerView = findViewById(R.id.review_recycler_view);
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String user_UID = currentUser.getUid();
+        String user_email = currentUser.getEmail();
+
+        RecyclerView recyclerView =findViewById(R.id.review_recycler_view);
+        ReviewAdapter adapter = new ReviewAdapter(BookDetailActivity.this, reviewList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(BookDetailActivity.this));
+        recyclerView.setAdapter(adapter);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+        DatabaseReference databaseReference = database.getReference("Review/"+isbn_txt_s+"/"); // DB 테이블 연결
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    ReviewList reviewList = snapshot.getValue(ReviewList.class);
+
+                    review_title = reviewList.getReview();
+                    Log.e("review_title", review_title); // 에러문 출력
+                   // review_content = reviewList.getContent();
+
+
+
+                    adapter.addItem(reviewList);
+                }
+                recyclerView.setAdapter(adapter);
+
+            }
+
+
+
+
+
+
+            private void PutDataIntoRecyclerView(List<ReviewList> reviewList){
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("BookDetailActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+        });
 
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(v -> {
@@ -69,7 +139,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     Handler handler = new Handler();
                     handler.postDelayed(toast::cancel, 1000);
                     //finish();
-                } else {
+                } else {//이거 동작 안함
                     Toast toast = Toast.makeText(BookDetailActivity.this, "이미 등록한 책입니다.", Toast.LENGTH_SHORT);
                     toast.show();
                     Handler handler = new Handler();
@@ -121,15 +191,6 @@ public class BookDetailActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
-        setDetailView();
-
-        //책 검색에서 넘어옴
-        getIntentString_search();
-        setTextViews_search();
-
-        //기존
-        getIntentString();
-        setTextViews();
 
         String isbn_s = isbn.getText().toString();
         Log.e(this.getClass().getName(), isbn_s+"클릭");

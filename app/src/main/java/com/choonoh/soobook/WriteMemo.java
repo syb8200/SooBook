@@ -17,9 +17,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -53,15 +56,21 @@ public class WriteMemo extends AppCompatActivity {
     EditText memo_title, memo_content, memo_last;
     Button save_btn;
     Bitmap bitmap;
+    String nick,  time2;
     int i;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+    FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
 
     private String user_uid = currentUser.getUid();
+    private String user_email = currentUser.getEmail();
     private ArrayList<SpinnerItem> mSpinnerList;
     private SpinnerAdapter mAdapter;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference mDatabase;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -88,6 +97,17 @@ public class WriteMemo extends AppCompatActivity {
         memo_title = findViewById(R.id.memo_title);
         memo_content = findViewById(R.id.memo_content);
         memo_last = findViewById(R.id.memo_last);
+
+        SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
+        long now = System.currentTimeMillis();
+        Date time = new Date(now);
+        time2 = format.format(time);
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+
 
         Thread mThread = new Thread() {
             @Override
@@ -144,14 +164,44 @@ public class WriteMemo extends AppCompatActivity {
 
         initList();
 
-       i = 0;
-        save_btn.setOnClickListener(v -> {
 
-            SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
-            long now = System.currentTimeMillis();
-            Date time = new Date(now);
-            String time2 = format.format(time);
-            DatabaseReference memoPostReference = FirebaseDatabase.getInstance().getReference();
+        i = 0;
+        save_btn.setOnClickListener(v -> {
+            mDatabase.child("User").child(user_uid).child("nick").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                    else {
+                        nick = String.valueOf(task.getResult().getValue());
+
+
+
+                        DatabaseReference memoPostReference = FirebaseDatabase.getInstance().getReference();
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        Map<String, Object> postValues = null;
+
+                        FirebaseMemoPost post1 = new FirebaseMemoPost(s_title, s_content, s_last, nick);
+                        postValues = post1.toMap();
+
+                        String root1 ="Memo/"+user_uid+"/"+isbn+"/"+time2;
+
+                        childUpdates.put(root1, postValues);
+                        memoPostReference.updateChildren(childUpdates);
+
+
+                        FirebaseReviewPost post2 = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5", nick);
+                        postValues = post2.toMap();
+
+                        String root2 = "Review/"+isbn+"/"+user_uid;
+                        childUpdates.put(root2, postValues);
+                        memoPostReference.updateChildren(childUpdates);
+                    }
+                }
+            });
+
+
 
 
             DatabaseReference mPostReference = database.getReference("ReadTime/"+user_uid+"/info/");
@@ -159,47 +209,52 @@ public class WriteMemo extends AppCompatActivity {
             s_content = memo_content.getText().toString();
             s_last = memo_last.getText().toString();
 
-            Map<String, Object> childUpdates = new HashMap<>();
-            Map<String, Object> postValues = null;
-            if(true){
-                FirebaseMemoPost post = new FirebaseMemoPost(s_title, s_content, s_last, "5");
-                postValues = post.toMap();
+
+
+
+
+
+            if(!one_line_review.getText().toString().equals("")){
+                ValueEventListener postListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            if(i == 1){
+                                readBookNum = snapshot.getValue().toString();
+                                plusOne = String.valueOf(Integer.parseInt(readBookNum)+1);
+                                Log.e("readBookNum", readBookNum);
+
+                                DatabaseReference hopperRef = database.getReference("ReadTime/"+user_uid+"/").child("info");
+                                Map<String, Object> hopperUpdates = new HashMap<>();
+                                hopperUpdates.put("readBookNum", plusOne);
+
+                                hopperRef.updateChildren(hopperUpdates);
+                            }
+                            i++;
+                        }
+                        postFirebaseDatabase(true);
+                        postFirebaseDatabase1(false);
+                        Intent intent = new Intent(WriteMemo.this, Home.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Getting Post failed, log a message
+                        Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
+                    }
+                };
+                mPostReference.addValueEventListener(postListener);
+
+
             }
 
-            String root1 ="Memo/"+user_uid+"/"+isbn+"/"+time2;
-            childUpdates.put(root1, postValues);
-            memoPostReference.updateChildren(childUpdates);
-
-            ValueEventListener postListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if(i == 1){
-                            readBookNum = snapshot.getValue().toString();
-                            plusOne = String.valueOf(Integer.parseInt(readBookNum)+1);
-                            Log.e("readBookNum", readBookNum);
-
-                            DatabaseReference hopperRef = database.getReference("ReadTime/"+user_uid+"/").child("info");
-                            Map<String, Object> hopperUpdates = new HashMap<>();
-                            hopperUpdates.put("readBookNum", plusOne);
-
-                            hopperRef.updateChildren(hopperUpdates);
-                        }
-                        i++;
-                    }
-                    
-                    Intent intent = new Intent(WriteMemo.this, Home.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Getting Post failed, log a message
-                    Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
-                }
-            };
-            mPostReference.addValueEventListener(postListener);
+            Intent intent = new Intent(WriteMemo.this, Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
 
 
         });
@@ -254,4 +309,42 @@ public class WriteMemo extends AppCompatActivity {
         mSpinnerList.add(new SpinnerItem(R.drawable.stars_2));
         mSpinnerList.add(new SpinnerItem(R.drawable.stars_1));
     }
+
+    public void postFirebaseDatabase(boolean add){
+        SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분", Locale.KOREA);
+        //시간 좀 안맞음 수정해야함
+        long now = System.currentTimeMillis();
+        Date time = new Date(now);
+        String time2 = format.format(time);
+        Intent intent2 = getIntent();
+        img = intent2.getStringExtra("img");
+        auth = intent2.getStringExtra("auth");
+        pub = intent2.getStringExtra("pub");
+        title = intent2.getStringExtra("title");
+        isbn = intent2.getStringExtra("isbn");
+        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
+        if(add){
+            FirebaseMylibPost post = new FirebaseMylibPost(user_uid, user_email, isbn, title,img, time2, auth, pub);
+            postValues = post.toMap();
+        }
+        String root ="/Oldlib/"+user_uid+"/"+isbn;
+        childUpdates.put(root, postValues);
+        mPostReference.updateChildren(childUpdates);
+    }
+    public void postFirebaseDatabase1(boolean add){
+
+        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
+        if(add){
+            FirebaseMylibPost post = new FirebaseMylibPost(null,null,null,null,null,null,null,null);
+            postValues = post.toMap();
+        }
+        String root ="/Mylib/"+user_uid+"/"+isbn;
+        childUpdates.put(root, postValues);
+        mPostReference.updateChildren(childUpdates);
+    }
+
 }

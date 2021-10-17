@@ -13,11 +13,17 @@
         android:fontFamily="@font/nanumgothicbold"
         android:text="작성한 제목"
         android:textColor="@color/sb_title"
-        android:textSize="12sp"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" >
     <TextView
         android:id="@+id/histoli_date"
         android:layout_width="wrap_content"
@@ -25,12 +31,8 @@
         android:fontFamily="@font/nanumgothic"
         android:text="200"
         android:textColor="@color/sb_gray3"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/page"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/histoli_title"
-        app:layout_constraintHorizontal_bias="0.99"/>
+        android:textSize="11sp"
+        />
     <TextView
         android:id="@+id/page"
         android:layout_width="wrap_content"
@@ -38,10 +40,6 @@
         android:fontFamily="@font/nanumgothic"
         android:text="페이지"
         android:textColor="@color/sb_gray3"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="histoli_title"
-        app:layout_constraintHorizontal_bias="1"/>
+        android:textSize="11sp"/>
+</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

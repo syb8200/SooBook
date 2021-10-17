@@ -12,6 +12,7 @@ public class FirebaseReviewPost {
     public String review;
     public String star;
     public String nick;
+    public String uid;
 
 
 
@@ -19,11 +20,12 @@ public class FirebaseReviewPost {
         // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
 
-    public FirebaseReviewPost(String now, String review, String star, String nick) {
+    public FirebaseReviewPost(String now, String review, String star, String nick, String uid) {
         this.now = now;
         this.review = review;
         this.star = star;
         this.nick = nick;
+        this.uid=uid;
     }
 
     @Exclude
@@ -33,6 +35,7 @@ public class FirebaseReviewPost {
         result.put("review", review);
         result.put("star", star);
         result.put("nick",nick);
+        result.put("uid",uid);
         return result;
     }
 }

@@ -191,7 +191,7 @@ public class WriteMemo extends AppCompatActivity {
                         memoPostReference.updateChildren(childUpdates);
 
 
-                        FirebaseReviewPost post2 = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5", nick);
+                        FirebaseReviewPost post2 = new FirebaseReviewPost(time2, one_line_review.getText().toString(), "5", nick, user_uid);
                         postValues = post2.toMap();
 
                         String root2 = "Review/"+isbn+"/"+user_uid;

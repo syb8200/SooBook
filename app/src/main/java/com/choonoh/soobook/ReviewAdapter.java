@@ -2,6 +2,7 @@ package com.choonoh.soobook;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -54,7 +59,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
         holder.nick.setText(mData.get(position).getNick());
         holder.review.setText(mData.get(position).getReview());
         holder.star.setText(mData.get(position).getStar());
-        holder.myuid.setText(user_UID);
+        holder.myuid.setText(mData.get(position).getUid());
         
 
         //리스트 아이템 클릭 시 데이터 전달
@@ -65,8 +70,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
 
                 String nick = holder.nick.getText().toString();
                 String uid = holder.myuid.getText().toString();
-
-
                 Intent intent = new Intent(mContext,FriendLibrary.class);
                 intent.putExtra("nick", nick);
                 intent.putExtra("uid", uid);

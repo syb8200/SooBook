@@ -1,29 +1,25 @@
 package com.choonoh.soobook;
 
 public class ReviewList {
-    String myuid;
-    String mystate;
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    String uid;
+
+
     String star;
     String nick;
     String title;
     String review;
     String content;
 
-    public String getMyuid() {
-        return myuid;
-    }
-    public String setMyuid(String myuid) {
-        this.myuid = myuid;
-        return myuid;
-    }
 
-    public String getMystate() {
-        return myuid;
-    }
-    public String setMystate(String mystate) {
-        this.mystate = mystate;
-        return mystate;
-    }
+
 
     public String getStar() {
         return star;

@@ -20,8 +20,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,15 +52,13 @@ public class FriendLibrary extends AppCompatActivity {
 
     private Intent intent;
     private FirebaseAuth mAuth;
-    private DatabaseReference FriendRef;
-
+    private DatabaseReference mDatabase;
     String currentUserId, user_email, user_UID, f_nickname, f_myuid, f_state;
 
     Boolean LikeChecker = false;
     int countLikes;
 
     private List<ReviewList> mData;
-
     FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
 
 
@@ -66,8 +66,7 @@ public class FriendLibrary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_library);
-
-        nickname_tv = findViewById(R.id.nickname_tv);
+       nickname_tv = findViewById(R.id.nickname_tv);
         state_tv = findViewById(R.id.state_tv);
 
 
@@ -83,37 +82,23 @@ public class FriendLibrary extends AppCompatActivity {
         intent = getIntent();
         f_myuid = intent.getStringExtra("uid");
         f_nickname = intent.getStringExtra("nick");
-        f_state = intent.getStringExtra("state");
+        Log.e("친구 uid",f_myuid);
 
+        nickname_tv.setText(f_nickname);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        //친구서재로 띄우기
-        DatabaseReference databaseReference = database.getReference().child("User").child(f_myuid).child("nick"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("User").child(f_myuid).child("state").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                nickname_tv.setText(f_nickname);
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                } else {
+                    f_state = String.valueOf(task.getResult().getValue());
+                    state_tv.setText(f_state);
+
+                }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        //친구 상태메시지 친구서재로 넘김
-        DatabaseReference databaseReference2 = database.getReference().child("User").child(f_myuid).child("state"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //Object value = snapshot.getValue(Object.class);
-                //state_tv.setText(value.toString());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        } );
 
         //친구 프로필 이미지 친구서재로 띄우기 (도움!)
         profile_img = findViewById(R.id.profile_img);

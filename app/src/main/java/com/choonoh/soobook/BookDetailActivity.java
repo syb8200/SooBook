@@ -145,7 +145,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     Handler handler = new Handler();
                     handler.postDelayed(toast::cancel, 1000);
                     //finish();
-                } else {//이거 동작 안함
+                } else {
                     Toast toast = Toast.makeText(BookDetailActivity.this, "이미 등록한 책입니다.", Toast.LENGTH_SHORT);
                     toast.show();
                     Handler handler = new Handler();

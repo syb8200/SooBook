@@ -48,7 +48,7 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_img"
+            android:id="@+id/frprofile_img"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginLeft="20dp"
@@ -118,6 +118,7 @@
                 android:fontFamily="@font/nanumgothicbold"/>
 
             <GridView
+                android:id="@+id/frlib_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnWidth="100dp"
@@ -137,6 +138,7 @@
                 android:fontFamily="@font/nanumgothicbold"/>
 
             <GridView
+                android:id="@+id/frold_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnWidth="100dp"

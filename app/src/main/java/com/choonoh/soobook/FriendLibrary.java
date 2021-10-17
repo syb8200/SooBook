@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,7 +36,9 @@ import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
@@ -60,7 +63,7 @@ public class FriendLibrary extends AppCompatActivity {
 
     private List<ReviewList> mData;
     FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
-
+    String book_img, book_isbn, book_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +104,7 @@ public class FriendLibrary extends AppCompatActivity {
         } );
 
         //친구 프로필 이미지 친구서재로 띄우기 (도움!)
-        profile_img = findViewById(R.id.profile_img);
+        profile_img = findViewById(R.id.frprofile_img);
 
 
         FirebaseStorage picstorage = FirebaseStorage.getInstance("gs://soobook-donghwa.appspot.com");
@@ -111,7 +114,7 @@ public class FriendLibrary extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 //이미지 로드 성공시
-                Glide.with(getApplicationContext())
+                Glide.with(FriendLibrary.this)
                         .load(uri)
                         .into(profile_img);
             }
@@ -138,28 +141,87 @@ public class FriendLibrary extends AppCompatActivity {
 
         //팔로우 버튼
         follow_btn = findViewById(R.id.follow_btn);
-        follow_btn.setOnClickListener(new View.OnClickListener(){
+        follow_btn.setOnClickListener(v->{
 
+
+                                DatabaseReference frPostReference = FirebaseDatabase.getInstance().getReference();
+                                Map<String, Object> childUpdates = new HashMap<>();
+                                Map<String, Object> postValues = null;
+
+                                FirebaseFrPost post1 = new FirebaseFrPost(f_myuid,f_nickname);
+                                postValues = post1.toMap();
+
+                                String root1 ="Friend/"+currentUserId+"/"+f_myuid;
+
+                                childUpdates.put(root1, postValues);
+                                frPostReference.updateChildren(childUpdates);
+
+            Toast.makeText(this, "친구가 되었습니다.", Toast.LENGTH_SHORT).show();
+
+
+    });
+
+        GridView gridView = findViewById(R.id.frlib_gridview);
+        GridListAdapter adapter = new GridListAdapter();
+
+
+        ///그리드뷰 스크롤 없애기기
+        gridView.setVerticalScrollBarEnabled(false);
+
+
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+        DatabaseReference databaseReference = database.getReference("Mylib/"+f_myuid+"/"); // DB 테이블 연결
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v){
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Bundle bundle = new Bundle();
-                bundle.putString("user_email", user_email);
-                bundle.putString("user_UID", user_UID);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MylibList mylibList = snapshot.getValue(MylibList.class);
+                    book_img = mylibList.getImg();
+                    book_isbn = mylibList.getisbn();
+                    book_title = mylibList.getTitle();
 
-
-
+                    adapter.addItem(mylibList);
+                }
+                gridView.setAdapter(adapter);
 
             }
 
-            //Toast toast = Toast.makeText(FriendLibrary.this, "팔로잉을 시작합니다.", Toast.LENGTH_SHORT);
-            //toast.show();
-            //Handler handler = new Handler();
-            //handler.postDelayed(toast::cancel, 1000);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
         });
+        GridView gridView1 = findViewById(R.id.frold_gridview);
+        GridListAdapter adapter1 = new GridListAdapter();
 
-    }
 
+
+        DatabaseReference databaseReference1 = database.getReference("Oldlib/"+f_myuid+"/"); // DB 테이블 연결
+
+        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MylibList mylibList = snapshot.getValue(MylibList.class);
+                    book_img = mylibList.getImg();
+                    book_isbn = mylibList.getisbn();
+                    book_title = mylibList.getTitle();
+
+                    adapter1.addItem(mylibList);
+                }
+                gridView1.setAdapter(adapter1);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Oldlib", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+        });
     /*
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -186,4 +248,4 @@ public class FriendLibrary extends AppCompatActivity {
     */
 
 
-}
+}}

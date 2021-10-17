@@ -88,11 +88,6 @@ public class RecordHistoryActivity extends AppCompatActivity {
                     HistoryReviewList historyReviewList = snapshot.getValue(HistoryReviewList.class);
 
                     title= historyReviewList.getTitle();
-                 //   Log.e("review_title", review_title); // 에러문 출력
-
-                  //  String myuid = historyReviewList.setMyuid(user_UID);
-                  //  myuid = reviewList.getMyuid();
-                    // review_content = reviewList.getContent();
 
                     adapter.addItem(historyReviewList);
                 }

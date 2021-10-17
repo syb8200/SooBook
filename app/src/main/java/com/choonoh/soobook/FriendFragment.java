@@ -60,7 +60,7 @@ public class FriendFragment extends Fragment {
             @Override
             public void onSuccess(Uri uri) {
                 //이미지 로드 성공시
-                Glide.with(getContext())
+                Glide.with(getActivity())
                         .load(uri)
                         .into(fr_iv);
             }

@@ -2,6 +2,7 @@ package com.choonoh.soobook;
 
 public class ReviewList {
     String myuid;
+    String mystate;
     String star;
     String nick;
     String title;
@@ -14,6 +15,14 @@ public class ReviewList {
     public String setMyuid(String myuid) {
         this.myuid = myuid;
         return myuid;
+    }
+
+    public String getMystate() {
+        return myuid;
+    }
+    public String setMystate(String mystate) {
+        this.mystate = mystate;
+        return mystate;
     }
 
     public String getStar() {

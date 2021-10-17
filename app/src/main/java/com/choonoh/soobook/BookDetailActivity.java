@@ -51,8 +51,9 @@ public class BookDetailActivity extends AppCompatActivity {
     String review_title, review_content;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-    final String user_UID = currentUser.getUid();
+    String user_UID = currentUser.getUid();
     String user_email = currentUser.getEmail();
+    String user_state;
     static ArrayList<String> arrayIndex = new ArrayList<String>();
     List<ReviewList> reviewList;
     RecyclerView recyclerView;
@@ -92,6 +93,7 @@ public class BookDetailActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         DatabaseReference databaseReference = database.getReference("Review/"+isbn_txt_s+"/"); // DB 테이블 연결
 
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -103,6 +105,8 @@ public class BookDetailActivity extends AppCompatActivity {
 
                     String myuid = reviewList.setMyuid(user_UID);
                     myuid = reviewList.getMyuid();
+
+
                    // review_content = reviewList.getContent();
 
                     adapter.addItem(reviewList);

@@ -23,6 +23,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
     private final Context mContext;
     private List<ReviewList> mData;
 
@@ -54,13 +55,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
         holder.review.setText(mData.get(position).getReview());
         holder.star.setText(mData.get(position).getStar());
         holder.myuid.setText(user_UID);
+        
 
         //리스트 아이템 클릭 시 데이터 전달
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 String user_UID = currentUser.getUid();
-                //String myuid;
 
                 String nick = holder.nick.getText().toString();
                 String uid = holder.myuid.getText().toString();

@@ -52,7 +52,7 @@ public class FriendLibrary extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference FriendRef;
 
-    String currentUserId, user_email, user_UID, f_nickname, f_myuid;
+    String currentUserId, user_email, user_UID, f_nickname, f_myuid, f_state;
 
     Boolean LikeChecker = false;
     int countLikes;
@@ -81,8 +81,9 @@ public class FriendLibrary extends AppCompatActivity {
 
         //친구 nickname 받기
         intent = getIntent();
-        f_nickname = intent.getStringExtra("nick");
         f_myuid = intent.getStringExtra("uid");
+        f_nickname = intent.getStringExtra("nick");
+        f_state = intent.getStringExtra("state");
 
 
         //친구서재로 띄우기
@@ -105,8 +106,8 @@ public class FriendLibrary extends AppCompatActivity {
         databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Object value = snapshot.getValue(Object.class);
-                state_tv.setText(value.toString());
+                //Object value = snapshot.getValue(Object.class);
+                //state_tv.setText(value.toString());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -117,7 +118,6 @@ public class FriendLibrary extends AppCompatActivity {
         //친구 프로필 이미지 친구서재로 띄우기 (도움!)
         profile_img = findViewById(R.id.profile_img);
 
-        /*
         FirebaseStorage picstorage = FirebaseStorage.getInstance("gs://soobook-donghwa.appspot.com");
         StorageReference storageRef = picstorage.getReference();
 
@@ -136,7 +136,7 @@ public class FriendLibrary extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
             }
         });
-         */
+
 
 
 

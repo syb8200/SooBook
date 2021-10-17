@@ -69,31 +69,24 @@ public class GridListAdapter extends BaseAdapter {
 
         Glide.with(context).load(book).into(bookImg);
 
-        //클릭시 디테일뷰로 넘어감 (근데 제목이랑  isbn이랑 사진밖에 안넘어감)
 
-     /*   convertView.setOnClickListener(v ->  {
+        convertView.setOnClickListener(v ->  {
 
             String title = items.get(position).getTitle();
-     //      String author = items.get(position).getAuthor();
-     //    String publisher = items.get(position).getPublisher();
-        //    String customerReviewRank = items.get(position).getCustomerReviewRank();
+          String auth = items.get(position).getauth();
+         String pub = items.get(position).getPub();
             String isbn = items.get(position).getisbn();
-     //       String pubDate = items.get(position).getPubDate();
-      //      String description = items.get(position).getDescription();
             String cover = items.get(position).getImg();
 
-            Intent intent = new Intent(context,BookDetailActivity.class);
+            Intent intent = new Intent(context,RecordHistoryActivity.class);
             intent.putExtra("title", title);
-         //   intent.putExtra("author", author);
-        //    intent.putExtra("publisher",publisher);
-        //    intent.putExtra("customerReviewRank", customerReviewRank);
+            intent.putExtra("auth", auth);
+            intent.putExtra("pub",pub);
             intent.putExtra("isbn",isbn);
-        //    intent.putExtra("pubDate", pubDate);
-         //   intent.putExtra("description",description);
-            intent.putExtra("coverSmallUrl", cover);
+            intent.putExtra("cover", cover);
 
             context.startActivity(intent);
-        });*/
+        });
         return convertView;
     }
 }

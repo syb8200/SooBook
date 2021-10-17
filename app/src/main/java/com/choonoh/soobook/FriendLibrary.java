@@ -117,11 +117,11 @@ public class FriendLibrary extends AppCompatActivity {
         //친구 프로필 이미지 친구서재로 띄우기 (도움!)
         profile_img = findViewById(R.id.profile_img);
 
-        /*
+
         FirebaseStorage picstorage = FirebaseStorage.getInstance("gs://soobook-donghwa.appspot.com");
         StorageReference storageRef = picstorage.getReference();
 
-        storageRef.child("Profile Images/"+user_UID+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child("Profile Images/"+f_myuid+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 //이미지 로드 성공시
@@ -136,7 +136,7 @@ public class FriendLibrary extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
             }
         });
-         */
+
 
 
 

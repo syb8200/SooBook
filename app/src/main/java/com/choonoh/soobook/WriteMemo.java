@@ -154,10 +154,10 @@ public class WriteMemo extends AppCompatActivity {
         radio_right = findViewById(R.id.radio_right);
         one_line_review = (EditText)findViewById(R.id.one_line_review);
 
-        //뒤로가기
+        //뒤로가기 버튼
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(v -> {
-            Intent intent=new Intent(WriteMemo.this, SelectReadBook.class);
+            Intent intent=new Intent(WriteMemo.this, RecordFragment.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });

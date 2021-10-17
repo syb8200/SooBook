@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class SelectReadBook extends AppCompatActivity {
+    ImageButton back_btn;
     String book_img, book_isbn, book_title, book_auth, book_pub;
     MylibList[] myLibLists = new MylibList[50];
     String nick ="";
@@ -29,13 +31,23 @@ public class SelectReadBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_read_book);
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         String user_UID = currentUser.getUid();
         String user_email = currentUser.getEmail();
 
+        //뒤로가기 버튼
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(v -> {
+            Intent intent=new Intent(SelectReadBook.this, RecordFragment.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+
+
         GridView gridView =findViewById(R.id.list_gridview);
-        GridListAdapter adapter = new GridListAdapter();
+        RecordGridListAdapter adapter = new RecordGridListAdapter();
 
 
         ///그리드뷰 스크롤 없애기기

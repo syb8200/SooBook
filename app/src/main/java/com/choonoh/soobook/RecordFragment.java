@@ -60,11 +60,12 @@ public class RecordFragment extends Fragment {
         });
 
         store_btn = rootView.findViewById(R.id.store_btn);
+
         user_email = bundle.getString("user_email");
         user_UID = bundle.getString("user_UID");
 
         GridView gridView = rootView.findViewById(R.id.list_gridview);
-        GridListAdapter adapter = new GridListAdapter();
+        RecordGridListAdapter adapter = new RecordGridListAdapter();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         DatabaseReference databaseReference = database.getReference("Mylib/"+user_UID+"/"); // DB 테이블 연결

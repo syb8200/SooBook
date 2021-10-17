@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.bluetooth.BluetoothAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -91,7 +92,13 @@ public class RecordFragment extends Fragment {
                 Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
-        gridView.setOnItemClickListener((parent, view, position, id) -> {
+
+        //parent, view, position, id) ->
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+            }
+
             /*
             Intent intent=new Intent(SelectReadBook.this, WriteMemo.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -202,6 +209,7 @@ public class RecordFragment extends Fragment {
             }
         });
 
+
         store_btn.setOnClickListener(v -> {
             endTimeNum = System.currentTimeMillis();
 //yyy-MM-dd hh:mm:ss
@@ -226,6 +234,7 @@ public class RecordFragment extends Fragment {
             String root ="/ReadTime/" + user_UID + "/" + firebaseKey + "/";
             childUpdates.put(root, postValues);
             mPostReference.updateChildren(childUpdates);
+
     });
         return rootView;
     }

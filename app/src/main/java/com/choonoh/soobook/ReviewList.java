@@ -1,11 +1,20 @@
 package com.choonoh.soobook;
 
 public class ReviewList {
+    String myuid;
     String star;
     String nick;
     String title;
     String review;
     String content;
+
+    public String getMyuid() {
+        return myuid;
+    }
+    public String setMyuid(String myuid) {
+        this.myuid = myuid;
+        return myuid;
+    }
 
     public String getStar() {
         return star;

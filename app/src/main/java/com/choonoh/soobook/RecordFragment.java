@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.bluetooth.BluetoothAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,8 +84,10 @@ public class RecordFragment extends Fragment {
                     book_auth = mylibList.getauth();
                     book_pub = mylibList.getPub();
                     adapter.addItem(mylibList);
+                    i++;
                 }
                 gridView.setAdapter(adapter);
+                Log.e("child 갯수", String.valueOf(i)); // 에러문 출력
             }
 
             @Override
@@ -91,7 +95,13 @@ public class RecordFragment extends Fragment {
                 Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
-        gridView.setOnItemClickListener((parent, view, position, id) -> {
+
+        //parent, view, position, id) ->
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+            }
+
             /*
             Intent intent=new Intent(SelectReadBook.this, WriteMemo.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -202,6 +212,7 @@ public class RecordFragment extends Fragment {
             }
         });
 
+
         store_btn.setOnClickListener(v -> {
             endTimeNum = System.currentTimeMillis();
 //yyy-MM-dd hh:mm:ss
@@ -226,6 +237,7 @@ public class RecordFragment extends Fragment {
             String root ="/ReadTime/" + user_UID + "/" + firebaseKey + "/";
             childUpdates.put(root, postValues);
             mPostReference.updateChildren(childUpdates);
+
     });
         return rootView;
     }

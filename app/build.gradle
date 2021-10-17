@@ -59,7 +59,7 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'com.akexorcist:bluetoothspp:1.0.0' // 블루투스
-    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'   // 그래프(차트) 2.2.4   |   3.1.0
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'   // 그래프(차트) 2.2.4   |   3.1.0
 //파이어베이스
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
     implementation 'com.google.firebase:firebase-analytics'

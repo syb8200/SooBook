@@ -103,8 +103,8 @@ public class BookDetailActivity extends AppCompatActivity {
                     review_title = reviewList.getReview();
                     Log.e("review_title", review_title); // 에러문 출력
 
-                    String myuid = reviewList.setMyuid(user_UID);
-                    myuid = reviewList.getMyuid();
+                 //   String myuid = reviewList.setMyd(user_UID);
+                //    myuid = reviewList.getMyuid();
 
 
                    // review_content = reviewList.getContent();

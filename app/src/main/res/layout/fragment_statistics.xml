@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".StatisticsFragment">
+    tools:context=".StatisticsFragment"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,8 +25,9 @@
             android:id="@+id/progressBar"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:scaleY="4"/>
+            android:layout_height="40dp"
+            android:scaleY="6"
+            android:progressTint="#FF5F68" />
 
         <TextView
             android:id="@+id/no_target_books_txt"
@@ -35,14 +39,14 @@
             android:layout_gravity="center"
             android:visibility="gone" />
 
-            <Button
-                android:id="@+id/target_books_btn"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:text="독서량 설정하기"
-                android:textSize="10sp"
-                android:layout_gravity="center"
-                android:visibility="gone"/>
+        <Button
+            android:id="@+id/target_books_btn"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:text="독서량 설정하기"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -95,7 +99,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/unit"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="1"/>
+                    app:layout_constraintHorizontal_bias="1"/>
 
             <TextView
                 android:id="@+id/unit"
@@ -122,19 +126,27 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-<!--
-            <TextView
+            <!--
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="독서시간 색깔들 들어갈 자리요..."
-                android:textSize="15sp"
-                android:textColor="@color/black"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/unit2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="1" />
+
+            </LinearLayout>
 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="독서시간 색깔들 들어갈 자리요..."
+            android:textSize="15sp"
+            android:textColor="@color/black"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/unit2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="1" />
+
             <TextView
                 android:id="@+id/unit2"
                 android:layout_width="wrap_content"
@@ -154,9 +166,17 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="완독률"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"/>
+
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/piechart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="300dp" />
     </LinearLayout>
-</FrameLayout>
+</ScrollView>

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -81,8 +82,10 @@ public class RecordFragment extends Fragment {
                     book_auth = mylibList.getauth();
                     book_pub = mylibList.getPub();
                     adapter.addItem(mylibList);
+                    i++;
                 }
                 gridView.setAdapter(adapter);
+                Log.e("child 갯수", String.valueOf(i)); // 에러문 출력
             }
 
             @Override

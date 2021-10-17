@@ -1,7 +1,11 @@
 package com.choonoh.soobook;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,14 +18,24 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +45,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,11 +53,13 @@ import java.util.Map;
 public class StatisticsFragment extends Fragment {
     String user_email, user_UID;
     BarChart barChart;
+    PieChart pieChart;
     BarDataSet bardataset;
     BarData barData;
     Button target_books_btn;
     ProgressBar progressBar;
     TextView no_target_books_txt, target_books_txt, read_books_txt;
+    int MylibNum = 0, OldlibNum = 0;
 
     ArrayList<BarEntry> barArrList;
     ArrayList<String> barLabels;
@@ -57,6 +74,7 @@ public class StatisticsFragment extends Fragment {
         Log.e("stati_Frag uid",user_UID);
 
         barChart = root.findViewById(R.id.barChart);
+        pieChart = root.findViewById(R.id.piechart);
         progressBar = root.findViewById(R.id.progressBar);
         read_books_txt = root.findViewById(R.id.read_books_txt);
         target_books_btn = root.findViewById(R.id.target_books_btn);
@@ -97,9 +115,9 @@ public class StatisticsFragment extends Fragment {
                     target_books_txt.setText(targetBookNum);
                     progressBar.setProgress(Integer.parseInt(readBookNum));
                     progressBar.setMax(Integer.parseInt(targetBookNum));
-                }
 
-                //if(Integer.parseInt(month) == Integer.parseInt(present_month))
+                    //progressBar.setBackgroundColor(Color.parseColor("#FF5F68"));
+                }
             }
 
             @Override
@@ -110,6 +128,60 @@ public class StatisticsFragment extends Fragment {
         };
         mPostReference.addValueEventListener(postListener);
 
+        DatabaseReference databaseReference2 = database.getReference("Mylib/" + user_UID + "/");
+        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MylibNum++;
+                }
+                Log.e("MylibNum child 갯수", String.valueOf(MylibNum)); // 에러문 출력
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("StaticFragment", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+        });
+
+        DatabaseReference databaseReference3 = database.getReference("Oldlib/" + user_UID + "/");
+        databaseReference3.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    // MylibList mylibList = snapshot.getValue(MylibList.class);
+                    OldlibNum++;
+                }
+                Log.e("OldlibNum child 갯수", String.valueOf(OldlibNum)); // 에러문 출력
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("StaticFragment", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+        });
+/*
+        ArrayList NoOfEmp = new ArrayList();
+        NoOfEmp.add(new Entry(MylibNum, 0));
+        NoOfEmp.add(new Entry(OldlibNum, 1));
+
+        PieDataSet dataSet = new PieDataSet(NoOfEmp, "Number Of Employees");
+        ArrayList year = new ArrayList();
+        year.add("완독");
+        year.add("미완독");
+
+        PieData data = new PieData(year, dataSet); // MPAndroidChart v3.X 오류 발생
+        pieChart.setData(data);
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieChart.animateXY(5000, 5000);
+        pieChart.setDescription("");
+*//*
+        int[] colorArray = Arrays.copyOfRange(getResources().getIntArray(R.array.pieChartColorArray),0,typeAmountMap.size());
+        ArrayList<Integer> colors = new ArrayList<>();
+        for(int color:colorArray){
+            colors.add(color);
+        }*/
+        showPieChart();
+        showBarChart();
+        initBarChart();
         target_books_btn.setOnClickListener(v -> {
             EditText et = new EditText(getContext());
             FrameLayout dialogConatainer = new FrameLayout(getContext());
@@ -152,7 +224,7 @@ public class StatisticsFragment extends Fragment {
             AlertDialog alert = alt_bld.create();
             alert.show();
         });
-
+/*
         barArrList = new ArrayList<>();
         barArrList.add(new BarEntry(8f, 0));
         barArrList.add(new BarEntry(2f, 1));
@@ -176,6 +248,7 @@ public class StatisticsFragment extends Fragment {
         barChart.setDescription("Set Bar Chart Description Here");  // set the description
         bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
         barChart.animateY(1500);
+        */
 /*
         ArrayList<Double> valueList = new ArrayList<>();
         ArrayList<BarEntry> entries = new ArrayList<>();
@@ -200,6 +273,7 @@ public class StatisticsFragment extends Fragment {
 
 
  */
+        /*
         //hiding the grey background of the chart, default false if not set
         barChart.setDrawGridBackground(false);
         //remove the bar shadow, default false if not set
@@ -214,15 +288,15 @@ public class StatisticsFragment extends Fragment {
         barChart.setDescription(description);
 
  */;
-
+/*
         XAxis xAxis = barChart.getXAxis();
         //change the position of x-axis to the bottom
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);*/
         //set the horizontal distance of the grid line
 /*
         xAxis.setGranularity(1f);
 
- */
+ *//*
         //hiding the x-axis line, default true if not set
         xAxis.setDrawAxisLine(false);
         //hiding the vertical grid lines, default true if not set
@@ -240,7 +314,7 @@ public class StatisticsFragment extends Fragment {
         //setting the shape of the legend form to line, default square shape
         legend.setForm(Legend.LegendForm.LINE);
         //setting the text size of the legend
-        legend.setTextSize(11f);
+        legend.setTextSize(11f);*/
         //setting the alignment of legend toward the chart
 /*
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -252,5 +326,165 @@ public class StatisticsFragment extends Fragment {
 */
         return root;
     }
+    private void showPieChart(){
 
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        String label = "type";
+
+        //initializing data
+        Map<String, Integer> typeAmountMap = new HashMap<>();
+        typeAmountMap.put("완독",69);
+        typeAmountMap.put("미완독",31);
+
+        //initializing colors for the entries
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.parseColor("#B9BABE"));
+        colors.add(Color.parseColor("#FF5F68"));
+
+        //input data and fit data into pie chart entry
+        for(String type: typeAmountMap.keySet()){
+            pieEntries.add(new PieEntry(typeAmountMap.get(type).floatValue(), type));
+        }
+
+        //collecting the entries with label name
+        PieDataSet pieDataSet = new PieDataSet(pieEntries,label);
+        //setting text size of the value
+        pieDataSet.setValueTextSize(12f);
+        //providing color list for coloring different entries
+        pieDataSet.setColors(colors);
+        //grouping the data set from entry to chart
+        PieData pieData = new PieData(pieDataSet);
+        //showing the value of the entries, default true if not set
+        pieData.setDrawValues(true);
+
+        pieChart.setData(pieData);
+        pieChart.invalidate();
+        pieData.setValueFormatter(new PercentFormatter());
+        pieChart.animateY(1500);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.getLegend().setEnabled(false);
+    }
+    private void showBarChart(){
+        ArrayList<Double> valueList = new ArrayList<Double>();
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        String title = "Title";
+
+        //input data
+        for(int i = 0; i < 5; i++){
+            switch (i) {
+                case 0:
+                    valueList.add(60.0);
+                    break;
+                case 1:
+                    valueList.add(120.0);
+                    break;
+                case 2:
+                    valueList.add(90.0);
+                    break;
+                case 3:
+                    valueList.add(150.0);
+                    break;
+                case 4:
+                    valueList.add(30.0);
+                    break;
+            }
+
+        }
+
+        //fit the data into a bar
+        for (int i = 0; i < valueList.size(); i++) {
+            BarEntry barEntry = new BarEntry(i, valueList.get(i).floatValue());
+            entries.add(barEntry);
+        }
+
+        BarDataSet barDataSet = new BarDataSet(entries, title);
+
+        BarData data = new BarData(barDataSet);
+        barChart.setData(data);
+        barChart.invalidate();
+
+        barDataSet.setColors(ContextCompat.getColor(getContext(), R.color.sb_main_2), ContextCompat.getColor(getContext(),
+                R.color.sb_main), ContextCompat.getColor(getContext(), R.color.sb_main_3), ContextCompat.getColor(getContext(), R.color.sb_main_5),
+                ContextCompat.getColor(getContext(), R.color.sb_main_1));
+        //barDataSet.setColor(ContextCompat.getColor(getContext(), R.color.sb_main));
+        initBarDataSet(barDataSet);
+        barChart.setTouchEnabled(false);
+    }
+
+    private void initBarDataSet(BarDataSet barDataSet){
+        //Changing the color of the bar
+        //barDataSet.setColor(Color.parseColor("#304567"));
+        //Setting the size of the form in the legend
+        barDataSet.setFormSize(15f);
+        //showing the value of the bar, default true if not set
+        barDataSet.setDrawValues(false);
+        //setting the text size of the value of the bar
+        barDataSet.setValueTextSize(12f);
+    }
+
+    private void initBarChart(){
+        //hiding the grey background of the chart, default false if not set
+        barChart.setDrawGridBackground(false);
+        //remove the bar shadow, default false if not set
+        barChart.setDrawBarShadow(false);
+        //remove border of the chart, default false if not set
+        barChart.setDrawBorders(false);
+
+        //remove the description label text located at the lower right corner
+        Description description = new Description();
+        description.setEnabled(false);
+        barChart.setDescription(description);
+
+        //setting animation for y-axis, the bar will pop up from 0 to its value within the time we set
+        barChart.animateY(1500);
+        //setting animation for x-axis, the bar will pop up separately within the time we set
+/*
+        XAxis xAxis = barChart.getXAxis();
+
+*/
+        final ArrayList<String> xAxisLabel = new ArrayList<>();
+        xAxisLabel.add("Mon");
+        xAxisLabel.add("Tue");
+        xAxisLabel.add("Wed");
+        xAxisLabel.add("Thu");
+        xAxisLabel.add("Fri");
+
+        XAxis xAxis = barChart.getXAxis();
+        //change the position of x-axis to the bottom
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //set the horizontal distance of the grid line
+        xAxis.setGranularity(1f);
+        //hiding the x-axis line, default true if not set
+        xAxis.setDrawAxisLine(false);
+        //hiding the vertical grid lines, default true if not set
+        xAxis.setDrawGridLines(false);
+
+        xAxis.setValueFormatter((value, axis) -> xAxisLabel.get((int) value));
+
+
+        YAxis leftAxis = barChart.getAxisLeft();
+        //hiding the left y-axis line, default true if not set
+        leftAxis.setDrawAxisLine(false);
+
+        YAxis rightAxis = barChart.getAxisRight();
+
+        //hiding the right y-axis line, default true if not set
+        rightAxis.setDrawAxisLine(false);
+        rightAxis.setEnabled(false);
+        barChart.getLegend().setEnabled(false);
+/*
+        Legend legend = barChart.getLegend();
+        //setting the shape of the legend form to line, default square shape
+        legend.setForm(Legend.LegendForm.LINE);
+        //setting the text size of the legend
+        legend.setTextSize(11f);
+        //setting the alignment of legend toward the chart
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        //setting the stacking direction of legend
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        //setting the location of legend outside the chart, default false if not set
+        legend.setDrawInside(false);
+*/
+    }
 }

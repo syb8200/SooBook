@@ -77,7 +77,7 @@ public class WriteMemo extends AppCompatActivity {
         setContentView(R.layout.activity_write_memo);
 
         Intent intent2 = getIntent();
-        img = intent2.getStringExtra("img");
+        img = intent2.getStringExtra("cover");
         auth = intent2.getStringExtra("auth");
         pub = intent2.getStringExtra("pub");
         title = intent2.getStringExtra("title");

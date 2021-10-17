@@ -59,7 +59,7 @@ public class RecordFragment extends Fragment {
             startActivity(intent);
         });
 
-        store_btn = rootView.findViewById(R.id.store_btn);
+        //store_btn = rootView.findViewById(R.id.store_btn);
         user_email = bundle.getString("user_email");
         user_UID = bundle.getString("user_UID");
 

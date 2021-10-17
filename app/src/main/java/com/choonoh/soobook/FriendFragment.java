@@ -56,7 +56,7 @@ public class FriendFragment extends Fragment {
         FirebaseStorage picstorage = FirebaseStorage.getInstance("gs://soobook-donghwa.appspot.com");
         StorageReference storageRef = picstorage.getReference();
 
-        storageRef.child("Profile Images/Yqrim0onpbS6gF0BvhyOcwZtJlh2.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child("Profile Images/n0Hky2lfLFbCP0ozD2si1GD4dtu1.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 //이미지 로드 성공시

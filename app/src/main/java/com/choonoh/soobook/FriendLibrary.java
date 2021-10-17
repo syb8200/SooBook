@@ -3,9 +3,12 @@ package com.choonoh.soobook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,30 +25,33 @@ import org.jetbrains.annotations.NotNull;
 
 public class FriendLibrary extends AppCompatActivity {
 
+    TextView nickname_tv, state_tv;
+    ImageView profile_img;
     ImageButton back_btn;
     Button follow_btn;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference UsersRef, PostsRef, LikesRef;
+    private DatabaseReference UsersRef, LikesRef;
 
-    String currentUserId;
+    String currentUserId, user_email, user_UID;
     Boolean LikeChecker = false;
+    int countLikes;
 
+    FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_library);
 
-        int countLikes;
-        String currentUserId;
-        DatabaseReference LikesRef;
+        user_email = getIntent().getStringExtra("user_email");
+        user_UID = getIntent().getStringExtra("user_UID");
+        Log.e(this.getClass().getName(), user_UID + "&" + user_email);
 
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
-        UsersRef = FirebaseDatabase.getInstance().getReference().child("User").child(currentUserId);;
-        LikesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
-
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("User").child(currentUserId);
+        LikesRef = FirebaseDatabase.getInstance().getReference().child("Likes").child(currentUserId);
 
 
         //뒤로가기 버튼
@@ -56,34 +62,21 @@ public class FriendLibrary extends AppCompatActivity {
             startActivity(intent);
         });
 
+
         //팔로우 버튼
         follow_btn = findViewById(R.id.follow_btn);
         follow_btn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v){
-                LikeChecker = true;
 
-                LikesRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+                Bundle bundle = new Bundle();
+                bundle.putString("user_email", user_email);
+                bundle.putString("user_UID", user_UID);
 
-                        if(dataSnapshot.hasChild(currentUserId)){
-                            LikesRef.child(currentUserId).removeValue();
-                            LikeChecker = false;
 
-                        } else{
-                            LikesRef.child(currentUserId).setValue(true);
 
-                        }
 
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError databaseError) {
-
-                    }
-                });
             }
 
 

@@ -25,7 +25,7 @@
         android:theme="@style/Theme.SOOBOOK.NoActionBar"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".Splash">
+        <activity android:name=".TestFindFriendActivity">
             <intent-filter>
 
                 <action android:name="android.intent.action.MAIN"/>

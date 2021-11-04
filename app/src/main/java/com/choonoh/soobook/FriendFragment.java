@@ -2,6 +2,7 @@ package com.choonoh.soobook;
 
 import android.app.LauncherActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,8 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,69 +38,78 @@ import java.util.List;
 
 public class FriendFragment extends Fragment {
     String nick;
-
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-    FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
-    List<FrList> reviewList;
-    private String user_uid = currentUser.getUid();
-    private String user_email = currentUser.getEmail();
+    static ArrayList<String> arrayIndex = new ArrayList<String>();
+    List<FrList> frList;
+    RecyclerView recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     ImageView fr_iv;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_friend, container, false);
-        fr_iv = root.findViewById(R.id.fr_circleImageView);
+        List<FrList> frList;
+        String user_email = getArguments().getString("user_email");
+        String user_UID = getArguments().getString("user_UID");
 
-        FirebaseStorage picstorage = FirebaseStorage.getInstance("gs://soobook-donghwa.appspot.com");
-        StorageReference storageRef = picstorage.getReference();
-
-        storageRef.child("Profile Images/Yqrim0onpbS6gF0BvhyOcwZtJlh2.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //이미지 로드 성공시
-                Glide.with(getContext())
-                        .load(uri)
-                        .into(fr_iv);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                //이미지 로드 실패시
-                Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
-            }
-        });
+        frList = new ArrayList<>();
+        recyclerView = root.findViewById(R.id.fr_recyclerView);
 
 
-/*
-        RecyclerView recyclerView = root.findViewById(R.id.fr_recyclerView);
-       FrAdapter adapter = new FrAdapter(getContext(),reviewList);
-
-
+        FrAdapter adapter = new FrAdapter(getContext(),frList);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
-        DatabaseReference databaseReference = database.getReference("Friend/"+user_uid+"/"); // DB 테이블 연결
+        DatabaseReference databaseReference = database.getReference("Friend/"+user_UID+"/"); // DB 테이블 연결
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                             @Override
+                                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    FrList mylibList = snapshot.getValue(FrList.class);
-                    nick = mylibList.getNick();
-                    adapter.addItem(mylibList);
+                                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                                     FrList mylibList = snapshot.getValue(FrList.class);
+                                                                     nick = mylibList.getNick();
+                                                                     adapter.addItem(mylibList);
+                                                                 }
+
+                                                                 mLayoutManager = new LinearLayoutManager(getContext());
+                                                                 recyclerView.setLayoutManager(mLayoutManager);
+
+                                                                 recyclerView.setAdapter(adapter);
+                                                             }@Override
+            public void onCancelled (@NonNull DatabaseError databaseError){
+                Log.e("FrFragment", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+
+
+            MySwipeHelper swipeHelper= new MySwipeHelper(getContext(), recyclerView,200) {
+                @Override
+                public void instantiatrMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buffer) {
+                    buffer.add(new MyButton(getContext(),
+                            "삭제",
+                            20,
+                            R.drawable.ic_baseline_delete_24,
+                            Color.parseColor("#FF3C30"),
+                            pos -> {
+                                Toast.makeText(getContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                Log.e("TAG", viewHolder.getAdapterPosition() + "");
+                                String fr_uid = frList.get(viewHolder.getAdapterPosition()).getUid();
+
+                                FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+                                DatabaseReference data = database.getReference("Friend/" + user_UID + "/" + fr_uid);
+                                data.removeValue();
+
+                                frList.remove(viewHolder.getAdapterPosition());                // 해당 항목 삭제
+                                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());    // Adapter에 알려주기.
+                            }));
                 }
-               recyclerView.setAdapter(adapter);
-
             }
+                    ;
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
-            }
-        });
-*/
+                  /*
 
-        return root;
-    }
-}
+
+            }*/
+                    // swipeHelper
+
+
+                });      return root;}}
+

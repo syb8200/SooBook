@@ -69,7 +69,7 @@ public class WishlistFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
+                Log.e("WishlistFragment", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
 

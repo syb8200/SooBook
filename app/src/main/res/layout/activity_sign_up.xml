@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_radius_2"
                 android:fontFamily="@font/nanumgothic"
-                android:hint="별명(영문)"
+                android:hint="별명"
                 android:inputType="text"
                 android:padding="18dp"
                 android:textColor="@color/sb_title"

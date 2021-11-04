@@ -2,6 +2,11 @@ package com.choonoh.soobook;
 
 public class FrList {
     String uid;
+    String nick;
+
+
+
+    String state;
 
     public String getUid() {
         return uid;
@@ -19,6 +24,12 @@ public class FrList {
         this.nick = nick;
     }
 
-    String nick;
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
 }

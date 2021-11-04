@@ -10,14 +10,16 @@ import java.util.Map;
 public class FirebaseFrPost {
     public String uid;
     public String nick;
+    public String state;
 
     public FirebaseFrPost(){
         // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
 
-    public FirebaseFrPost(String uid, String nick) {
+    public FirebaseFrPost(String uid, String nick, String state) {
         this.uid= uid;
         this.nick=nick;
+        this.state = state;
     }
 
     @Exclude
@@ -25,7 +27,7 @@ public class FirebaseFrPost {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid",uid);
         result.put("nick", nick);
-
+        result.put("state", state);
         return result;
     }
 }

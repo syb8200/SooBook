@@ -103,7 +103,7 @@ public class FriendLibrary extends AppCompatActivity {
             }
         } );
 
-        //친구 프로필 이미지 친구서재로 띄우기 (도움!)
+
         profile_img = findViewById(R.id.frprofile_img);
 
 
@@ -148,7 +148,7 @@ public class FriendLibrary extends AppCompatActivity {
                                 Map<String, Object> childUpdates = new HashMap<>();
                                 Map<String, Object> postValues = null;
 
-                                FirebaseFrPost post1 = new FirebaseFrPost(f_myuid,f_nickname);
+                                FirebaseFrPost post1 = new FirebaseFrPost(f_myuid,f_nickname, f_state);
                                 postValues = post1.toMap();
 
                                 String root1 ="Friend/"+currentUserId+"/"+f_myuid;

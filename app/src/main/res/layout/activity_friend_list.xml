@@ -7,36 +7,31 @@
     android:background="@color/white">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:background="@drawable/profile_first"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/fr_nick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:fontFamily="@font/nanumgothic"
         android:text="minion1001"
         android:textColor="@color/sb_title"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/circleImageView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:layout_width="22dp"
-        android:layout_height="20dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/heart_icon_pink"
+    <TextView
+        android:id="@+id/fr_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumgothic"
+        android:text="상태메시지"
+        android:textColor="@color/sb_gray4"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <View
         android:layout_width="match_parent"

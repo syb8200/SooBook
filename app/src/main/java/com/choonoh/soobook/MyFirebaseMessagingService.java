@@ -3,62 +3,71 @@ package com.choonoh.soobook;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.text.TextUtils;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import androidx.core.app.NotificationCompat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (remoteMessage != null && remoteMessage.getData().size() > 0) {
-            sendNotification(remoteMessage);
+    private static final String TAG = "MyFirebaseMsgService";
+
+    @Override public void onMessageReceived(RemoteMessage remoteMessage) {
+        // Handle FCM Message
+        Log.e(TAG, remoteMessage.getFrom());
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0){
+            Log.e(TAG, "Message data payload: " + remoteMessage.getData());
+
+            handleNow();
+        }
+
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null){
+            Log.e(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            String getMessage = remoteMessage.getNotification().getBody();
+            if(TextUtils.isEmpty(getMessage)) {
+                Log.e(TAG, "ERR: Message data is empty...");
+            }
+            else {
+                Map<String, String> mapMessage = new HashMap<>();
+                assert getMessage != null;
+                mapMessage.put("key", getMessage);
+            }
+
+       // Broadcast Data Sending Test
+            Intent intent = new Intent("alert_data");
+            intent.putExtra("msg", getMessage);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
     }
 
-    private void sendNotification(RemoteMessage remoteMessage) {
 
-        String title = remoteMessage.getData().get("title");
-        String message = remoteMessage.getData().get("message");
-
-        final String CHANNEL_ID = "ChannerID";
-        NotificationManager mManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            final String CHANNEL_NAME = "ChannerName";
-            final String CHANNEL_DESCRIPTION = "ChannerDescription";
-            final int importance = NotificationManager.IMPORTANCE_HIGH;
-
-            // add in API level 26
-            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
-            mChannel.setDescription(CHANNEL_DESCRIPTION);
-            mChannel.enableLights(true);
-            mChannel.enableVibration(true);
-            mChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
-            mChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            mManager.createNotificationChannel(mChannel);
-        }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setAutoCancel(true);
-        builder.setDefaults(Notification.DEFAULT_ALL);
-        builder.setWhen(System.currentTimeMillis());
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle(title);
-        builder.setContentText(message);
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            builder.setContentTitle(title);
-            builder.setVibrate(new long[]{500, 500});
-        }
-        mManager.notify(0, builder.build());
+    private void handleNow(){
+        Log.d(TAG, "Short lived task is done.");
     }
 
-    @Override
-    public void onNewToken(String s) {
-        super.onNewToken(s);
+    /** 새로운 토큰이 생성되는 경우 **/
+    @Override public void onNewToken(String refreshedToken) {
+        super.onNewToken(refreshedToken);
+        Log.e(TAG, "Refreshed token: " + refreshedToken);
+        sendRegistrationToServer(refreshedToken);
     }
+
+    private void sendRegistrationToServer(String token) {
+        Log.e(TAG, "here ! sendRegistrationToServer! token is " + token);
+    }
+
 }
+
+

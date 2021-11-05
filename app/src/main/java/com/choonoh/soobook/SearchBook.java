@@ -90,6 +90,7 @@ public class SearchBook  extends AppCompatActivity {
         Log.e(this.getClass().getName(), user_UID + "&" + user_email);
 
 
+        /*
         //키보드에 검색 버튼 생성
         et_search.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -263,7 +264,7 @@ public class SearchBook  extends AppCompatActivity {
             }
 
         });
-
+*/
 
         //검색 버튼
         btn_search.setOnClickListener(v -> {

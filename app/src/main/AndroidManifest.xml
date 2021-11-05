@@ -52,7 +52,7 @@
         <activity android:name=".FriendLibrary"/>
         <activity android:name=".DirectRecord"/>
         <activity android:name=".ProfileEdit"/>
-
+        <activity android:name=".RecordHistoryDetailActivity"/>
         <service
             android:name=".MyFirebaseMessagingService"
             android:stopWithTask="false">

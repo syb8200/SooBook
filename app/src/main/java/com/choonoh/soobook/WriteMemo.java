@@ -182,7 +182,7 @@ public class WriteMemo extends AppCompatActivity {
                         Map<String, Object> childUpdates = new HashMap<>();
                         Map<String, Object> postValues = null;
 
-                        FirebaseMemoPost post1 = new FirebaseMemoPost(s_title, s_content, s_last, nick);
+                        FirebaseMemoPost post1 = new FirebaseMemoPost(s_title, s_content, s_last, nick, time2);
                         postValues = post1.toMap();
 
                         String root1 ="Memo/"+user_uid+"/"+isbn+"/"+time2;

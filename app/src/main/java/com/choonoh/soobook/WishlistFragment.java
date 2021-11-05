@@ -37,11 +37,8 @@ public class WishlistFragment extends Fragment {
         String user_email = getArguments().getString("user_email");
         String user_UID = getArguments().getString("user_UID");
 
-
-
         GridView gridView = root.findViewById(R.id.wish_gridview);
         WishGridListAdapter adapter = new WishGridListAdapter();
-
 
         ///그리드뷰 스크롤 없애기기
         gridView.setVerticalScrollBarEnabled(false);
@@ -62,15 +59,16 @@ public class WishlistFragment extends Fragment {
                     book_title = mylibList.getTitle();
 
                     adapter.addItem(mylibList);
+
                 }
                 gridView.setAdapter(adapter);
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("WishlistFragment", String.valueOf(databaseError.toException())); // 에러문 출력
             }
+
         });
 
         return root;

@@ -72,6 +72,16 @@ public class ProfileEdit extends AppCompatActivity {
         profile_edit_btn = findViewById(R.id.profile_edit_btn);
 
 
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(ProfileEdit.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+
         change_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -83,8 +93,6 @@ public class ProfileEdit extends AppCompatActivity {
                 startActivityForResult(galleryIntent, Gallery_Pick);
             }
         });
-
-
 
 
     }
@@ -103,9 +111,6 @@ public class ProfileEdit extends AppCompatActivity {
 
             profile_img.setImageURI(ImageUri); // 이미지 띄움
         }
-
-
-
 
 
 
@@ -162,8 +167,6 @@ public class ProfileEdit extends AppCompatActivity {
 
 
                     });
-
-
 
                     Intent intent = new Intent(ProfileEdit.this, Home.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -19,18 +19,8 @@
             android:textColor="@color/sb_point"
             android:fontFamily="@font/nanumgothicbold"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:layout_marginRight="10dp"
-            android:id="@+id/add_btn"
-            android:fontFamily="@font/nanumgothicbold"
-            android:textColor="@color/sb_point"
-            android:text="추가"/>
-
-
 </LinearLayout>
+
         <GridView
             android:id="@+id/reading_gridview"
             android:layout_width="match_parent"

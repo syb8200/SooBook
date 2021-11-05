@@ -96,7 +96,6 @@ public class Sign_up extends AppCompatActivity {
                 String user_email= currentUser.getEmail();
                 String user_nick = et_nick.getText().toString();
                 //db에 user 추가
-
                 HashMap<Object,String> hashMap = new HashMap<>();
 
                 hashMap.put("uid",user_UID);
@@ -104,11 +103,16 @@ public class Sign_up extends AppCompatActivity {
                 hashMap.put("nick",user_nick);
                 hashMap.put("state", "상태메세지를 입력해주세요");
 
-
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference reference = database.getReference("User");
                 reference.child(user_UID).setValue(hashMap);
 
+                HashMap<Object,String> hashMap2 = new HashMap<>();
+                hashMap2.put("totalBookNum", Integer.toString(0));
+                hashMap2.put("totalReadBookNum", Integer.toString(0));
+
+                reference = database.getReference("ReadTime/info");
+                reference.child(user_UID).setValue(hashMap2);
 /*
             DatabaseReference hopperRef = database.getReference("ReadTime/0ABGKRMonqbw6Pbx3aASBJvxyEa2/").child("info");
             Map<String, Object> hopperUpdates = new HashMap<>();

@@ -247,7 +247,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
+<!--
             <Button
                 android:id="@+id/book_add_btn"
                 android:layout_width="0dp"
@@ -258,7 +258,7 @@
                 android:textSize="15sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/nanumgothicbold" />
-
+-->
             <Button
                 android:id="@+id/store_btn"
                 android:layout_width="0dp"
@@ -266,7 +266,7 @@
                 android:layout_weight="1"
                 android:background="@color/sb_main"
                 android:fontFamily="@font/nanumgothicbold"
-                android:text="기록"
+                android:text="책 추가"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 

@@ -51,7 +51,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StatisticsFragment extends Fragment {
-    String user_email, user_UID;
+    String user_email, user_UID, totalBookNum, totalReadBookNum;
     BarChart barChart;
     PieChart pieChart;
     BarDataSet bardataset;
@@ -59,7 +59,7 @@ public class StatisticsFragment extends Fragment {
     Button target_books_btn;
     ProgressBar progressBar;
     TextView no_target_books_txt, target_books_txt, read_books_txt;
-    int MylibNum = 0, OldlibNum = 0;
+    int MylibNum = 0, OldlibNum = 0, i;
 
     ArrayList<BarEntry> barArrList;
     ArrayList<String> barLabels;
@@ -327,42 +327,69 @@ public class StatisticsFragment extends Fragment {
         return root;
     }
     private void showPieChart(){
-
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
         String label = "type";
 
-        //initializing data
-        Map<String, Integer> typeAmountMap = new HashMap<>();
-        typeAmountMap.put("완독",69);
-        typeAmountMap.put("미완독",31);
+        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(i == 0){
+                        totalBookNum = snapshot.getValue().toString();
+                    }
+                    else if(i == 1) {
+                        totalReadBookNum = snapshot.getValue().toString();
+                        //initializing data
+                        Map<String, Integer> typeAmountMap = new HashMap<>();
+                        double all = Integer.parseInt(totalBookNum);
+                        double read = Integer.parseInt(totalReadBookNum);
+                        int readResult = 0;
+                       // System.out.println(read*100.0/all);
+                        readResult = (int) (read*100.0/all);
 
-        //initializing colors for the entries
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.parseColor("#B9BABE"));
-        colors.add(Color.parseColor("#FF5F68"));
 
-        //input data and fit data into pie chart entry
-        for(String type: typeAmountMap.keySet()){
-            pieEntries.add(new PieEntry(typeAmountMap.get(type).floatValue(), type));
-        }
+                        typeAmountMap.put("완독", (int) (read*100.0/all));
+                        typeAmountMap.put("미완독", 100-(int)(read/all*100.0));
 
-        //collecting the entries with label name
-        PieDataSet pieDataSet = new PieDataSet(pieEntries,label);
-        //setting text size of the value
-        pieDataSet.setValueTextSize(12f);
-        //providing color list for coloring different entries
-        pieDataSet.setColors(colors);
-        //grouping the data set from entry to chart
-        PieData pieData = new PieData(pieDataSet);
-        //showing the value of the entries, default true if not set
-        pieData.setDrawValues(true);
+                        //initializing colors for the entries
+                        ArrayList<Integer> colors = new ArrayList<>();
+                        colors.add(Color.parseColor("#B9BABE"));
+                        colors.add(Color.parseColor("#FF5F68"));
 
-        pieChart.setData(pieData);
-        pieChart.invalidate();
-        pieData.setValueFormatter(new PercentFormatter());
-        pieChart.animateY(1500);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.getLegend().setEnabled(false);
+                        //input data and fit data into pie chart entry
+                        for(String type: typeAmountMap.keySet()){
+                            pieEntries.add(new PieEntry(typeAmountMap.get(type).floatValue(), type));
+                        }
+
+                        //collecting the entries with label name
+                        PieDataSet pieDataSet = new PieDataSet(pieEntries,label);
+                        //setting text size of the value
+                        pieDataSet.setValueTextSize(12f);
+                        //providing color list for coloring different entries
+                        pieDataSet.setColors(colors);
+                        //grouping the data set from entry to chart
+                        PieData pieData = new PieData(pieDataSet);
+                        //showing the value of the entries, default true if not set
+                        pieData.setDrawValues(true);
+
+                        pieChart.setData(pieData);
+                        pieChart.invalidate();
+                        pieData.setValueFormatter(new PercentFormatter());
+                        pieChart.animateY(1500);
+                        pieChart.getDescription().setEnabled(false);
+                        pieChart.getLegend().setEnabled(false);
+                    }
+                    i++;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mPostReference.addValueEventListener(postListener);
     }
     private void showBarChart(){
         ArrayList<Double> valueList = new ArrayList<Double>();

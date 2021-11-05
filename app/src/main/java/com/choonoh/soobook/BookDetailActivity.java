@@ -49,6 +49,8 @@ public class BookDetailActivity extends AppCompatActivity {
     String isbn_txt, title_txt, auth_txt, pub_txt, star_txt, date_txt, disc_txt, cover_txt;
     String isbn_txt_s, title_txt_s, auth_txt_s, pub_txt_s, star_txt_s, date_txt_s, disc_txt_s, cover_txt_s;
     String review_title, review_content;
+    String totalBookNum, totalReadBookNum, plusOne1, plusOne2;
+
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
     String user_UID = currentUser.getUid();
@@ -57,6 +59,7 @@ public class BookDetailActivity extends AppCompatActivity {
     static ArrayList<String> arrayIndex = new ArrayList<String>();
     List<ReviewList> reviewList;
     RecyclerView recyclerView;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +225,38 @@ public class BookDetailActivity extends AppCompatActivity {
         String root ="/Mylib/"+user_UID+"/"+isbn_txt;
         childUpdates.put(root, postValues);
         mPostReference.updateChildren(childUpdates);
+
+        root ="/ReadTime/"+user_UID+"/"+isbn_txt;
+        childUpdates.put(root, postValues);
+        mPostReference.updateChildren(childUpdates);
+
+        DatabaseReference mPostReference2 = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(i == 0){
+                        totalBookNum = snapshot.getValue().toString();
+                        plusOne1 = String.valueOf(Integer.parseInt(totalBookNum)+1);
+                        Log.e("totalBookNum", totalBookNum);
+
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference hopperRef = database.getReference("ReadTime/info").child(user_UID);
+                        Map<String, Object> hopperUpdates = new HashMap<>();
+                        hopperUpdates.put("totalBookNum", plusOne1);
+
+                        hopperRef.updateChildren(hopperUpdates);
+                    }
+                    i++;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mPostReference2.addValueEventListener(postListener);
     }
 
     public void postWishFirebaseDatabase(boolean add){

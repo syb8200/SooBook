@@ -39,20 +39,23 @@
     <TextView
         android:id="@+id/his_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
+        android:layout_height="45dp"
         android:padding="10dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
+        android:gravity="center|left"
         android:background="@drawable/button_radius_9"
+        android:maxLines="1"
         android:text="제목"
         android:textSize="13sp"
         android:textColor="@color/sb_title"
         android:fontFamily="@font/nanumgothic"/>
+
     <TextView
         android:id="@+id/his_content"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="320dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:padding="10dp"

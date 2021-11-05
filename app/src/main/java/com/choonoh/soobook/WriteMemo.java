@@ -76,12 +76,12 @@ public class WriteMemo extends AppCompatActivity {
         setContentView(R.layout.activity_write_memo);
 
         Intent intent2 = getIntent();
-        img = intent2.getStringExtra("cover");
+        img = intent2.getStringExtra("img");
         auth = intent2.getStringExtra("auth");
         pub = intent2.getStringExtra("pub");
         title = intent2.getStringExtra("title");
         isbn = intent2.getStringExtra("isbn");
-        Log.e("Mylib", img + ", " + auth + ", " + pub + ", " + title);
+        Log.e("WriteMemo들어온거 확인", img + ", " + auth + ", " + pub + ", " + title + ", " + isbn);
 
         write_book_img = findViewById(R.id.write_book_img);
         write_book_auth = findViewById(R.id.write_book_auth);
@@ -200,7 +200,7 @@ public class WriteMemo extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                if(i == 8){
+                                                if(i == 1){
                                                     readBookNum = snapshot.getValue().toString();
                                                     plusOne = String.valueOf(Integer.parseInt(readBookNum)+1);
                                                     Log.e("readBookNum", readBookNum);
@@ -226,11 +226,12 @@ public class WriteMemo extends AppCompatActivity {
                                             Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
                                         }
                                     };
+                                    mPostReference.addValueEventListener(postListener);
                                     ValueEventListener postListener2 = new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                if(i == 1){
+                                                if(i == 8){
                                                     totalReadBookNum = snapshot.getValue().toString();
                                                     plusOne2 = String.valueOf(Integer.parseInt(totalReadBookNum)+1);
                                                     Log.e("totalReadBookNum", totalReadBookNum);
@@ -250,7 +251,6 @@ public class WriteMemo extends AppCompatActivity {
                                             Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
                                         }
                                     };
-                                    mPostReference.addValueEventListener(postListener);
                                     mPostReference2.addValueEventListener(postListener2);
                                 }
                             }
@@ -326,7 +326,7 @@ public class WriteMemo extends AppCompatActivity {
         Date time = new Date(now);
         String time2 = format.format(time);
         Intent intent2 = getIntent();
-        img = intent2.getStringExtra("cover");
+        img = intent2.getStringExtra("img");
         auth = intent2.getStringExtra("auth");
         pub = intent2.getStringExtra("pub");
         title = intent2.getStringExtra("title");

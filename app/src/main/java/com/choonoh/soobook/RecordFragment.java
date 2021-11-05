@@ -41,6 +41,7 @@ public class RecordFragment extends Fragment {
     String hh, mm, ss;
     String book_img, book_isbn, book_title, book_auth, book_pub, weekDay;
     String year, month, day, totalBookNum, totalReadBookNum, mon, tue, wed, thu, fri, sat, sun;
+    String year_db, month_db, day_db, totalBookNum_db, totalReadBookNum_db, mon_db, tue_db, wed_db, thu_db, fri_db, sat_db, sun_db;
     BluetoothSPP bt;
     String user_email, user_UID;
     ImageButton direct_record;
@@ -228,33 +229,137 @@ public class RecordFragment extends Fragment {
             Log.e("myLibLists", myLibLists[(position)].img + ", " + myLibLists[(position)].title + ", " + myLibLists[(position)].auth
                     + ", " + myLibLists[(position)].pub);
 
-//            DatabaseReference mPostReference2 = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
-//            ValueEventListener postListener = new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        if(i == 7){
-//                            totalBookNum = snapshot.getValue().toString();
-//                            plusOne1 = String.valueOf(Integer.parseInt(totalBookNum)+1);
-//                            Log.e("totalBookNum", totalBookNum);
-//
-//                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                            DatabaseReference hopperRef = database.getReference("ReadTime/info").child(user_UID);
-//                            Map<String, Object> hopperUpdates = new HashMap<>();
-//                            hopperUpdates.put("totalBookNum", plusOne1);
-//
-//                            hopperRef.updateChildren(hopperUpdates);
-//                        }
-//                        i++;
-//                    }
-//                }
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//                    // Getting Post failed, log a message
-//                    Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
-//                }
-//            };
-//            mPostReference2.addValueEventListener(postListener);
+            DatabaseReference mPostReference2 = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        switch (i){
+                            case 0:
+                                day_db = snapshot.getValue().toString();
+                                break;
+                            case 1:
+                                fri_db = snapshot.getValue().toString();
+                                break;
+                            case 2:
+                                mon_db = snapshot.getValue().toString();
+                                break;
+                            case 3:
+                                month_db = snapshot.getValue().toString();
+                                break;
+                            case 4:
+                                sat_db = snapshot.getValue().toString();
+                                break;
+                            case 5:
+                                sun_db = snapshot.getValue().toString();
+                                break;
+                            case 6:
+                                thu_db = snapshot.getValue().toString();
+                                break;
+                            case 7:
+                                totalBookNum_db = snapshot.getValue().toString();
+                                break;
+                            case 8:
+                                totalReadBookNum_db = snapshot.getValue().toString();
+                                break;
+                            case 9:
+                                tue_db = snapshot.getValue().toString();
+                                break;
+                            case 10:
+                                wed_db = snapshot.getValue().toString();
+                                break;
+                            case 11:
+                                year_db = snapshot.getValue().toString();
+
+                                SimpleDateFormat yyyy = new SimpleDateFormat("yyyy");
+                                SimpleDateFormat MM = new SimpleDateFormat("MM");
+                                SimpleDateFormat dd = new SimpleDateFormat("dd");
+
+                                String end_year = yyyy.format(endTimeNum);
+                                String end_month = MM.format(endTimeNum);
+                                String end_day = dd.format(endTimeNum);
+                                if(year_db.equals(end_year) && month_db.equals(end_month) && Integer.parseInt(day_db) + 7 > Integer.parseInt(end_day)){
+                                    switch (weekDay){
+                                        case "월":
+                                            mon_db = Integer.toString(Integer.parseInt(mon_db) + valid_value);
+                                            break;
+                                        case "화":
+                                            tue_db = Integer.toString(Integer.parseInt(tue_db) + valid_value);
+                                            break;
+                                        case "수":
+                                            wed_db = Integer.toString(Integer.parseInt(wed_db) + valid_value);
+                                            break;
+                                        case "목":
+                                            thu_db = Integer.toString(Integer.parseInt(thu_db) + valid_value);
+                                            break;
+                                        case "금":
+                                            fri_db = Integer.toString(Integer.parseInt(fri_db) + valid_value);
+                                            break;
+                                        case "토":
+                                            sat_db = Integer.toString(Integer.parseInt(sat_db) + valid_value);
+                                            break;
+                                        case "일":
+                                            sun_db = Integer.toString(Integer.parseInt(sun_db) + valid_value);
+                                            break;
+                                    }
+                                    Log.e("result(if 가까움)", mon_db + ", " + tue_db + ", " + wed_db + ", " + thu_db + ", "
+                                    + fri_db + ", " + sat_db + ", " + sun_db + ", ");
+
+                                    Map<String, Object> childUpdates = new HashMap<>();
+                                    Map<String, Object> postValues = null;
+
+                                    //String uid, String readTime , String startTime, String endTime, String date
+                                    FirebaseReadTimePost post = new FirebaseReadTimePost(readTime, startTime, endTime, date);
+                                    postValues = post.toMap();
+                                    String root ="/ReadTime/" + user_UID + "/" + firebaseKey + "/";
+                                    childUpdates.put(root, postValues);
+                                    mPostReference.updateChildren(childUpdates);
+
+                                    Map<String, Object> childUpdates2 = new HashMap<>();
+                                    Map<String, Object> postValues2 = new HashMap<>();
+
+                                    //mon, tue, wed, thu, fri, sat, sun;
+                                    postValues2.put("mon", mon_db);
+                                    postValues2.put("tue", tue_db);
+                                    postValues2.put("wed", wed_db);
+                                    postValues2.put("thu", thu_db);
+                                    postValues2.put("fri", fri_db);
+                                    postValues2.put("sat", sat_db);
+                                    postValues2.put("sun", sun_db);
+
+                                    postValues2.put("year", year_db);
+                                    postValues2.put("month", month_db);
+                                    postValues2.put("day", day_db);
+
+                                    postValues2.put("totalBookNum", totalBookNum_db);
+                                    postValues2.put("totalReadBookNum", totalReadBookNum_db);
+
+                                    root ="/ReadTime/info/" + user_UID + "/";
+                                    childUpdates2.put(root, postValues2);
+                                    mPostReference.updateChildren(childUpdates2);
+
+                                    Intent intent=new Intent(getContext(), WriteMemo.class);
+
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.putExtra("img", myLibLists[(position)].img);
+                                    intent.putExtra("title", myLibLists[(position)].title);
+                                    intent.putExtra("auth", myLibLists[(position)].auth);
+                                    intent.putExtra("pub", myLibLists[(position)].pub);
+                                    intent.putExtra("isbn", myLibLists[(position)].isbn);
+
+                                    startActivity(intent);
+                               }
+                        }
+                        i++;
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
+                }
+            };
+            mPostReference2.addValueEventListener(postListener);
 //            DatabaseReference mPostReference2 = FirebaseDatabase.getInstance().getReference("ReadTime/info/");
 //            ValueEventListener postListener = new ValueEventListener() {
 //

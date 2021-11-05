@@ -161,24 +161,6 @@ public class WriteMemo extends AppCompatActivity {
                         Log.e("firebase", "Error getting data", task.getException());
                     }
                     else {
-<<<<<<< HEAD
-                        nick = String.valueOf(task.getResult().getValue());
-
-
-
-                        DatabaseReference memoPostReference = FirebaseDatabase.getInstance().getReference();
-                        Map<String, Object> childUpdates = new HashMap<>();
-                        Map<String, Object> postValues = null;
-
-                        FirebaseMemoPost post1 = new FirebaseMemoPost(s_title, s_content, s_last, nick, time2);
-                        postValues = post1.toMap();
-
-                        String root1 ="Memo/"+user_uid+"/"+isbn+"/"+time2;
-
-                        childUpdates.put(root1, postValues);
-                        memoPostReference.updateChildren(childUpdates);
-
-=======
                         if(memo_title.getText().toString().equals("") || memo_content.getText().toString().equals("") ||
                                 memo_last.getText().toString().equals("") || one_line_review.getText().toString().equals("")){
                             Toast.makeText(getApplicationContext(), "모든 칸을 입력해 주세요", Toast.LENGTH_SHORT).show();
@@ -189,7 +171,7 @@ public class WriteMemo extends AppCompatActivity {
                             Map<String, Object> childUpdates = new HashMap<>();
                             Map<String, Object> postValues = null;
 
-                            FirebaseMemoPost post1 = new FirebaseMemoPost(s_title, s_content, s_last, nick);
+                            FirebaseMemoPost post1 = new FirebaseMemoPost(s_title, s_content, s_last, nick, time2);
                             postValues = post1.toMap();
 
                             String root1 ="Memo/"+user_uid+"/"+isbn+"/"+time2;
@@ -271,7 +253,6 @@ public class WriteMemo extends AppCompatActivity {
                                     mPostReference2.addValueEventListener(postListener2);
                                 }
                             }
->>>>>>> b2eb9cd8e1b0e2b3c7ee7e70fa4d8084ab63a008
 
                             Intent intent = new Intent(WriteMemo.this, Home.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -344,7 +325,7 @@ public class WriteMemo extends AppCompatActivity {
         Date time = new Date(now);
         String time2 = format.format(time);
         Intent intent2 = getIntent();
-      //  img = intent2.getStringExtra("img");
+        img = intent2.getStringExtra("img");
         auth = intent2.getStringExtra("auth");
         pub = intent2.getStringExtra("pub");
         title = intent2.getStringExtra("title");
@@ -353,7 +334,7 @@ public class WriteMemo extends AppCompatActivity {
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if(add){
-            FirebaseMylibPost post = new FirebaseMylibPost(user_uid, user_email, isbn, title, img, time2, auth, pub);
+            FirebaseMylibPost post = new FirebaseMylibPost(user_uid, user_email, isbn, title,img, time2, auth, pub);
             postValues = post.toMap();
         }
         String root ="/Oldlib/"+user_uid+"/"+isbn;

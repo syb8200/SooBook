@@ -114,7 +114,35 @@
             android:fontFamily="@font/nanumgothic"/>
 
     </LinearLayout>
+  <!--      <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이번달 목표 독서량"
+                android:textColor="@color/sb_title"
+                android:textSize="14sp"
+                android:fontFamily="@font/nanumgothicbold"/>
+
+            <EditText
+                android:id="@+id/target_et"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/button_radius_2"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:numeric="integer"
+                android:textSize="12sp"
+                android:textColor="@color/sb_title"
+                android:fontFamily="@font/nanumgothic"/>
+
+        </LinearLayout>
+!-->
     </LinearLayout>
 
     <Button

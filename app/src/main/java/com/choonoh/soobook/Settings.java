@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.provider.ContactsContract;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Settings extends AppCompatActivity {
     Button logout_btn;
-    ImageButton back_btn;
+    //ImageButton back_btn;
     View changepw_btn, del_btn;
     String user_email, user_UID;
     TextView email_tv;
@@ -52,13 +53,14 @@ public class Settings extends AppCompatActivity {
                 del_btn = findViewById(R.id.del_btn);
                 email_tv = findViewById(R.id.email_tv);
                 email_tv.setText(user_email);
-                back_btn = findViewById(R.id.back_btn);
+               // back_btn = findViewById(R.id.back_btn);
+               /*
                 back_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v){
-                        //해야됨
+
                     }
-                });
+                }); */
 
 
         changepw_btn.setOnClickListener(v -> {

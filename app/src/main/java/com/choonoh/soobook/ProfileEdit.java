@@ -41,7 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileEdit extends AppCompatActivity {
 
     private EditText nickname_et, status_et;
-    private ImageButton back_btn;
+    //private ImageButton back_btn;
     private TextView change_img;
     private Button profile_edit_btn;
     private CircleImageView profile_img;
@@ -64,12 +64,23 @@ public class ProfileEdit extends AppCompatActivity {
         Profile_Edit_Ref = FirebaseDatabase.getInstance().getReference().child("User").child(currentUserId);
         Profile_Image_Ref = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
-        back_btn = (ImageButton)findViewById(R.id.back_btn);
+        //back_btn = (ImageButton)findViewById(R.id.back_btn);
         profile_img = (CircleImageView)findViewById(R.id.profile_img);
         change_img = (TextView)findViewById(R.id.change_img);
         nickname_et = (EditText)findViewById(R.id.nickname_et);
         status_et = (EditText)findViewById(R.id.status_et);
         profile_edit_btn = findViewById(R.id.profile_edit_btn);
+
+        /*
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(ProfileEdit.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+        */
 
 
         change_img.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +94,6 @@ public class ProfileEdit extends AppCompatActivity {
                 startActivityForResult(galleryIntent, Gallery_Pick);
             }
         });
-
-
 
 
     }
@@ -103,9 +112,6 @@ public class ProfileEdit extends AppCompatActivity {
 
             profile_img.setImageURI(ImageUri); // 이미지 띄움
         }
-
-
-
 
 
 
@@ -162,8 +168,6 @@ public class ProfileEdit extends AppCompatActivity {
 
 
                     });
-
-
 
                     Intent intent = new Intent(ProfileEdit.this, Home.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

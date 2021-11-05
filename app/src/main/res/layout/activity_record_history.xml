@@ -39,8 +39,8 @@
 
     <ImageView
         android:id="@+id/history_iv"
-        android:layout_width="125dp"
-        android:layout_height="180dp"
+        android:layout_width="115dp"
+        android:layout_height="165dp"
         android:layout_marginTop="15dp"
         android:background="@color/sb_gray3"
         android:layout_gravity="center"/>
@@ -50,9 +50,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="20dp"
         android:text="책 제목"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textColor="@color/sb_title"
         android:fontFamily="@font/nanumgothicbold"/>
 
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
         <TextView
@@ -96,7 +96,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="24dp"
         android:background="@color/sb_gray2"/>
 
     <androidx.recyclerview.widget.RecyclerView

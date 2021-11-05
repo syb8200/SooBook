@@ -58,7 +58,7 @@ public class StatisticsFragment extends Fragment {
     BarData barData;
     Button target_books_btn;
     ProgressBar progressBar;
-    TextView no_target_books_txt, target_books_txt, read_books_txt;
+    TextView no_target_books_txt, target_books_txt, read_books_txt,  edit_target;
     int MylibNum = 0, OldlibNum = 0, i;
 
     ArrayList<BarEntry> barArrList;
@@ -80,6 +80,7 @@ public class StatisticsFragment extends Fragment {
         target_books_btn = root.findViewById(R.id.target_books_btn);
         target_books_txt = root.findViewById(R.id.target_books_txt);
         no_target_books_txt = root.findViewById(R.id.no_target_books_txt);
+        edit_target = root.findViewById(R.id. edit_target);
 
         DatabaseReference mPostReference = database.getReference("ReadTime/" + user_UID + "/info/");
         ValueEventListener postListener = new ValueEventListener() {
@@ -194,7 +195,7 @@ public class StatisticsFragment extends Fragment {
             dialogConatainer.addView(et);
 
             AlertDialog.Builder alt_bld = new AlertDialog.Builder(getContext(),R.style.MyAlertDialogStyle);
-            alt_bld.setTitle("목표 독서량 설정").setMessage("목표 독서량을 입려해주세요!(숫자)").setCancelable(
+            alt_bld.setTitle("목표 독서량 설정").setMessage("목표 독서량을 입력해주세요.(숫자)").setCancelable(
                     false).setView(dialogConatainer).setPositiveButton("확인",
                     (dialog, id) -> {
                         String readBookNum = "0";
@@ -224,6 +225,42 @@ public class StatisticsFragment extends Fragment {
             AlertDialog alert = alt_bld.create();
             alert.show();
         });
+
+
+        edit_target.setOnClickListener(v -> {
+            EditText et = new EditText(getContext());
+            FrameLayout dialogConatainer = new FrameLayout(getContext());
+            FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+            params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+
+            et.setLayoutParams(params);
+            dialogConatainer.addView(et);
+
+            AlertDialog.Builder alt_bld = new AlertDialog.Builder(getContext(),R.style.MyAlertDialogStyle);
+            alt_bld.setTitle("목표 독서량 변경").setMessage("목표 독서량을 입력해주세요.(숫자)").setCancelable(
+                    false).setView(dialogConatainer).setPositiveButton("확인",
+                    (dialog, id) -> {
+
+                        String targetBookNum = et.getText().toString();
+                        SimpleDateFormat MM = new SimpleDateFormat("MM");
+                        Date endTimeDate = new Date(System.currentTimeMillis());
+                        String month = MM.format(endTimeDate);
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        Map<String, Object> postValues = null;
+                        FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+                        DatabaseReference databaseReference = database.getReference("/ReadTime/" + user_UID + "/info/targetBookNum"); // DB 테이블 연결FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        databaseReference.setValue(targetBookNum);
+
+                //        progressBar.setMax(Integer.parseInt(targetBookNum));
+                    });
+            AlertDialog alert = alt_bld.create();
+            alert.show();
+        });
+
+
 /*
         barArrList = new ArrayList<>();
         barArrList.add(new BarEntry(8f, 0));

@@ -18,9 +18,9 @@
     <application
         android:allowBackup="false"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_soobook"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_soobook_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SOOBOOK.NoActionBar"
         android:usesCleartextTraffic="true">
@@ -53,6 +53,7 @@
         <activity android:name=".DirectRecord"/>
         <activity android:name=".ProfileEdit"/>
         <activity android:name=".RecordHistoryDetailActivity"/>
+        <activity android:name=".WishDetailActivity"/>
         <service
             android:name=".MyFirebaseMessagingService"
             android:stopWithTask="false">

@@ -47,7 +47,7 @@ public class FriendLibrary extends AppCompatActivity {
 
     TextView nickname_tv, state_tv;
     ImageView profile_img;
-    ImageButton back_btn;
+    //ImageButton back_btn;
     Button follow_btn;
 
     private Uri imageUri;
@@ -69,7 +69,7 @@ public class FriendLibrary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_library);
-       nickname_tv = findViewById(R.id.nickname_tv);
+        nickname_tv = findViewById(R.id.nickname_tv);
         state_tv = findViewById(R.id.state_tv);
 
 
@@ -129,7 +129,7 @@ public class FriendLibrary extends AppCompatActivity {
 
 
 
-
+/*
         //뒤로가기 버튼
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(v -> {
@@ -137,7 +137,7 @@ public class FriendLibrary extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
-
+*/
 
         //팔로우 버튼
         follow_btn = findViewById(R.id.follow_btn);

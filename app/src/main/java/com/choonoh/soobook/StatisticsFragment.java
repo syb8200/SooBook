@@ -54,6 +54,7 @@ public class StatisticsFragment extends Fragment {
     String user_email, user_UID, totalBookNum, totalReadBookNum;
     BarChart barChart;
     PieChart pieChart;
+    String mon, tue, wed, thu, fri, sat, sun;
     BarDataSet bardataset;
     BarData barData;
     Button target_books_btn;
@@ -160,7 +161,35 @@ public class StatisticsFragment extends Fragment {
             }
         });
 
-        showPieChart();
+
+        DatabaseReference mPostReference4 = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
+        ValueEventListener postListener4 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(i == 7){
+                        totalBookNum = snapshot.getValue().toString();
+                    }
+                    else if(i == 8) {
+                        totalReadBookNum = snapshot.getValue().toString();
+                        //initializing data
+                        if(!totalBookNum.equals("0") && !totalReadBookNum.equals(0)) {
+                            showPieChart(totalBookNum, totalReadBookNum);
+                        } else{
+                            pieChart.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                    i++;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mPostReference4.addValueEventListener(postListener4);
+
         showBarChart();
         initBarChart();
         target_books_btn.setOnClickListener(v -> {
@@ -343,59 +372,77 @@ public class StatisticsFragment extends Fragment {
 */
         return root;
     }
-    private void showPieChart(){
+    private void showPieChart(String ttBookNum, String ttReadBookNum){
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
         String label = "type";
 
-        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
-        ValueEventListener postListener = new ValueEventListener() {
+        Map<String, Integer> typeAmountMap = new HashMap<>();
+        double all = Integer.parseInt(totalBookNum);
+        double read = Integer.parseInt(totalReadBookNum);
+        int readResult = 0;
+        // System.out.println(read*100.0/all);
+        readResult = (int) (read*100.0/all);
+
+
+        typeAmountMap.put("완독", (int) (read*100.0/all));
+        typeAmountMap.put("미완독", 100-(int)(read/all*100.0));
+
+        //initializing colors for the entries
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.parseColor("#B9BABE"));
+        colors.add(Color.parseColor("#FF5F68"));
+
+        //input data and fit data into pie chart entry
+        for(String type: typeAmountMap.keySet()){
+            pieEntries.add(new PieEntry(typeAmountMap.get(type).floatValue(), type));
+        }
+
+        //collecting the entries with label name
+        PieDataSet pieDataSet = new PieDataSet(pieEntries,label);
+        //setting text size of the value
+        pieDataSet.setValueTextSize(12f);
+        //providing color list for coloring different entries
+        pieDataSet.setColors(colors);
+        //grouping the data set from entry to chart
+        PieData pieData = new PieData(pieDataSet);
+        //showing the value of the entries, default true if not set
+        pieData.setDrawValues(true);
+
+        pieChart.setData(pieData);
+        pieChart.invalidate();
+        pieData.setValueFormatter(new PercentFormatter());
+        pieChart.animateY(1500);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.getLegend().setEnabled(false);
+    }
+    private void showBarChart(){
+        ArrayList<Double> valueList = new ArrayList<Double>();
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        String title = "Title";
+
+
+
+        DatabaseReference mPostReference5 = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
+        ValueEventListener postListener5 = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if(i == 0){
-                        totalBookNum = snapshot.getValue().toString();
-                    }
-                    else if(i == 1) {
-                        totalReadBookNum = snapshot.getValue().toString();
-                        //initializing data
-                        Map<String, Integer> typeAmountMap = new HashMap<>();
-                        double all = Integer.parseInt(totalBookNum);
-                        double read = Integer.parseInt(totalReadBookNum);
-                        int readResult = 0;
-                       // System.out.println(read*100.0/all);
-                        readResult = (int) (read*100.0/all);
-
-
-                        typeAmountMap.put("완독", (int) (read*100.0/all));
-                        typeAmountMap.put("미완독", 100-(int)(read/all*100.0));
-
-                        //initializing colors for the entries
-                        ArrayList<Integer> colors = new ArrayList<>();
-                        colors.add(Color.parseColor("#B9BABE"));
-                        colors.add(Color.parseColor("#FF5F68"));
-
-                        //input data and fit data into pie chart entry
-                        for(String type: typeAmountMap.keySet()){
-                            pieEntries.add(new PieEntry(typeAmountMap.get(type).floatValue(), type));
-                        }
-
-                        //collecting the entries with label name
-                        PieDataSet pieDataSet = new PieDataSet(pieEntries,label);
-                        //setting text size of the value
-                        pieDataSet.setValueTextSize(12f);
-                        //providing color list for coloring different entries
-                        pieDataSet.setColors(colors);
-                        //grouping the data set from entry to chart
-                        PieData pieData = new PieData(pieDataSet);
-                        //showing the value of the entries, default true if not set
-                        pieData.setDrawValues(true);
-
-                        pieChart.setData(pieData);
-                        pieChart.invalidate();
-                        pieData.setValueFormatter(new PercentFormatter());
-                        pieChart.animateY(1500);
-                        pieChart.getDescription().setEnabled(false);
-                        pieChart.getLegend().setEnabled(false);
+                    if(i == 1){
+                        fri = snapshot.getValue().toString();
+                    } else if(i == 2){
+                        mon = snapshot.getValue().toString();
+                    } else if(i == 4){
+                        sat = snapshot.getValue().toString();
+                    } else if(i == 5){
+                        sun = snapshot.getValue().toString();
+                    } else if(i == 6){
+                        thu = snapshot.getValue().toString();
+                    } else if(i == 9){
+                        tue = snapshot.getValue().toString();
+                    } else if(i == 10){
+                        wed = snapshot.getValue().toString();
+                        Log.e("bar char 요일", mon + ", " + tue + ", " + wed + ", " + thu + ", " + fri + ", " +
+                                sat + ", " + sun + ", ");
                     }
                     i++;
                 }
@@ -406,12 +453,8 @@ public class StatisticsFragment extends Fragment {
                 Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
             }
         };
-        mPostReference.addValueEventListener(postListener);
-    }
-    private void showBarChart(){
-        ArrayList<Double> valueList = new ArrayList<Double>();
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        String title = "Title";
+        mPostReference5.addValueEventListener(postListener5);
+
 
         //input data
         for(int i = 0; i < 5; i++){

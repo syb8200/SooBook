@@ -111,6 +111,14 @@ public class Sign_up extends AppCompatActivity {
                 hashMap2.put("totalBookNum", Integer.toString(0));
                 hashMap2.put("totalReadBookNum", Integer.toString(0));
 
+                hashMap2.put("monday", Integer.toString(0));
+                hashMap2.put("tuesday", Integer.toString(0));
+                hashMap2.put("wednesday", Integer.toString(0));
+                hashMap2.put("thursday", Integer.toString(0));
+                hashMap2.put("friday", Integer.toString(0));
+                hashMap2.put("saturday", Integer.toString(0));
+                hashMap2.put("sunday", Integer.toString(0));
+
                 reference = database.getReference("ReadTime/info");
                 reference.child(user_UID).setValue(hashMap2);
 /*

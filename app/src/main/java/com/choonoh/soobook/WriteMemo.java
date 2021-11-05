@@ -141,7 +141,7 @@ public class WriteMemo extends AppCompatActivity {
         //다 읽음, 읽는 중 라디오 버튼, 리뷰 한줄평 란
         radio_left = findViewById(R.id.radio_left);
         radio_right = findViewById(R.id.radio_right);
-        one_line_review = (EditText)findViewById(R.id.one_line_review);
+        one_line_review = findViewById(R.id.one_line_review);
 
         //뒤로가기 버튼
         back_btn = findViewById(R.id.back_btn);
@@ -166,6 +166,9 @@ public class WriteMemo extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "모든 칸을 입력해 주세요", Toast.LENGTH_SHORT).show();
                         } else{
                             nick = String.valueOf(task.getResult().getValue());
+                            s_title = memo_title.getText().toString();
+                            s_content = memo_content.getText().toString();
+                            s_last = memo_last.getText().toString();
 
                             DatabaseReference memoPostReference = FirebaseDatabase.getInstance().getReference();
                             Map<String, Object> childUpdates = new HashMap<>();
@@ -188,9 +191,7 @@ public class WriteMemo extends AppCompatActivity {
 
                             DatabaseReference mPostReference = database.getReference("ReadTime/"+user_uid+"/info/");
                             DatabaseReference mPostReference2 = database.getReference("ReadTime/info/"+user_uid);
-                            s_title = memo_title.getText().toString();
-                            s_content = memo_content.getText().toString();
-                            s_last = memo_last.getText().toString();
+
 
                             Log.e("is_read", Integer.toString(is_read));
                             if(is_read == 0){

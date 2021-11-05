@@ -226,10 +226,6 @@ public class BookDetailActivity extends AppCompatActivity {
         childUpdates.put(root, postValues);
         mPostReference.updateChildren(childUpdates);
 
-        root ="/ReadTime/"+user_UID+"/"+isbn_txt;
-        childUpdates.put(root, postValues);
-        mPostReference.updateChildren(childUpdates);
-
         DatabaseReference mPostReference2 = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
         ValueEventListener postListener = new ValueEventListener() {
             @Override

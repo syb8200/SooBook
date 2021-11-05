@@ -61,7 +61,7 @@ public class RecordFragment extends Fragment {
             startActivity(intent);
         });
 
-        store_btn = rootView.findViewById(R.id.store_btn);
+        //store_btn = rootView.findViewById(R.id.store_btn);
 
         user_email = bundle.getString("user_email");
         user_UID = bundle.getString("user_UID");
@@ -213,32 +213,32 @@ public class RecordFragment extends Fragment {
         });
 
 
-        store_btn.setOnClickListener(v -> {
-            endTimeNum = System.currentTimeMillis();
-//yyy-MM-dd hh:mm:ss
-            SimpleDateFormat month_day = new SimpleDateFormat("MM-dd");
-            SimpleDateFormat hour_minute = new SimpleDateFormat("hh:mm");
-            SimpleDateFormat month_day_hour_minute = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-            Date startTimeDate = new Date(startTimeNum);
-            Date endTimeDate = new Date(endTimeNum);
-
-            String readTime = Integer.toString(measured);
-            String startTime = hour_minute.format(startTimeDate);
-            String endTime = hour_minute.format(endTimeDate);
-            String date = month_day.format(startTimeDate);
-            String firebaseKey = month_day_hour_minute.format(endTimeDate);
-
-            Map<String, Object> childUpdates = new HashMap<>();
-            Map<String, Object> postValues = null;
-
-            //String uid, String readTime , String startTime, String endTime, String date
-            FirebaseReadTimePost post = new FirebaseReadTimePost(readTime, startTime, endTime, date);
-            postValues = post.toMap();
-            String root ="/ReadTime/" + user_UID + "/" + firebaseKey + "/";
-            childUpdates.put(root, postValues);
-            mPostReference.updateChildren(childUpdates);
-
-    });
+//        store_btn.setOnClickListener(v -> {
+//            endTimeNum = System.currentTimeMillis();
+////yyy-MM-dd hh:mm:ss
+//            SimpleDateFormat month_day = new SimpleDateFormat("MM-dd");
+//            SimpleDateFormat hour_minute = new SimpleDateFormat("hh:mm");
+//            SimpleDateFormat month_day_hour_minute = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+//            Date startTimeDate = new Date(startTimeNum);
+//            Date endTimeDate = new Date(endTimeNum);
+//
+//            String readTime = Integer.toString(measured);
+//            String startTime = hour_minute.format(startTimeDate);
+//            String endTime = hour_minute.format(endTimeDate);
+//            String date = month_day.format(startTimeDate);
+//            String firebaseKey = month_day_hour_minute.format(endTimeDate);
+//
+//            Map<String, Object> childUpdates = new HashMap<>();
+//            Map<String, Object> postValues = null;
+//
+//            //String uid, String readTime , String startTime, String endTime, String date
+//            FirebaseReadTimePost post = new FirebaseReadTimePost(readTime, startTime, endTime, date);
+//            postValues = post.toMap();
+//            String root ="/ReadTime/" + user_UID + "/" + firebaseKey + "/";
+//            childUpdates.put(root, postValues);
+//            mPostReference.updateChildren(childUpdates);
+//
+//    });
         return rootView;
     }
     public void onDestroy() {

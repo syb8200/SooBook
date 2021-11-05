@@ -162,7 +162,7 @@ public class WriteMemo extends AppCompatActivity {
                     }
                     else {
                         if(memo_title.getText().toString().equals("") || memo_content.getText().toString().equals("") ||
-                                memo_last.getText().toString().equals("") || one_line_review.getText().toString().equals("")){
+                                memo_last.getText().toString().equals("")){
                             Toast.makeText(getApplicationContext(), "모든 칸을 입력해 주세요", Toast.LENGTH_SHORT).show();
                         } else{
                             nick = String.valueOf(task.getResult().getValue());
@@ -200,7 +200,7 @@ public class WriteMemo extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                if(i == 1){
+                                                if(i == 8){
                                                     readBookNum = snapshot.getValue().toString();
                                                     plusOne = String.valueOf(Integer.parseInt(readBookNum)+1);
                                                     Log.e("readBookNum", readBookNum);

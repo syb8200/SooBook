@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
@@ -35,15 +36,16 @@ import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 
 public class RecordFragment extends Fragment {
-    int h = 0, m = 0, s = 0;
-    int measured = 0, pre_measured = 0;
+    int h = 0, m = 0, s = 0, i = 0, is_first = 1;
+    int measured = 0, pre_measured = 0, valid_value = 0;
     String hh, mm, ss;
-    String book_img, book_isbn, book_title, book_auth, book_pub;
+    String book_img, book_isbn, book_title, book_auth, book_pub, weekDay;
+    String year, month, day, totalBookNum, totalReadBookNum, mon, tue, wed, thu, fri, sat, sun;
     BluetoothSPP bt;
     String user_email, user_UID;
-    Button store_btn;
     ImageButton direct_record;
     long startTimeNum, endTimeNum;
+    MylibList[] myLibLists = new MylibList[50];
 
     private final DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference();
     @Override
@@ -60,8 +62,6 @@ public class RecordFragment extends Fragment {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
-
-        //store_btn = rootView.findViewById(R.id.store_btn);
 
         user_email = bundle.getString("user_email");
         user_UID = bundle.getString("user_UID");
@@ -84,6 +84,8 @@ public class RecordFragment extends Fragment {
                     book_auth = mylibList.getauth();
                     book_pub = mylibList.getPub();
                     adapter.addItem(mylibList);
+
+                    myLibLists[i] = mylibList;
                     i++;
                 }
                 gridView.setAdapter(adapter);
@@ -94,23 +96,6 @@ public class RecordFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("Mylib", String.valueOf(databaseError.toException())); // 에러문 출력
             }
-        });
-
-        //parent, view, position, id) ->
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-            }
-
-            /*
-            Intent intent=new Intent(SelectReadBook.this, WriteMemo.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("img", myLibLists[(position)].img);
-            intent.putExtra("title", myLibLists[(position)].title);
-            intent.putExtra("auth", myLibLists[(position)].auth);
-            intent.putExtra("pub", myLibLists[(position)].pub);
-
-            startActivity(intent);*/
         });
 
         bt = new BluetoothSPP(this.getContext()); //Initializing
@@ -134,7 +119,7 @@ public class RecordFragment extends Fragment {
             if(pre_measured > 0 && measured == -1){
                 androidx.constraintlayout.widget.ConstraintLayout constraintLayout = rootView.findViewById(R.id.const_record);
                 constraintLayout.setVisibility(View.VISIBLE);
-                
+                valid_value = pre_measured;
             }
             pre_measured = measured;
             Log.e("array[0]", array[0]);
@@ -173,7 +158,6 @@ public class RecordFragment extends Fragment {
                 minute.setText(mm);
                 second.setText(ss);
             }
-
         });
 
         // ------------------------------ 데이터 수신부 ----------------------------- //
@@ -212,33 +196,185 @@ public class RecordFragment extends Fragment {
             }
         });
 
+        gridView.setOnItemClickListener((parent, v, position, id) -> {
+            endTimeNum = System.currentTimeMillis();
 
-//        store_btn.setOnClickListener(v -> {
-//            endTimeNum = System.currentTimeMillis();
-////yyy-MM-dd hh:mm:ss
-//            SimpleDateFormat month_day = new SimpleDateFormat("MM-dd");
-//            SimpleDateFormat hour_minute = new SimpleDateFormat("hh:mm");
-//            SimpleDateFormat month_day_hour_minute = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-//            Date startTimeDate = new Date(startTimeNum);
-//            Date endTimeDate = new Date(endTimeNum);
+            SimpleDateFormat weekdayFormat = new SimpleDateFormat("EE", Locale.getDefault());
+            SimpleDateFormat month_day = new SimpleDateFormat("MM-dd");
+            SimpleDateFormat hour_minute = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat month_day_hour_minute = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            Date startTimeDate = new Date(startTimeNum);
+            Date endTimeDate = new Date(endTimeNum);
+
+            weekDay = weekdayFormat.format(endTimeNum);
+            String readTime = Integer.toString(valid_value);
+            String startTime = hour_minute.format(startTimeDate);
+            String endTime = hour_minute.format(endTimeDate);
+            String date = month_day.format(startTimeDate);
+            String firebaseKey = month_day_hour_minute.format(endTimeDate);
+
+            Log.e("readTime", readTime + ", " + startTime + ", " + endTime + ", " + date + ", " + firebaseKey + ", " + weekDay);
+
+            Map<String, Object> childUpdates = new HashMap<>();
+            Map<String, Object> postValues = null;
+
+            //String uid, String readTime , String startTime, String endTime, String date
+            FirebaseReadTimePost post = new FirebaseReadTimePost(readTime, startTime, endTime, date);
+            postValues = post.toMap();
+            String root ="/ReadTime/" + user_UID + "/" + firebaseKey + "/";
+            childUpdates.put(root, postValues);
+           mPostReference.updateChildren(childUpdates);
+
+            Log.e("myLibLists", myLibLists[(position)].img + ", " + myLibLists[(position)].title + ", " + myLibLists[(position)].auth
+                    + ", " + myLibLists[(position)].pub);
+
+//            DatabaseReference mPostReference2 = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
+//            ValueEventListener postListener = new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        if(i == 7){
+//                            totalBookNum = snapshot.getValue().toString();
+//                            plusOne1 = String.valueOf(Integer.parseInt(totalBookNum)+1);
+//                            Log.e("totalBookNum", totalBookNum);
 //
-//            String readTime = Integer.toString(measured);
-//            String startTime = hour_minute.format(startTimeDate);
-//            String endTime = hour_minute.format(endTimeDate);
-//            String date = month_day.format(startTimeDate);
-//            String firebaseKey = month_day_hour_minute.format(endTimeDate);
+//                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                            DatabaseReference hopperRef = database.getReference("ReadTime/info").child(user_UID);
+//                            Map<String, Object> hopperUpdates = new HashMap<>();
+//                            hopperUpdates.put("totalBookNum", plusOne1);
 //
-//            Map<String, Object> childUpdates = new HashMap<>();
-//            Map<String, Object> postValues = null;
+//                            hopperRef.updateChildren(hopperUpdates);
+//                        }
+//                        i++;
+//                    }
+//                }
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                    // Getting Post failed, log a message
+//                    Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
+//                }
+//            };
+//            mPostReference2.addValueEventListener(postListener);
+//            DatabaseReference mPostReference2 = FirebaseDatabase.getInstance().getReference("ReadTime/info/");
+//            ValueEventListener postListener = new ValueEventListener() {
 //
-//            //String uid, String readTime , String startTime, String endTime, String date
-//            FirebaseReadTimePost post = new FirebaseReadTimePost(readTime, startTime, endTime, date);
-//            postValues = post.toMap();
-//            String root ="/ReadTime/" + user_UID + "/" + firebaseKey + "/";
-//            childUpdates.put(root, postValues);
-//            mPostReference.updateChildren(childUpdates);
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        String[] splitText = dataSnapshot.getValue().toString().split("=");
+//                        Log.e("dataSnapshot.getKey() ", splitText[0]);
+//                        Log.e("UID ", "{" + user_UID);
 //
-//    });
+//                        if(splitText[0].equals("{" + user_UID) && is_first == 1) {
+//                            Log.e("is same?: ", "YES");
+//                            MyReadInfoList myReadInfoList = snapshot.getValue(MyReadInfoList.class);
+//                            year = myReadInfoList.getYear();
+//                            month = myReadInfoList.getMonth();
+//                            day = myReadInfoList.getDay();
+//
+//                            totalBookNum = myReadInfoList.getTotalBookNum();
+//                            totalReadBookNum = myReadInfoList.getTotalReadBookNum();
+//
+//                            mon = myReadInfoList.getMon();
+//                            tue = myReadInfoList.getTue();
+//                            wed = myReadInfoList.getWed();
+//                            thu = myReadInfoList.getThu();
+//                            fri = myReadInfoList.getFri();
+//                            sat = myReadInfoList.getSat();
+//                            sun = myReadInfoList.getSun();
+//
+//                            Log.e("요일", mon + ", " + tue + ", " + wed + ", " + thu + ", "
+//                                    + fri + ", " + sat + ", " + sun + ", ");
+//
+//                            SimpleDateFormat yyyy = new SimpleDateFormat("yyyy");
+//                            SimpleDateFormat MM = new SimpleDateFormat("MM");
+//                            SimpleDateFormat dd = new SimpleDateFormat("dd");
+//
+//                            String end_year = yyyy.format(endTimeNum);
+//                            String end_month = MM.format(endTimeNum);
+//                            String end_day = dd.format(endTimeNum);
+//                            if(year.equals(end_year) && month.equals(end_month) && Integer.parseInt(day) + 7 > Integer.parseInt(end_day)){
+//                                switch (weekDay){
+//                                    case "월":
+//                                        mon = Integer.toString(Integer.parseInt(mon) + valid_value);
+//                                        break;
+//                                    case "화":
+//                                        tue = Integer.toString(Integer.parseInt(tue) + valid_value);
+//                                        break;
+//                                    case "수":
+//                                        wed = Integer.toString(Integer.parseInt(wed) + valid_value);
+//                                        break;
+//                                    case "목":
+//                                        thu = Integer.toString(Integer.parseInt(thu) + valid_value);
+//                                        break;
+//                                    case "금":
+//                                        fri = Integer.toString(Integer.parseInt(fri) + valid_value);
+//                                        break;
+//                                    case "토":
+//                                        sat = Integer.toString(Integer.parseInt(sat) + valid_value);
+//                                        break;
+//                                    case "일":
+//                                        sun = Integer.toString(Integer.parseInt(sun) + valid_value);
+//                                        break;
+//                                }
+//                                Log.e("result(if 가까움)", mon + ", " + tue + ", " + wed + ", " + thu + ", "
+//                                + fri + ", " + sat + ", " + sun + ", ");
+//
+//                                Map<String, Object> childUpdates = new HashMap<>();
+//                                Map<String, Object> postValues = null;
+//
+//                                //String uid, String readTime , String startTime, String endTime, String date
+//                                FirebaseReadTimePost post = new FirebaseReadTimePost(readTime, startTime, endTime, date);
+//                                postValues = post.toMap();
+//                                String root ="/ReadTime/" + user_UID + "/" + firebaseKey + "/";
+//                                childUpdates.put(root, postValues);
+//                                mPostReference.updateChildren(childUpdates);
+//
+//                                Map<String, Object> childUpdates2 = new HashMap<>();
+//                                Map<String, Object> postValues2 = new HashMap<>();
+//
+//                                //mon, tue, wed, thu, fri, sat, sun;
+//                                postValues2.put("mon", mon);
+//                                postValues2.put("tue", tue);
+//                                postValues2.put("wed", wed);
+//                                postValues2.put("thu", thu);
+//                                postValues2.put("fri", fri);
+//                                postValues2.put("sat", sat);
+//                                postValues2.put("sun", sun);
+//
+//                                postValues2.put("year", year);
+//                                postValues2.put("month", month);
+//                                postValues2.put("day", day);
+//
+//                                postValues2.put("totalBookNum", totalBookNum);
+//                                postValues2.put("totalReadBookNum", totalReadBookNum);
+//
+//                                root ="/ReadTime/info/" + user_UID + "/";
+//                                childUpdates2.put(root, postValues2);
+//                                mPostReference.updateChildren(childUpdates2);
+//                                is_first = 0;
+//                           }
+//                        }
+//                        i++;
+//                    }
+//                }
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                    // Getting Post failed, log a message
+//                    Log.e("RecordFragment", "loadPost:onCancelled", databaseError.toException());
+////                }
+//            };
+//            mPostReference2.addValueEventListener(postListener);
+
+//                Intent intent=new Intent(getContext(), WriteMemo.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                intent.putExtra("img", myLibLists[(position)].img);
+//                intent.putExtra("title", myLibLists[(position)].title);
+//                intent.putExtra("auth", myLibLists[(position)].auth);
+//                intent.putExtra("pub", myLibLists[(position)].pub);
+//
+//                startActivity(intent);
+        });
         return rootView;
     }
     public void onDestroy() {

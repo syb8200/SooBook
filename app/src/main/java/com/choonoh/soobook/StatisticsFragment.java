@@ -159,27 +159,7 @@ public class StatisticsFragment extends Fragment {
                 Log.e("StaticFragment", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
-/*
-        ArrayList NoOfEmp = new ArrayList();
-        NoOfEmp.add(new Entry(MylibNum, 0));
-        NoOfEmp.add(new Entry(OldlibNum, 1));
 
-        PieDataSet dataSet = new PieDataSet(NoOfEmp, "Number Of Employees");
-        ArrayList year = new ArrayList();
-        year.add("완독");
-        year.add("미완독");
-
-        PieData data = new PieData(year, dataSet); // MPAndroidChart v3.X 오류 발생
-        pieChart.setData(data);
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        pieChart.animateXY(5000, 5000);
-        pieChart.setDescription("");
-*//*
-        int[] colorArray = Arrays.copyOfRange(getResources().getIntArray(R.array.pieChartColorArray),0,typeAmountMap.size());
-        ArrayList<Integer> colors = new ArrayList<>();
-        for(int color:colorArray){
-            colors.add(color);
-        }*/
         showPieChart();
         showBarChart();
         initBarChart();

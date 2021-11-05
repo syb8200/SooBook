@@ -69,24 +69,23 @@ public class RecordGridListAdapter extends BaseAdapter {
 
         Glide.with(context).load(book).into(bookImg);
 
-
-        convertView.setOnClickListener(v ->  {
-
-            String title = items.get(position).getTitle();
-            String auth = items.get(position).getauth();
-            String pub = items.get(position).getPub();
-            String isbn = items.get(position).getisbn();
-            String cover = items.get(position).getImg();
-
-            Intent intent = new Intent(context,WriteMemo.class);
-            intent.putExtra("title", title);
-            intent.putExtra("auth", auth);
-            intent.putExtra("pub",pub);
-            intent.putExtra("isbn",isbn);
-            intent.putExtra("cover", cover);
-
-            context.startActivity(intent);
-        });
+        // RecordFragment.java의 click listener 사용 위해 주석 처리
+//        convertView.setOnClickListener(v ->  {
+//            String title = items.get(position).getTitle();
+//            String auth = items.get(position).getauth();
+//            String pub = items.get(position).getPub();
+//            String isbn = items.get(position).getisbn();
+//            String cover = items.get(position).getImg();
+//
+//            Intent intent = new Intent(context, WriteMemo.class);
+//            intent.putExtra("title", title);
+//            intent.putExtra("auth", auth);
+//            intent.putExtra("pub",pub);
+//            intent.putExtra("isbn",isbn);
+//            intent.putExtra("cover", cover);
+//
+//            context.startActivity(intent);
+//        });
         return convertView;
     }
 }

@@ -231,7 +231,7 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if(i == 0){
+                    if(i == 7){
                         totalBookNum = snapshot.getValue().toString();
                         plusOne1 = String.valueOf(Integer.parseInt(totalBookNum)+1);
                         Log.e("totalBookNum", totalBookNum);

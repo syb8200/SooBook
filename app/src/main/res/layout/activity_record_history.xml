@@ -47,19 +47,24 @@
 
     <TextView
         android:id="@+id/history_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="60dp"
+        android:gravity="center"
         android:layout_marginTop="20dp"
+        android:lineSpacingExtra="5dp"
         android:text="책 제목"
         android:textSize="14sp"
         android:textColor="@color/sb_title"
         android:fontFamily="@font/nanumgothicbold"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginHorizontal="60dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal">
 

@@ -82,20 +82,20 @@ public class LibraryFragment extends Fragment {
         GridListAdapter adapter1 = new GridListAdapter();
 
 
-
-        DatabaseReference databaseReference1 = database.getReference("Oldlib/"+user_UID+"/"); // DB 테이블 연결
+        FirebaseDatabase database2 = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
+        DatabaseReference databaseReference1 = database2.getReference("Oldlib/"+user_UID+"/"); // DB 테이블 연결
 
         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MylibList mylibList = snapshot.getValue(MylibList.class);
-                    book_img = mylibList.getImg();
-                    book_isbn = mylibList.getisbn();
-                    book_title = mylibList.getTitle();
+                    MylibList oldlibList = snapshot.getValue(MylibList.class);
+                    book_img = oldlibList.getImg();
+                    book_isbn = oldlibList.getisbn();
+                    book_title = oldlibList.getTitle();
 
-                    adapter1.addItem(mylibList);
+                    adapter1.addItem(oldlibList);
                 }
                 gridView1.setAdapter(adapter1);
 

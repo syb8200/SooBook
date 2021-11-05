@@ -30,7 +30,7 @@
             android:gravity="right"
             android:layout_marginRight="10dp"
             android:text="변경"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textColor="@color/sb_point" />
         </LinearLayout>
         <ProgressBar

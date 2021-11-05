@@ -102,7 +102,7 @@ public class WishGridListAdapter extends BaseAdapter {
 
             context.startActivity(intent);
              */
-            
+
 
             AlertDialog.Builder ad = new AlertDialog.Builder(context);
             ad.setTitle("위시리스트");

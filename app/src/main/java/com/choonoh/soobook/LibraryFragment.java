@@ -52,10 +52,6 @@ public class LibraryFragment extends Fragment {
         GridListAdapter adapter = new GridListAdapter();
 
 
-        ///그리드뷰 스크롤 없애기기
-        gridView.setVerticalScrollBarEnabled(false);
-
-
 
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         DatabaseReference databaseReference = database.getReference("Mylib/"+user_UID+"/"); // DB 테이블 연결

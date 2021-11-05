@@ -40,7 +40,7 @@ public class WishlistFragment extends Fragment {
 
 
         GridView gridView = root.findViewById(R.id.wish_gridview);
-        GridListAdapter adapter = new GridListAdapter();
+        WishGridListAdapter adapter = new WishGridListAdapter();
 
 
         ///그리드뷰 스크롤 없애기기

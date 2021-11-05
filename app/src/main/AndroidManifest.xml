@@ -53,6 +53,7 @@
         <activity android:name=".DirectRecord"/>
         <activity android:name=".ProfileEdit"/>
         <activity android:name=".RecordHistoryDetailActivity"/>
+        <activity android:name=".WishDetailActivity"/>
         <service
             android:name=".MyFirebaseMessagingService"
             android:stopWithTask="false">

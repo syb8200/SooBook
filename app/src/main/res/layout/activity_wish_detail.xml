@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+<!--
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="11dp"
+            android:background="@drawable/back_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+!-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumgothicbold"
+            android:text="위시리스트"
+            android:textColor="@color/sb_title"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/wish_iv"
+        android:layout_width="125dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/sb_gray3"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/wish_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="18dp"
+        android:text="책 제목"
+        android:textSize="16sp"
+        android:textColor="@color/sb_title"
+        android:fontFamily="@font/nanumgothicbold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/wish_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="작가"
+            android:textColor="@color/sb_gray3"
+            android:textSize="12sp"
+            android:fontFamily="@font/nanumgothic"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:fontFamily="@font/nanumgothic"
+            android:text="/"
+            android:textColor="@color/sb_gray3"
+            android:textSize="12sp" />
+
+        <TextView
+
+            android:id="@+id/wish_pub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출판사"
+            android:textColor="@color/sb_gray3"
+            android:textSize="12sp"
+            android:fontFamily="@font/nanumgothic"/>
+        <TextView
+
+            android:id="@+id/wish_isbn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/sb_gray3"
+            android:textSize="12sp"
+            android:fontFamily="@font/nanumgothic"
+            android:visibility="gone"/>
+        <TextView
+
+            android:id="@+id/wish_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/sb_gray3"
+            android:textSize="12sp"
+            android:fontFamily="@font/nanumgothic"
+            android:visibility="gone"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/wish_reading_book_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:paddingVertical="14dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/reading_book_plus"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/reading_book_img_selector"/>
+
+            <TextView
+                android:id="@+id/reading_book_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="읽는 책"
+                android:textSize="12dp"
+                android:textColor="@drawable/reading_book_text_selector"
+                android:fontFamily="@font/nanumgothic"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/sb_gray2"/>
+
+        <LinearLayout
+            android:id="@+id/wish_del_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:paddingVertical="14dp"
+            android:orientation="horizontal">
+
+
+
+            <TextView
+                android:id="@+id/wish_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="위시리스트 삭제"
+                android:textSize="12dp"
+                android:textColor="@drawable/wishlist_text_selector"
+                android:fontFamily="@font/nanumgothic"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

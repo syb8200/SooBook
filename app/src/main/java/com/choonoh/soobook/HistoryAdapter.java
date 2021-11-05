@@ -50,7 +50,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
         holder.title.setText(mData.get(position).getTitle());
         holder.date.setText(mData.get(position).getLast());
-/*
+
         //리스트 아이템 클릭 시 데이터 전달
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -60,15 +60,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
                 String nick = holder.title.getText().toString();
                 String uid = holder.date.getText().toString();
+                String content = mData.get(position).getContent();
+                String last = mData.get(position).getLast();
+                String now = mData.get(position).getNow();
+                String title = mData.get(position).getTitle();
 
-
-                Intent intent = new Intent(mContext,FriendLibrary.class);
+                Intent intent = new Intent(mContext,RecordHistoryDetailActivity.class);
                 intent.putExtra("nick", nick);
                 intent.putExtra("uid", uid);
+                intent.putExtra("content", content);
+                intent.putExtra("last",last);
+                intent.putExtra("now",now);
+                intent.putExtra("title",title);
 
                 mContext.startActivity(intent);
             }
-        });*/
+        });
     }
 
     @Override

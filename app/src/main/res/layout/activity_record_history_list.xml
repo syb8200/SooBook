@@ -2,9 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingVertical="20dp"
-    android:paddingHorizontal="20dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/histoli_title"
@@ -14,6 +12,8 @@
         android:text="작성한 제목"
         android:textColor="@color/sb_title"
         android:textSize="13sp"
+        android:paddingVertical="23dp"
+        android:paddingHorizontal="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -21,6 +21,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:paddingVertical="23dp"
+    android:paddingHorizontal="20dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent" >
@@ -31,15 +33,24 @@
         android:fontFamily="@font/nanumgothic"
         android:text="200"
         android:textColor="@color/sb_gray3"
-        android:textSize="11sp"
-        />
+        android:textSize="13sp" />
+
     <TextView
         android:id="@+id/page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanumgothic"
-        android:text="페이지"
+        android:text=" 페이지"
         android:textColor="@color/sb_gray3"
-        android:textSize="11sp"/>
+        android:textSize="13sp"/>
+
 </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/sb_gray2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

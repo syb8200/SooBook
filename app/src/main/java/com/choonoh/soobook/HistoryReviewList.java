@@ -29,5 +29,13 @@ public class HistoryReviewList {
     String content;
     String last;
 
+    public String getNow() {
+        return now;
+    }
 
+    public void setNow(String now) {
+        this.now = now;
+    }
+
+    String now;
 }

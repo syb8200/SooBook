@@ -4,6 +4,7 @@ public class MemoList {
     String title;
     String content;
     String last;
+
     public String getTitle() {
         return title;
     }

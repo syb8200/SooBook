@@ -5,24 +5,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-import java.util.List;
 
-public class GridListAdapter extends BaseAdapter {
+public class WishGridListAdapter extends BaseAdapter {
 
     ArrayList<MylibList> items = new ArrayList<MylibList>();
     Context context;
@@ -61,26 +53,23 @@ public class GridListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_item, parent, false);
         }
 
-    //    TextView numberText = convertView.findViewById(R.id.numberText);
+
         ImageView bookImg = convertView.findViewById(R.id.book_img);
-        //String bookst = mylibList.getImg();
-       // Uri book = Uri.parse(bookst);
         Uri book= Uri.parse(mylibList.getImg());
         Log.e("uri", book.toString());
-   //     numberText.setText(mylibList.getTitle());
+
 
         Glide.with(context).load(book).into(bookImg);
 
 
         convertView.setOnClickListener(v ->  {
-
             String title = items.get(position).getTitle();
-          String auth = items.get(position).getauth();
-         String pub = items.get(position).getPub();
+            String auth = items.get(position).getauth();
+            String pub = items.get(position).getPub();
             String isbn = items.get(position).getisbn();
             String cover = items.get(position).getImg();
 
-            Intent intent = new Intent(context,RecordHistoryActivity.class);
+            Intent intent = new Intent(context,WishDetailActivity.class);
             intent.putExtra("title", title);
             intent.putExtra("auth", auth);
             intent.putExtra("pub",pub);

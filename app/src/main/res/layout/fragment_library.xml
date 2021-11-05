@@ -1,49 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginHorizontal="16dp"
     android:background="@color/white">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:id="@+id/add_btn"
-            android:fontFamily="@font/nanumgothicbold"
-            android:textColor="@color/sb_point"
-            android:text="추가"/>
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="읽는 책"
-            android:textSize="14sp"
-            android:layout_marginBottom="15dp"
-            android:textColor="@color/sb_point"
-            android:fontFamily="@font/nanumgothicbold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="읽는 책"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/sb_point"
+                    android:fontFamily="@font/nanumgothicbold"/>
+
+        </LinearLayout>
 
         <GridView
             android:id="@+id/reading_gridview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
             android:columnWidth="100dp"
-            android:horizontalSpacing="20dp"
-            android:verticalSpacing="15dp"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="10dp"
             android:numColumns="auto_fit">
-
         </GridView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:text="읽은 책"
             android:textSize="14sp"
             android:textColor="@color/sb_point"
@@ -52,13 +44,11 @@
         <GridView
             android:id="@+id/read_gridview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:columnWidth="100dp"
-            android:horizontalSpacing="20dp"
-            android:verticalSpacing="15dp"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="10dp"
             android:numColumns="auto_fit">
         </GridView>
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

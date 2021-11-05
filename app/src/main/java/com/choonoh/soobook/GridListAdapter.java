@@ -63,6 +63,8 @@ public class GridListAdapter extends BaseAdapter {
 
     //    TextView numberText = convertView.findViewById(R.id.numberText);
         ImageView bookImg = convertView.findViewById(R.id.book_img);
+        //String bookst = mylibList.getImg();
+       // Uri book = Uri.parse(bookst);
         Uri book= Uri.parse(mylibList.getImg());
         Log.e("uri", book.toString());
    //     numberText.setText(mylibList.getTitle());

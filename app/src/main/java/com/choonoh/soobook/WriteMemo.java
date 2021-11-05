@@ -326,7 +326,7 @@ public class WriteMemo extends AppCompatActivity {
         Date time = new Date(now);
         String time2 = format.format(time);
         Intent intent2 = getIntent();
-        img = intent2.getStringExtra("img");
+        img = intent2.getStringExtra("cover");
         auth = intent2.getStringExtra("auth");
         pub = intent2.getStringExtra("pub");
         title = intent2.getStringExtra("title");
@@ -335,7 +335,7 @@ public class WriteMemo extends AppCompatActivity {
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if(add){
-            FirebaseMylibPost post = new FirebaseMylibPost(user_uid, user_email, isbn, title,img, time2, auth, pub);
+            FirebaseMylibPost post = new FirebaseMylibPost(user_uid, user_email, isbn, title, img, time2, auth, pub);
             postValues = post.toMap();
         }
         String root ="/Oldlib/"+user_uid+"/"+isbn;

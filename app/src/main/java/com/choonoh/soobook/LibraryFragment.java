@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class LibraryFragment extends Fragment {
     String book_img, book_isbn, book_title;
-    TextView add_btn;
+    //TextView add_btn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class LibraryFragment extends Fragment {
         String user_email = getArguments().getString("user_email");
         String user_UID = getArguments().getString("user_UID");
 
+        /*
         add_btn = root.findViewById(R.id.add_btn);
 
         add_btn.setOnClickListener(v->{
@@ -45,7 +46,7 @@ public class LibraryFragment extends Fragment {
             intent.putExtra("user_UID", user_UID);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-        });
+        });*/
 
 
         GridView gridView = root.findViewById(R.id.reading_gridview);

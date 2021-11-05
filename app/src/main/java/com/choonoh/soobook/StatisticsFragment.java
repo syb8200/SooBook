@@ -173,14 +173,33 @@ public class StatisticsFragment extends Fragment {
                     else if(i == 8) {
                         totalReadBookNum = snapshot.getValue().toString();
                         //initializing data
-                        if(!totalBookNum.equals("0") && !totalReadBookNum.equals(0)) {
+                        if(!totalBookNum.equals("0") && !totalReadBookNum.equals("0")) {
                             showPieChart(totalBookNum, totalReadBookNum);
+                            Log.e("piecaryt", "보여주게씀");
                         } else{
                             pieChart.setVisibility(View.INVISIBLE);
                         }
+                    } else if(i == 1){
+                        fri = snapshot.getValue().toString();
+                    } else if(i == 2){
+                        mon = snapshot.getValue().toString();
+                    } else if(i == 4){
+                        sat = snapshot.getValue().toString();
+                    } else if(i == 5){
+                        sun = snapshot.getValue().toString();
+                    } else if(i == 6){
+                        thu = snapshot.getValue().toString();
+                    } else if(i == 9){
+                        tue = snapshot.getValue().toString();
+                    } else if(i == 10) {
+                        wed = snapshot.getValue().toString();
+                        Log.e("bar char 요일", mon + ", " + tue + ", " + wed + ", " + thu + ", " + fri + ", " +
+                                sat + ", " + sun + ", ");
+                        showBarChart(mon, tue, wed, thu, fri, sat, sun);
                     }
                     i++;
                 }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -190,7 +209,6 @@ public class StatisticsFragment extends Fragment {
         };
         mPostReference4.addValueEventListener(postListener4);
 
-        showBarChart();
         initBarChart();
         target_books_btn.setOnClickListener(v -> {
             EditText et = new EditText(getContext());
@@ -415,64 +433,34 @@ public class StatisticsFragment extends Fragment {
         pieChart.getDescription().setEnabled(false);
         pieChart.getLegend().setEnabled(false);
     }
-    private void showBarChart(){
+    private void showBarChart(String mon, String tue, String wed, String thu, String fri, String sat, String sun){
         ArrayList<Double> valueList = new ArrayList<Double>();
         ArrayList<BarEntry> entries = new ArrayList<>();
         String title = "Title";
 
-
-
-        DatabaseReference mPostReference5 = FirebaseDatabase.getInstance().getReference("ReadTime/info/"+user_UID);
-        ValueEventListener postListener5 = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if(i == 1){
-                        fri = snapshot.getValue().toString();
-                    } else if(i == 2){
-                        mon = snapshot.getValue().toString();
-                    } else if(i == 4){
-                        sat = snapshot.getValue().toString();
-                    } else if(i == 5){
-                        sun = snapshot.getValue().toString();
-                    } else if(i == 6){
-                        thu = snapshot.getValue().toString();
-                    } else if(i == 9){
-                        tue = snapshot.getValue().toString();
-                    } else if(i == 10){
-                        wed = snapshot.getValue().toString();
-                        Log.e("bar char 요일", mon + ", " + tue + ", " + wed + ", " + thu + ", " + fri + ", " +
-                                sat + ", " + sun + ", ");
-                    }
-                    i++;
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.e("StatisticsFragment", "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        mPostReference5.addValueEventListener(postListener5);
-
-
         //input data
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 7; i++){
             switch (i) {
                 case 0:
-                    valueList.add(60.0);
+                    valueList.add(Double.parseDouble(mon));
                     break;
                 case 1:
-                    valueList.add(120.0);
+                    valueList.add(Double.parseDouble(tue));
                     break;
                 case 2:
-                    valueList.add(90.0);
+                    valueList.add(Double.parseDouble(wed));
                     break;
                 case 3:
-                    valueList.add(150.0);
+                    valueList.add(Double.parseDouble(thu));
                     break;
                 case 4:
-                    valueList.add(30.0);
+                    valueList.add(Double.parseDouble(fri));
+                    break;
+                case 5:
+                    valueList.add(Double.parseDouble(sat));
+                    break;
+                case 6:
+                    valueList.add(Double.parseDouble(sun));
                     break;
             }
 
@@ -492,7 +480,8 @@ public class StatisticsFragment extends Fragment {
 
         barDataSet.setColors(ContextCompat.getColor(getContext(), R.color.sb_main_2), ContextCompat.getColor(getContext(),
                 R.color.sb_main), ContextCompat.getColor(getContext(), R.color.sb_main_3), ContextCompat.getColor(getContext(), R.color.sb_main_5),
-                ContextCompat.getColor(getContext(), R.color.sb_main_1));
+                ContextCompat.getColor(getContext(), R.color.sb_main_1), ContextCompat.getColor(getContext(), R.color.sb_main_5),
+                ContextCompat.getColor(getContext(), R.color.sb_main_2));
         //barDataSet.setColor(ContextCompat.getColor(getContext(), R.color.sb_main));
         initBarDataSet(barDataSet);
         barChart.setTouchEnabled(false);
@@ -535,6 +524,8 @@ public class StatisticsFragment extends Fragment {
         xAxisLabel.add("Wed");
         xAxisLabel.add("Thu");
         xAxisLabel.add("Fri");
+        xAxisLabel.add("Sat");
+        xAxisLabel.add("Sun");
 
         XAxis xAxis = barChart.getXAxis();
         //change the position of x-axis to the bottom

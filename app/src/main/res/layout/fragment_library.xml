@@ -5,41 +5,42 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="읽는 책"
-            android:textSize="14sp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/sb_point"
-            android:fontFamily="@font/nanumgothicbold"/>
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:layout_marginRight="10dp"
-            android:id="@+id/add_btn"
-            android:fontFamily="@font/nanumgothicbold"
-            android:textColor="@color/sb_point"
-            android:text="추가"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="읽는 책"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/sb_point"
+                    android:fontFamily="@font/nanumgothicbold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/add_btn"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:textColor="@color/sb_point"
+                    android:text="추가"/>
 
 
-</LinearLayout>
+        </LinearLayout>
+
         <GridView
             android:id="@+id/reading_gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="6"
             android:columnWidth="100dp"
-            android:horizontalSpacing="7dp"
+            android:horizontalSpacing="1dp"
             android:verticalSpacing="10dp"
             android:numColumns="auto_fit">
-
         </GridView>
 
         <TextView
@@ -56,10 +57,10 @@
             android:id="@+id/read_gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:columnWidth="100dp"
-            android:horizontalSpacing="7dp"
+            android:horizontalSpacing="1dp"
             android:verticalSpacing="10dp"
             android:numColumns="auto_fit">
         </GridView>
-
-        </LinearLayout>
+</LinearLayout>
